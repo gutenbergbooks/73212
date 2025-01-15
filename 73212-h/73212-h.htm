@@ -1,0 +1,4038 @@
+<!DOCTYPE html>
+<html lang='nl'>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <title>IN DE HOLLANDSCHE BRANDING</title>
+
+    <style>
+    /* The value of the "lang" attribute will decide which part of the transcribers notes is visible because of the next css rule.
+       In this case it only works with the values 'en' or 'nl'
+    */
+    html:not([lang="en"]) .link-en, html:not([lang="nl"]) .link-nl {   
+        display: none!important;
+    }
+    
+    
+    body {margin-left: 10%; margin-right: 10%;}
+
+    /* normal indent */
+    p {
+        text-indent: 2%;
+        text-align: justify;
+    }
+
+    /* hanging indent */
+    .p2 {
+        text-indent: -6%; 
+        padding-left: 6%;
+        text-align: justify;
+    }
+
+    /* no indent */
+    .p_no_indent {
+        text-indent: 0%;
+        text-align: justify;
+    }
+
+    /* Standard sup and sub have the same fontsize as normal text, 
+       it's only moved up or down half a line.
+       But usually you will find sup/sub in a smaller font. 
+       Therefore these adaptations: */
+    sup {
+        vertical-align: super;
+        font-size: 50%;
+    }
+    
+    sub {
+        vertical-align: sub;
+        font-size: 50%;
+    }
+
+    .standard {font-size: 100%; font-weight: normal;}
+
+    .indent02 {margin-left: 2%}
+    .indent10 {margin-left: 10%}
+    .indent20 {margin-left: 20%}
+    .indent30 {margin-left: 30%}
+    .indent40 {margin-left: 40%}
+    .indent50 {margin-left: 50%}
+    .indent60 {margin-left: 60%}
+
+    .fontsize60 {font-size: 60%;}
+    .fontsize80 {font-size: 80%;}
+    .fontsize110 {font-size: 110%;}
+    .fontsize133 {font-size: 133%;}
+    
+    /* for big and small caps on one line. Usable as class in a 'span' tag around text or in the 'p'/tag */
+    .smallcaps {font-variant: small-caps;}
+
+    /* use for Transcribers Notes and such */
+    .notebox {
+        margin-left: 10%; 
+        margin-right: 10%; 
+        margin-top: 5%; 
+        margin-bottom: 5%; 
+        padding: 1em; 
+        border: solid black 1px;
+    }
+    
+    th, td.align_left {
+      text-align:left;
+      vertical-align:top;
+    }
+    th, td.align_right {
+      text-align:right;
+      vertical-align:top;
+    } 
+    .caption_text {
+      font-size: 1.17em;
+      font-weight: bold;
+      text-align:center
+    }
+    
+    /* Pagenumbers in the text or the right margin:
+        1. The class [blznr] can be used to show a blznrber in your text. This
+           blznrber will not obstruct the search for a text-fragment. 
+           If you comment out its property [display: none;], no pagenumbers will be visible (as is the case now)
+        2. The class [hyphen] can be used to simulate a split word. Again, if you
+           comment out its property [display: none;], no hyphens will be visible (as is the case now)
+        3. If you want to show the pagenumbers to the right of your text, remove the 
+           comment around [position: absolute; right: 1%;]. There is a drawback: if users of your text try to search a text-fragment, they will no longer find that fragment!
+        4. When creating a tag for your pagenumber, you have to provide a unique id
+           that represents the page number. Like so:
+        
+                <span id="p.{blznrber}" class="blznr"><|span>
+        
+           (Even though the previous line is contained in a comment, it would have caused an error in CSS-checkers, had the {/} symbol not been replaced (by a {|})
+        5. You can jump to any pagenumber, because they all (should) have 
+           a unique id. Example:
+        
+                Click on <a href="#p.{blznr}">link<|a> to jump to pagenumber {blznr}.
+            
+            Of course, if you placed the pagenumber at the bottom of a page, a jump to it would place that line at the top of the browser. If you don't want that, link to the pagenumber just previous to the one you want.
+    */ 
+    .blznr:after {
+        display: inherit;
+        font-size: inherit;
+        font-style: initial;
+        color: gray;
+        content: "[" attr(id) "]";
+    }
+    .hyphen:before {
+        display: none;
+        content: "-";
+    }
+    /* ...end of: pagenumbers in the text or the right margin. */
+    
+    /* To mark a correction in the text, use this class. It will put a dotted red line underneath the corrected word and
+       you can even display the original text in a hint when the cursor hovers above the word.
+       Example (replace pipe-symbol with forwardslash if you are going to use it):
+
+            <p>This sentence <span id="cor0001" class="corrected" title="[Original text: cantaind]">contained<|span> an error.<|p>
+
+       You can hyperlink the word from the Transcriber's notes:
+       Example (replace pipe-symbol with forwardslash if you are going to use it):
+
+            <a href="#cor0001">[XXX] &mdash;&gt; [YYY]<|a>
+    */
+
+    span.corrected {border-bottom:1px dotted red;}
+
+    /* use for words to show extra spacing between characters
+       Example:
+            <span class="expand_spacing">dit is een test<|span>
+
+       which results in something like this:
+            d i t  i s  e e n  t e s t
+       To add just a bit more space to the left, the margin-left is also set.
+    */
+    .expand_spacing {letter-spacing: 0.2em; margin-left: 0.2em;}
+
+    /* To start a chapter with an image representing the first letter, use this class.
+       Example with the letter "H" (replace pipe-symbol with forwardslash if you are going to use it):
+
+            <img class="letterimage" src="image_representing_letter.jpg" alt="H" style="width:10%; height:auto; max-width:300px;">
+            <p class="hidden_char"><span style="color: white;">H<|span>ere he was going to stay.<|p>
+
+       The result is the letter "H" represented by an image sized to 10% of the width of the browser-window (with a maximum-width of 300px).
+    */
+    .letterimage {float:left; padding: 5px;}
+    .hidden_char {text-indent: -0.5em;
+                  padding-left: 0.5em;}
+
+    /* To create hidden but searchable (!) text. Great to use for: an image that shows text. You type the same text beneath the image and apply this style. 
+       That ensures the reader doesn't see it twice, but he can search on it. */
+    span.hiddenText {
+        width:0px;
+        height:0px;
+        overflow:hidden;
+        display:inline-block;
+    }
+ 
+    /* To create a big first character (sometimes used in a new chapter) use this in a <span> around first character(s). 
+       Use it in combination with [class="p_no_indent"], or else the second line will be too close to the big character. */
+    .introduction {
+        float: left; 
+        font-size: 44px;
+        line-height: 35px;
+        padding-top: 3px; 
+        padding-right: 1px;
+    }
+    
+    /* If there is a quote before the first big character, it's usually the normal size. Then use this in a <span> around it. */
+    .introduction_quote {
+        float: left; 
+    }
+    
+    div.illustration {
+        text-align: center;
+    }
+
+    /* Aligning images in text: left, center, or right */
+    img.img_left {
+        float: left;
+        margin: 10px 10px 10px 0px;
+        width: 50%;
+    }
+    img.img_right {
+        float: right;
+        margin: 10px 0px 10px 10px;
+        width: 50%;
+    }
+    /* ...end of -- Aligning images in text: left or right */
+
+    /* Footnotes: 
+       Use as follows. In the text, place something like: 
+       
+            By snege<a href="#fn1text"><span id="fn1" title="1" class="fn"><|span><|a> jagers uytgeset;
+            
+       And then the footnote text, somewhere else:
+       
+            <span id="fn1text" class="fn_text"><a href="#fn1">1) handig<|a><|span>
+           
+       The classes [fn] and [fn_text] are defined directly below    
+    */
+    /* Style for a virtual footnote number in the text */
+    .fn:after {
+        display: inherit;
+        position: relative;
+        font-size: 60%;
+        font-style: inherit;
+        vertical-align: super;
+        content: " " attr(title) ")";
+    }    
+    /* Style for the footnote text */
+    .fn_text {
+        font-size: 80%;
+        font-weight: normal;
+    }
+
+    /* ...end of -- Footnotes */
+    .center_block {
+        display: block;
+        text-align: center
+    }
+    .sayings {
+        display: inline-block;
+        text-align: left;
+        font-family: "Times New Roman", Times, Serif;
+    }
+    </style>    
+</head>
+
+<body>
+<div style='text-align:center'>*** START OF THE PROJECT GUTENBERG EBOOK 73212 ***</div>
+
+
+<div class="illustration">
+    <a id="cover"></a>
+    <br>
+    <img src="images/01_cover.jpg" alt="Cover" style="width:100%; height:auto; max-width:600px;">
+    <br>{Illustratie: kaft}
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<h2 style="text-align:center">IN DE HOLLANDSCHE BRANDING</h2>
+<br>
+<br>
+<br>
+<br>
+
+<h1 style="text-align:center">IN DE HOLLANDSCHE <br>BRANDING</h1>
+
+<h2 style="text-align:center">EEN JONGENSBOEK VAN DE ZEE
+  <br>DOOR
+  <br>JAN FEITH</h2>
+<br>
+<br>
+<br>
+<h4 style="text-align:center">ILLUSTRATIES EN BANDTEEKENING<br>VAN</h4>
+<h3 style="text-align:center">PIETER DAS</h3>
+<br>
+<br>
+<div class="illustration">
+    <a id="logo"></a>
+    <img src="images/02_logo.jpg" alt="{Illustratie: logo}" style="width:100%; height:auto; max-width:100px;">
+</div>
+
+<br>
+<h4 style="text-align:center">AMSTERDAM -- SCHELTENS & GILTAY</h4>
+
+<br>
+<br>
+<br>
+
+<table style="margin-left: auto; margin-right: auto; width:80%">
+  <caption class="caption_text">INHOUD</caption>
+  <thead>
+    <tr>
+      <th colspan="2"><hr style="width:10%;"></th>          
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td class="align_left"><a href="#chapter01">EEN WOORD VOORAF</a></td>
+      <td class="align_right">1</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter02">HET VERHAAL VAN EEN LEVENSREDDER </a></td>
+      <td class="align_right">7</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter03">IN DEN ONDERZEEËR</a></td>
+      <td class="align_right">25</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter04">VAN EEN AMERIKAANSCHEN KAPITEIN EN EEN LEUKEN SCHEEPSDOKTER</a></td>
+      <td class="align_right">39</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter05">HOLLANDSCHE SCHEEPSSPREEKWOORDEN</a></td>
+      <td class="align_right">52</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter06">MET DE KONINGIN AAN BOORD VAN EEN ONZER OORLOGSSCHEPEN</a></td>
+      <td class="align_right">57</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter07">'N TOCHTJE MET DE NIEUWE REDDINGBOOT</a></td>
+      <td class="align_right">69</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter08">OP EEN "REUZE"-SCHIP</a></td>
+      <td class="align_right">81</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter09">STUURSTOEL-OPSCHRIFTEN</a></td>
+      <td class="align_right">94</td>
+    </tr>
+    
+    <tr>
+      <td class="align_left"><a href="#chapter10">ALS JE ZEEZIEK BENT</a></td>
+      <td class="align_right">97</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter11">EEN OVERLEVENDE VAN SHIMONOSEKI</a></td>
+      <td class="align_right">105</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter12">VAN OUDE UITHANGBORDEN</a></td>
+      <td class="align_right">116</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter13">DE MILLIOENEN VAN DE LUTINE</a></td>
+      <td class="align_right">119</td>
+    </tr>
+
+    <tr>
+      <td class="align_left"><a href="#chapter14">HET VERHAAL VAN EEN ZEILTOCHT, DAT ZOO VROOLIJK BEGINT EN ZOO DROEVIG EINDIGT</a></td>
+      <td class="align_right">150</td>
+    </tr>
+
+  </tbody>
+</table>
+
+<br>
+<br>
+<br>
+<br>
+  
+  
+<br>
+<br>
+<br>
+<br>
+<a id="chapter01"></a>
+<h3 style="text-align:center">EEN WOORD VOORAF!</h3>
+<hr style="width:20%;">
+
+<p>O!... Jongens, die zee!...</p>
+
+<p>Ben jullie even dol op de zee als ik?</p>
+
+<p>Voor mij is ze aanbiddelijk!</p>
+
+<p>Ik aanbid de zee met een diepe vereering, met een kinderlijk ontzag,
+met een geheim verlangen, met de vrome liefde als tot iets
+hoogers...</p>
+
+<p>Elken keer, dat ik weer naar zee ging, voelde ik 't als een
+blijdschap, als een goede boodschap!</p>
+
+<p>Het is wel natuurlijk, dat ik meer dan eens tot de zee mocht
+uitgaan. Als je schrijver van je beroep bent, zooals ik, dan is het
+van-zelf-spre-kend, dat je pad niet steeds leidt langs de
+glad-geëffende banen van het aard-oppervlak. Even<span id="p.2" class="blznr"></span> goed als je je
+soms in een vliegtoestel wel hebt te verheffen boven de aarde en
+boven het onderwerp, dat je te beschrijven zult hebben voor krant
+of boek, &mdash; even goed moet je er niet tegen opzien, je in te
+schepen, hetzij aan boord van het bottertje van een
+Zuiderzee-visschersman, dan wel in het gevolg van H.M. de Koningin,
+wanneer deze een bezoek gaat brengen aan een harer oorlogschepen op
+de reede; hetzij het een proeftocht geldt met de nieuwe reddingboot
+van Nieuwediep, dan wel of je moet afdalen in de nauwe en duistere
+diepten van een onzer onderzeeërs; hetzij je als vacantie-uitstapje
+een reis-om-de-wereld maakt, met minstens een viertal groote
+wereld-zeeën onderweg, dan wel of je naast je schippertje staat
+kringetjes te spuwen in het water, samen zeilende op een gemoedelijk
+kruistochtje langs onze prachtige Nederlandsche wateren; hetzij het
+toeval je in aanraking brengt met een merkwaardig oud type, die in
+zijn tijd, een halve eeuw geleden, jongens! in Japan een der groote
+heldendaden onzer Nederlandsche marine meevocht, dan wel of zoo'n
+verweerde zeerob uit Den Helder je staat te vertellen de zelf
+doorleefde gebeurtenis<span class="hyphen"></span><span id="p.3" class="blznr"></span>sen van zijn half duizend geredde
+menschenlevens, bij minstens een vier dozijn schipbreuken.</p>
+
+<p>In dezen eigenaardigen tijd moet iemand zich geschikt trachten te
+maken, om onder de meest ongewone omstandigheden te kunnen mee doen.
+We moeten alle ons zelven, en ook elkaar, wat zien te ontbolsteren.
+Wie weet wat het lot met ons voor heeft? Wie zal jullie vooruit
+zeggen, waar je nog eenmaal je leven zult hebben te leven?</p>
+
+<p>Weet iemand welke hemelstreken hem later tot verblijf zullen
+strekken? Alle elementen zullen hem vertrouwd moeten zijn. Aan vele
+haarden zal hij wellicht zijn beenen eens moeten uitstrekken. Wie
+zegt, of zijn levenslot hem niet beschoor, dat hij op velerlei
+legersteden in de vier windstreken eenmaal zijn rust zal hebben te
+zoeken! En onder welken hemel der vijf werelddeelen zal hij straks
+het eigen dak moeten spreiden?</p>
+
+<p>Moeten we dan niet vroegtijdig ons vertrouwd leeren maken juist met
+de zee?</p>
+
+<p>Is niet de zee een der voornaamste deelen van de wereld?... Leeft
+en werkt men niet op zee?... Is niet de zee de voornaamste grens
+van ons Nederland?... Was niet de roem, en<span id="p.4" class="blznr"></span> is niet de hoop van ons
+land de zee?.... Was niet telkens weer de zee de grootste
+verschrikking van ons bedreigde vaderland?... En tegelijk, is er
+iets wat wij onstuimiger liefhebben dan diezelfde zee?</p>
+
+<p>O! als ik lees in oude of in nieuwe boeken van zeereizen, dan wil
+ik dadelijk zèlf de zee op. Wanneer ik sta bij winter of zomer aan
+het fel-bewogen of stille strand, dan overvalt me telkens weer als
+iets onweerstaanbaars die drang naar de zee.</p>
+
+<p>En steeds weer verlang ik er naar, dit groote, geheimzinnige,
+lokkende, alles-belovende, wijde water te bevaren!</p>
+
+<p>Zoo ben ik wel een weinig de zee gaan leeren kennen. Ik weet van
+onze eigen zeeën; onze prachtige, roerige Noord-Zee, maar ook,
+midden in ons land, die soms zoo drieste Zuider-Zee. Ook andere
+zeeën heb ik leeren kennen, vele andere, en oneindig veel grootere
+dan die daar achter de onze liggen; zoo aanschouwde ik daarginds
+ook nieuwe, vreemde, schoone landen, gelegen aan de bonte, volle,
+weinig bekende stranden dier zeeën.<span id="p.5" class="blznr"></span></p>
+
+<p>En nu wilde ik mijn Nederlandschen jongens van dit alles gaan
+vertellen, een verhaal van hier, een herinnering van daar.</p>
+
+<p>Weet jullie welke bedoeling ik daarmede heb? Slechts deze:</p>
+
+<p>Ik wil jullie óók wat van mijn liefde voor de zee schenken; ik
+wensch, dat al onze Nederlandsche jongens de zee kennen; ik verlang,
+dat er niet één van jullie zal zijn, die niet heeft leeren
+begrijpen welke banden ons land aan de zee binden.</p>
+
+<p>En om jullie, Nederlandsche jongens, wat nader te brengen tot die
+zee, daarom schreef ik voor jullie mijn jongensboek van de zee.</p>
+
+<br>
+<br>
+<br>
+<br>
+<span id="p.7" class="blznr"></span><a id="chapter02"></a>
+<div style="text-align:center">
+  <span class="hiddenText">Het verhaal van een levensredder {illustratie}</span>
+  <img src="images/03_Hoofdstuk_Levensredder.jpg" alt="[Illustratie: Het verhaal van een levensredder]" style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<p>Dorus Rijkers heeft me aan het Heldersche station van den
+ochtendtrein afgehaald. Hij droeg een paar medailles op z'n jas
+geprikt, want daaraan zou ik hem &mdash; zooals hij me had geschreven
+&mdash; herkennen; .... alsof je zoo'n ruigen ringbaard, zoo'n zeewolf op
+z'n Zondagsch, zoo'n verweerden zeerob, die daar heel ongemakkelijk
+op zijn te nauwe bottines te schommelen staat, niet zonder dàt in
+zicht zou gekregen hebben!</p>
+
+<p>Dorus Rijkers &mdash; die officieel Theodorus heet maar op straat door
+elken kwajongen en lichtmatroos van Nieuwediep met "Opa" wordt aan
+geroepen &mdash; heeft me door Den Helder geloods naar de haven, waar, in
+een net steenen huisje<span id="p.8" class="blznr"></span> de reddingboot ligt van de "Noord- en
+Zuid-Hollandsche Redding Maatschappij."</p>
+
+<p>Dorus Rijkers heeft me daarna heel de stad door gekoerst naar zijn
+huisje achter den hoogen zeedijk; daar ligt-ie bij z'n getrouwde
+dochter in den kost, heel knap, heel best, heel naar het genoegen
+van den ouwen man, &mdash; zoolang 't met de verdiensten wat meevalt.
+Want zonder nu te willen weeklagen, sta je toch raar te kijken, hoe
+zoo'n kerel, met 'n veertigtal reddingen op z'n naam, met een rits
+medailles en getuigschriften, op z'n ouwen dag nog moeite heeft, met
+de vletterij uit 't water z'n eerlijke boterham op te halen.</p>
+
+<p>Dorus Rijkers heeft me ook op stap genomen den hoogen zeedijk langs,
+me daarover gekuierd, verrekijker in de hand, en dan weer dat ding
+voor m'n oogen gehouden, om me 'n indruk te geven van den toestand
+buitengaats, ja, eigenlijk daar vlak voor je. 'n Zacht kabbeltje van
+golfslag tegen den steenen dijkvoet, maar wijders 'n glad, bijna
+rimpelloos water, van dezen kant tot den verren overkant, waar 't
+bij helderen winterdag wit schemert van Texels strand; en verder
+naar buiten &mdash; "zie je die boei? en daarachter die tweede?<span id="p.9" class="blznr"></span> ... daar
+ligt 't vaargat tussche door!" &mdash; zoover als je kunt kijken met 't
+bloote oog, is dat nu 'n vriendelijke, gladde zee.</p>
+
+<a id="04_zeedijk"></a>
+<div style="text-align:center">
+<img src="images/04_zeedijk.jpg" alt="{Illustratie: 04_zeedijk.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+    
+<p>Als hij je niet gewezen had met z'n hand, en je daarbij den kijker
+niet voor je oogen had gedrukt, om de goeie richting voor je vast te
+stellen, dan zou je niet eens gelet hebben op zoo'n enkelen
+onrustigen golfslag over het verre water, in den vaargeul tusschen
+den dijk en het overliggende strand van Texel &mdash; "dat is nou die
+Onrustplaat" &mdash; en nog verder buitengaats, tegen den lichten
+horizon, een verre smalle schuim<span class="hyphen"></span><span id="p.10" class="blznr"></span>lijn &mdash; "en gunder daar dat zijn
+nou die Haaksgronde, waar je wel van gehoord mot hebbe?"</p>
+
+<p>"Niet genoeg!" zei ik; "daarom is 't me juist te doen, schipper...
+En hoe haal je ze daar met je reddingboot af?... En hoeveel schepen
+heb je daar al aan den grond zien zitten?.... En hoeveel man heb je
+er wel in den storm van hun verongelukte schuiten opgepikt?"</p>
+
+<p>Toen is hij uit zich zelf gaan vertellen.</p>
+
+<p>In het schuitenhuis van de reddingboot vertelde hij al, terwijl hij
+de reparatie van de boot inspecteerde na den laatsten knauw, die dat
+ding had opgeloopen bij de redding van de bemanning van de ELFRIEDE;
+nog niet zoo lang geleden, 't was half Januari geweest.</p>
+
+<p>Hij vertelde al, terwijl we daar langs den hoogen, kouden dijk
+scharrelden, om zicht te krijgen, door den kijker, op wat er nog te
+zien lag aan wrakken op de verre Haaksgronden.</p>
+
+<p>Thuis vertelde hij nog door, in den familiekring gezeten, theeblad
+gezellig op tafel, van sigarenwalm de kamer vol; en Rijkers, telkens
+deftig z'n bril op den neus geschoven, als z'n dochter 't beter wou
+weten, omdat die netjes en<span id="p.11" class="blznr"></span> trouw, met jaartal en scheepsnaam, van al
+zijn reddingen aanteekening had gehouden op 'n pampier.</p>
+
+<br>
+<p>
+De schipper van de reddingboot vertelde:</p>
+
+<p>"... Eerst kan ik je dat wel vertelle van de "Turbo"... Dat 's al
+weer wat jaartjes gelee', in de winter van 1908... Die liep z'n
+eige vast op de Noorder Haaks... Toen 't bericht uit de vuurtore
+van Huisduin aan de have van Nieuwediep was overgebracht, hadde de
+twee sleepboote al stoom op, en al m'n jonges al in de
+reddingboot... 't Was zoo'n vuile nacht &mdash; afijn, met mooi weer heb
+ik ze d'r nooit hoeve af te hale! &mdash; en donker als de hel... Maar
+nou mot je 's luistere wat dan zoo'n groot schip van 6000 ton waard
+is, as de zee 'm goed in z'n body te pakke hèt!.... Laat dat schip
+nou 's avonds om zeve uur gestoote hebbe, en late we nou om half nege
+uur op sleeptouw van de "Atlas" naar buite gegaan zijn... Toen we
+d'r om 'n uur of nege in de buurt van de "Turbo" zitte &mdash; want 't is
+nog 'n knap eind van de have naar de Haaksgronde &mdash; toen leit me die
+kanjer<span id="p.12" class="blznr"></span> van 'n schuit al in twee!... Maar nou mot je me
+geloove, zooas ik je ankijk: niet gewoon met 'n barst over z'n
+buitewand, maar gebroke in twee stukke, twee losse helfte, zoodat
+m'n manne en ik denke, datte d'r daar twee schuite met mekaar in
+aanvaring zijn geweest en dwars op mekaar vast zitte... Maar nog
+geen half uur later hêt de zee de twee helfte zoetjes opgenome, en
+zet ze 'n twee honderd meter van mekaar... Is maar om je 'n aperpoo
+te geve van wat zoo'n stormzee uit 't noordwest kàn!</p>
+
+<p>"Kortom, we zitte daar zoo effe te koekeloere, omdat op allebei die
+halve schepe nog mensche aan boord ware. De "Atlas" houdt er z'n
+zoeklicht op, en we zien op allebei de dekke zoo'n troepje manne...
+Toevallig ligge we 't dichtst bij 't wrak, dat 't voorschip geweest
+mot zijn; we lage met de sleepboot bove de wind en bezuie de
+stroom... En meteen vechte we de reddingboot door de branding
+heen.... Daar sting me 'n zee, brokke water als stadhuize... 'Maar
+we rake bij 't wrak, en prakkiseere 'n lijntje aan boord... We
+werke om m'n eigen boot vrij te houe, want dat is de heele foef, om
+je<span id="p.13" class="blznr"></span> eige gevaar geen moment uit 't oog te verlieze ... &mdash; want
+als je boot lek slaat op zoo'n wrak, nou, dan benne niet alleen die
+andere drenkelinge, maar dan ben je met je eige volk ook
+verkouwe!... &mdash;</p>
+
+<a id="05_branding"></a>
+<div style="text-align:center">
+<img src="images/05_branding.jpg" alt="{Illustratie: 05_branding.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>Langs de lijn hale we d'r acht binne onze reddingboot, stokers en
+olielui... "Wat stinke jullie naar de petrolie," snuif ik zoo. We
+dachte, dat ze olie op de golve hadde gestort.... Maar 't bleek 'n
+Engelschman te zijn, die van Rusland voer met tanklading petrolie,
+en door 't breke van de schuit dreef me daar de zee vol van die
+stinkolie... Tussche twee haakjes: we hebben in De Helder veertien
+dage die zelfde lucht in<span id="p.14" class="blznr"></span> de kokker gehouwe, en de dooie vissche en
+vogels lage voor 't oprape langs 't strand.</p>
+
+<p>"Ik ben nog an die redding toe... Ik zal eerst die acht geredde
+manne an boord van de "Atlas" afzette, die 'n paar honderd vaam
+buiten de felle branding lei...</p>
+
+<a id="06_atlas"></a>
+<div style="text-align:center">
+<img src="images/06_atlas.jpg" alt="{Illustratie: 06_atlas.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>Maar met die gekke zee, die dol te keer gaat, krijg 'k 'n jens van
+de sleepboot en slaat ie met z'n kont m'n helmhout stuk, ... met
+schaaf an 't roer, en de helft van onze rieme an splinters, om niet
+te spreke van al de verdere<span id="p.15" class="blznr"></span> averij... Ik krijg m'n boot toch
+langszij van de sleepboot en die geredde kruipe wel an boord... Maar
+nog acht zitte d'r op dat voorschip, en de storm wier nog kwajer...
+Zoo was d'r geen beginne an... Die arme bliksems moste we in de
+steek late, en de "Atlas" sleept onze reddingboot foelspiet naar
+Nieuwediep.... &mdash; "Reddingboot defek!" roept de kaptein de haven
+in. Hou nou toch je mond!" roep ik er overheen. "Ben ik de schipper
+van de reddingboot, of jij?" En in nog geen halfuur heb ik m'n
+schuit weer klaar... Sleept de "Atlas" ons weer naar buite... Wat
+zal ik je daar nou veel van vertelle?... Die andere acht krege we
+d'r ook af... En de zestien man van 't achter-schip wete we an
+boord van de "Herkulus" te scharrele... Opgeteld hebbe we 's
+morgens half zeve die heele ekiepaasje van de "Turbo", met geen
+mannetje te weinig, an de wal gebracht...</p>
+
+<p>
+"Maar de "R<span class="expand_spacing">eno</span>w" is de kwaaiste van allemaal geweest.... Die
+redding leit al weer langer terug &mdash; in 1887 &mdash; maar die staat me
+nog duidelijker voor m'n herinnering. En z'n eerste stuur<span class="hyphen"></span><span id="p.16" class="blznr"></span>man, die
+toen onder m'n ooge verdronk, die mot ik nog altijd met dat
+belabberde witte gezicht en z'n rooje kinbaardje voor me zien...
+"Help me?" riep-ie op z'n Duitsch, want 't was 'n Duitsche bark.
+Maar we mochte 't niet wage 'm te redde; hij was uit de mast geslage
+en tussche 't wrak van 't schip gespoeld, en daar mocht ik de
+reddingboot in zoo'n dolle zee niet tussche brenge, want aan alle
+kante stake de scheepsbinte als de slagtande van 'n beest in 't
+rond... Van dat schip was er toen al niks meer over. Ze sprake aan
+de wal al van 'n <span class="expand_spacing">vergeefsche</span> redding, omdat de reddingboot terug
+had gemotte... Ik kon er m'n manne de derde keer niet meer in
+krijge... "'t Is niet te doen, schipper!", zeije ze, en dat ware
+toch geen kinders. Toen krijg ik de jongens van de loods-leerlinge
+aan de rieme en we late d'r ons weer heen sleepe. Dat was de vierde
+tocht in drie dagen, en nog altijd hinge daar buite op de uiterste
+punt van de Razende Bol, wat wij de Pannekoek noeme, in de enkele
+mast, die nog overend stond, die laatste manne van de ekiepaasje van
+de "R<span class="expand_spacing">eno</span>w". 't Was 'n driemaster, met rijst voor Hamburg; maar z'n
+fokkie en<span id="p.17" class="blznr"></span> groote mast ware al dadelik over boord geslage. Ze hadde
+zich vastgebonde, zoo goed as 't ging. Ja! 'n jong van zestien jaar
+glee' er de laatste maal, dat we d'r aan kome, dood uit de mast; die
+was van pure ellende omgekomme...</p>
+
+<a id="07_laatste"></a>
+<div style="text-align:center">
+<img src="images/07_laatste.jpg" alt="{Illustratie: 07_laatste.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>Langs 'n lijntje krijg ik zoo verbinding met 'n stuk ankerketting en
+daar langs konne we die laatste schipbreukelinge binne de
+reddingboot hale...<span id="p.18" class="blznr"></span> In vier tochte, met 'n drie-daagsche
+onverminderde storm uit noordwest, hadde we d'r dus vijf-en-twintig
+man levend afgehaald... En van de vorige Duitsche Keizer heb ik
+toen 'n gouwe horloosie met inschrift gekrege en in dat zelfde jaar
+ook Broeder in de Nederlandsche Leeuw... Maar ik was twee-en-zestig
+uur aan één stuk niet uit de kleere geweest, en alsmaar vechte tege
+die storm. Zoodat 'n kapitein van de mariniers me onder m'n arm
+neemt en me naar z'n kamer brengt en me heete koffie en 'n cognakkie
+te drinke geeft. Toen zou ik naar m'n huis gaan, heel aan de andere
+kant van de stad, bij de windinrichting; maar daar krijgt ten leste
+de moeiheid me te pakke. En wat met me gebeurd is weet ik niet, maar
+ik wor' wakker en daar staat me 'n agent van politie voor me, en ik
+zit op 'n stoep. &mdash; "Wat is dat nou, Rijkers?" vraagt die agent; die
+dacht zeker dat ik 'n stuk in m'n kraag had of dat ik daar m'n roes
+zat uit te slape; "waarom slaap je niet thuis?" &mdash; "Nou," zeg ik
+zoo, "ik ben net opweg, agent, maar 't schijnt me onder de hand te
+zijn overvalle." &mdash; "Vooruit maar, omdat jij 't bent!" zeit ie; hij
+dacht stellig dat ik sikker<span id="p.19" class="blznr"></span> was, want toen ik opstond, om naar huis
+te gaan, waggelde ik op m'n beene... Zóó moei was ik!</p>
+<br>
+<p>
+"In 1893 had ik ook 'n goeie winter, want de reddingboot haalt er
+bij drie verschillende gelegenhede, kort na mekaar, de drenkelinge
+van drie schuite, die me door de storm al weer op de Haaksgronde
+ware gesmakt; dat ware twee Engelsche boote en een Deen. En van die
+laatste Engelschman, de "W<span class="expand_spacing">anddl</span>e", haal ik er 23 af... Toen kreeg
+ik 'n boodschap van 't havenkantoor, met de complimente uit Engeland
+"en of de schipper van de Nieuwediepsche reddingboot d'r 's wou
+optelle, hoeveel Engelsche hij al aan wal had gebracht?"</p>
+
+<p>"Nou, wie telt dat zoo precies?... Als 't stormt met stukke water as
+kanonschote, en hardstikkend nacht, met die vuile, witte branding om
+je heen, dan kijk of vraag je niet of dat 'n Engelschman is, of 'n
+Duitscher!... Maar m'n dochter had 't waschlijstje bijgehouwe, en
+die gaat aan 't telle, en ze zeit:</p>
+
+<p>"Vader, 't zijn d'r 195, die je d'r van af 1872 met je eige vlet en
+later met de reddingboot en<span id="p.20" class="blznr"></span> Gods hulp heb magge redde..." &mdash; "Mot
+je me nou!" vraag ik.</p>
+
+<p>Ook noemt ze me de name van al die schuite, en jawel, dat ware 'r
+krek 'n dozijn reddinge, die ik me stuk voor stuk scherp kon
+herinnere; want dat cijfer van drenkelinge zal ook wel goed zijn
+geweest. Toen kreeg ik weer zoo'n medalje met 'n getuigschrift...
+Ik had er vòòr die tijd al een van de Koning van de Belse, 't
+burgerkruis, ook met 'n getuigschrift, omdat we zeve man van 'n
+Belsche visscherschuit, de smak "F<span class="expand_spacing">erdinande</span>s" &mdash; dat is geweest in
+1887 &mdash; in 'n vliegende storm van de Haaks hadde afgehaald... Afijn,
+ik had d'r al meer van die medaljes met de getuigschrifte d'r bij,
+want die heb m'n dochter altijd voor de arigheid bewaard...</p>
+
+<p>"Zoo is d'r een van de manne hier uit De Helder, Dirk heette-ie, en
+de meeste reddinge had-ie in m'n reddingboot aan de rieme gezete;
+die zit nou in 't Prins-Hendrik-gesticht; wel twintig of dertig
+groote reddinge hêt die Dirk samen met me mee gemaakt, maar niks
+weet-ie d'r meer van, omdat al z'n getuigschrifte weg benne... Dat
+'s toch jammer, want wat hou je d'r anders van<span id="p.21" class="blznr"></span> over?... De premies,
+die zijn zoo vet niet, dat je daarvan potte kan; dat eet je onder de
+hand zoo op... En 'n andere herinnering als zoo'n pampier in 'n
+lijstje hou' je dus niet over...</p>
+
+<a id="08_waschlijstje"></a>
+<div style="text-align:center">
+<img src="images/08_waschlijstje.jpg" alt="{Illustratie: 08_waschlijstje.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>"Hier heb ik 'n Italiaansche opvarende, van 'n Engelsche schuit
+gehaald... Dat is nog kort gelee', en de medalje van de Koning
+Moeder &mdash; ik had d'r al een met 't portret van 't Koninginnetje
+&mdash; daar staat op "Heldenmoed en Naastenliefde"; die kreeg ik in 1907
+met de redding van de "N<span class="expand_spacing">ina Pato</span>n"...</p>
+
+<p>"Die zat te rije in de storm op de Razende<span id="p.22" class="blznr"></span> Bol; 37 man hale we d'r
+met de vlet af, en 'n kwaje redding omdat 't donkere nacht was en je
+dan de meeste moeite heb, met zoo'n ruwe boel om je heen, net
+precies te weten hòè je ze hebbe mot... As je ze niet benadere kan
+bòve wind en bòve stroom, laat 't dan maar... En altijd je door de
+sleepboot tot op 'n paar honderd vaam late trekke, en dan met de
+rieme of met 't zeil d'r op af, liefst dwars door de gekke branding,
+wat daar altijd maar op de Haaks raast.</p>
+
+<p>
+"Met die "N<span class="expand_spacing">ina Pato</span>n" was 't al zóó slim, dat 't water met brokke
+over de luike beukte... Maar al de bemanning krijge we in de
+reddingboot... Hoewel niet alles in eens, snap je wel?... De groote
+moeite heb je trouwens om dan weer uit de buurt van 't wrak te komme
+en je geredde mensche an boord van de sleepboot over te zette...
+Nou, bij die keer dat we de laatste lading zulle gaan hale, krijg ik
+twee vrouwe an boord, de hofmeesteres en 'n zuster van d'r... Die
+sla ik 'n touw om d'r middel en ik bind ze achterin de reddingboot
+naast me vast... Dat ware 'n paar flinke meide... Geen kik gave
+ze...<span id="p.23" class="blznr"></span> Want toen hebbe we nog werk gehad om ons eige lijf te berge...
+Daar was zóó'n geweld van water om ons heen, dat ik alleen maar de
+boot z'n kop recht op de zee kon houe... 't Was wel klare dag, maar
+zoo vuil weer, dat de sleepboot ons kwijt is... En omdat ik ook geen
+kans meer zie, 'm te bereike, tracht ik op eige gelegenheid m'n
+reddingboot tussche de Kapermeule-boei bij de Onrustplaat, en boei
+nommer negen van 't Westgat te loodse... Nou, dat lappe m'n jonges
+'m handig, alsof 't God behaagt, zoodat we na wat tobbe weer knap
+alleenig thuis komme.</p>
+
+<p>"Anderhalf uur later komt de sleepboot "Hercules" binne, met de
+boodschap, dat de reddingboot omgeslage mot zijn, want dat ie geen
+spoor van ons had kunne terugvinde... En zooals die keek, toen we
+daar al an de wal stonde... Maar wat ik je eigelijk wou vertelle
+van die twee vrouwe; Zweedsche ware 't, en geen woord gesproke of
+gelamenteerd, zoolang we daar tege de storm an 't vechte ware...</p>
+
+<p>"Maar toen ze de volgende dag met de trein weg zoue gaan, beginne ze
+in-eens an 't station te zinge... Toen bleke 't twee vrouwelijke
+Heil<span class="hyphen"></span><span id="p.24" class="blznr"></span>soldaatjes te zijn. En ter eere van de redders zonge ze
+voor ons 'n dankgebed an Onze Lieve Heer..."</p>
+
+<br>
+<br>
+<br>
+<br>
+<span id="p.25" class="blznr"></span><a id="chapter03"></a>
+<div style="text-align:center">
+  <span class="hiddenText">In een Onderzeëer {Illustratie}</span>
+  <img src="images/09_In_een_Onderzeeer.jpg" alt="[Illustratie: In een Onderzeëer]" style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<p>Bestaat er nog wel één jongen ter wereld, die na dezen vreeslijksten
+aller schrikkelijke oorlogen te water en te land, <span class="expand_spacing">niet</span> zou gehoord
+hebben van een onderzee-boot?</p>
+
+<p>Geen krant kun je opnemen, of er staat weer het geen of ander
+staaltje van kranigheid of boosaardigheid te lezen, uitgehaald door
+een der duikbooten van een der elkaar beoorlogende mogendheden...</p>
+
+<p>Maar ik denk er niet aan, in jullie boek over de zee een
+beschrijving te geven van al hetgeen een onderzeeër al voor nuttigs
+en voor kwaads heeft uitgericht in de betrekkelijk weinige jaren,
+sedert dit scheepstype in gebruik is genomen.<span id="p.26" class="blznr"></span></p>
+
+<p>Toch wil ik jullie jongens iets vertellen over de inrichting van
+zoo'n onderzee-vaarder, en als jullie naar me wilt luisteren wil ik
+jullie ook vertellen van een tocht, welken ik aan boord van een
+onzer Nederlandsche duikbooten onder water heb meegemaakt.</p>
+
+<p>Eerst enkele woorden, om jullie een eenvoudig, maar duidelijk beeld
+te geven van zoo'n boot.</p>
+
+<p>Het best laat zich een onderzeeër vergelijken met een reusachtige,
+holle sigaar, maar een, waarin zich menschen bevinden, om de
+verschillende werktuigen te bedienen en om torpedo's onder water af
+te schieten.</p>
+
+<p>Het doel, dat deze vaartuigen beoogen, is het aanvallen van
+vijandelijke schepen, door, in hun nabijheid gekomen, een of meer
+torpedo's te schieten, of zooals de technische term luidt: te
+lanceeren.</p>
+
+<p>Dit naderbij-komen doen ze niet openlijk, zooals de boven water
+varende oorlogschepen, voornamelijk dus als de eigenlijke
+torpedo-booten, &mdash; maar ongezien, onder-gedoken, verscholen onder
+het water, naderen ze tot ze kans zien, den onder<span class="hyphen"></span><span id="p.27" class="blznr"></span>water-aanval
+te wagen. Zelf blijven ze dus meestal onzichtbaar en dus...
+ontrefbaar.</p>
+
+<p>Buiten het bereik van den vijand zal echter een onderzee-boot
+gewoonlijk boven water varen; dan doet ze het meest denken aan het
+scheepstype, dat torpedoboot heet. In dit geval worden de schroeven
+door petroleum-motoren gedreven. Doch zoodra de boot zich heeft
+laten zakken onder het water-oppervlak, wordt zoo'n manier van
+voortbewegen bezwaarlijk; deze heeft dus plaats door middel van
+electriciteit.</p>
+<br>
+<p>
+Voordat de boot gaat duiken, wordt alles wat aan dek staat, als
+hekwerk, luchtkokers, enz. zooveel mogelijk opgeborgen. De
+bemanning, welke beperkt is tot de hoogst-noodige hulpkrachten,
+verdwijnt in de boot. Alle openingen worden zorgvuldig luchtdicht
+gesloten.</p>
+
+<p>Nu wordt het water binnengelaten in een paar afzonderlijk daarvoor
+ingerichte afdeelingen; door het water-gewicht zinkt de boot, totdat
+ze bijna onder water is verdwenen. Wanneer nu de schroeven in
+beweging worden gebracht en de boot vooruitgaat, kan men door middel
+van de<span id="p.28" class="blznr"></span> horizontale roeren de boot op alle gewenschte diepten onder
+water bewegen.</p>
+
+<p>Teneinde den kapitein in staat te stellen, te zien wat er boven
+water voorvalt &mdash; opdat hij zich kan overtuigen of het oogenblik
+reeds gekomen is, om een vijandelijk schip te naderen en aan te
+vallen, wellicht ook of het beter is zoo'n vijandelijk oorlogschip
+te ontwijken &mdash; steekt boven het dek van de boot een lange buis uit.
+Wanneer de duikboot niet te diep onder het zee-oppervlak vaart, kan
+men door deze holle buis, met behulp van verschillend-gestelde
+lenzen en spiegeltjes, beneden in den commando-toren precies zien
+wat er aan de oppervlakte van het water voorvalt.</p>
+
+<p>Zoo'n toestel heet &mdash; zooals elke jongen tegenwoordig wel weet, want
+hoeveel jongens zijn er niet, die zelfs bij hun speelgoed zoo'n ding
+bezitten, waarmee je, zonder zelf gezien te worden, om een hoekje
+kunt kijken &mdash; een periskoop.</p>
+
+<p>Dit is wel een van de voornaamste hulpmiddelen voor den kapitein, om
+uit te kijken. Zakt de duikboot dieper onder water, zoodat ook het
+bovenste puntje van den periskoop onder water is verdwenen, dan moet
+hij op zijn kompas varen.<span id="p.29" class="blznr"></span></p>
+
+<p>Verder bevinden zich aan boord natuurlijk de toestellen voor het
+lanceeren der torpedo's, en de verschillende machines en reservoirs,
+daartoe noodig. Zoodat er voor de bemanning maar heel weinig ruimte
+overblijft. Daarbij komt nog, dat de luchtverversching daar beneden
+nog al wat te wenschen overlaat. Immers, je kunt geen lucht van
+buiten toelaten, zoolang het vaartuig zich onder water bevindt. Dus
+moet men zich maar behelpen door lucht te tappen uit de aan boord
+zijnde luchtreservoirs, gevuld met saâm-geperste lucht.</p>
+
+<p>Toch bestaat er, al die onaangenaamheden bij elkaar genomen, veel
+minder gevaar voor ongelukken onder dan boven water. Bijvoorbeeld is
+men er betrekkelijk veilig tegen stormgevaar, wanneer de boot onder
+gedoken is. Daartegenover staan natuurlijk weer een aantal kwade
+kansen, die je op een boven water varend schip niet loopt.</p>
+
+<p>Over dit alles behoef ik jullie, met je voldoende ontwikkelde
+jongensverbeeldingskracht, niet uitvoeriger te onderhouden. Ik denk,
+dat jullie het veel belangrijker vindt, te lezen, hoe ik zelf eens
+zoo'n duiktocht meemaakte?<span id="p.30" class="blznr"></span></p>
+
+<p>Ik meldde me daartoe aan de Vlissingsche haven, waar een
+luitenant-ter-zee onzer Nederlandsche marine, die kapitein is van de
+daar voor anker liggende onderzeeër, me aan de sluis opwachtte, om
+me dadelijk uit te noodigen, mij aan boord te begeven van dat
+wonderlijke ding, dat op alles geleek... behalve op een schip.</p>
+
+<a id="10_haven"></a>
+<div style="text-align:center">
+<img src="images/10_haven.jpg" alt="{Illustratie: 10_haven.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>Uit het nauwe ijzeren torentje, even uitstulpend boven het
+glad-stalen dek, wenkte de commandant me, hem naar omlaag te volgen.<span id="p.31" class="blznr"></span></p>
+
+<p>"Welkom aan boord van den "Luctor"!... en u gaat dus zoo 's mee?...
+en toch ook <span class="expand_spacing">onder</span> water?"</p>
+
+<p>"Graag!" antwoordde ik, en nauwelijks was ik beneden, of boven onze
+hoofden werd op het torentje het deksel al dichtgeschroefd.</p>
+
+<p>Daardoor kwam er van boven geen licht meer; boven mijn hoofd hoorde
+ik tegen de stalen dekplaten de pruttelende geluidjes van klotsend
+water. Ik begreep, dat de duikboot al zinkende moest zijn. De
+bevelen van den commandant volgden elkaar snel en scherp op.</p>
+
+<p>Elk bevel werd door een der bemanning beantwoord.</p>
+
+<p>"Midscheepstank is vol, meneer!...." &mdash; "Buitenboordskleppen zijn
+dicht, meneer!" &mdash; "Hoofdballast-tank is vol, meneer!..."</p>
+
+<p>"De boot helt naar bakboordzijde;.... geef stuurboordzijde-tank nog
+wat... Is de voortank leeg?"</p>
+
+<p>"Bijna leeg, meneer!" &mdash; "Zet 'm dan af." &mdash; "Ja, meneer!"</p>
+
+<p>Daarna sprak niemand meer.</p>
+
+<p>De motor ratelde met fellen donderrommel,<span id="p.32" class="blznr"></span> zoodat de echo's met
+scherpen dreun langs de stalen wanden rondspookten; ... uit een hoek
+siste het; ... dan was het, of de haastende slagen van den motor
+zachter en doffer klonken; ... alle geluid scheen zich op te lossen,
+weg te doezelen als in een droom... Het hamerde tegen m'n slapen,
+omdat de saâm-geperste lucht het ademhalen bemoeilijkte; maar na een
+minuut of wat was ik aan dit gevoel gewend.</p>
+
+<p>En nu lette ik verder uitsluitend op het groote wijzerbord,
+waarlangs een naald regelmatig voortschoof, dan vooruit, dan
+achteruit, nu eens naar het cijfer 15, dan weer terug naar de 10.</p>
+
+<p>Ik wist, dat dit de diepte in voeten aangaf, waarop we nu onder
+water voeren. Soms helde de boot sterk naar voren, zoodat ik het
+lichaam mee moest laten hellen; dan wees de voorkant weer omhoog,
+zoodat ik achteruit moest leunen om in evenwicht te blijven. En bij
+elke beweging omlaag trachtte ik het onaangename gevoel van mij af
+te zetten, dat mijn niet meer te openen kerker voor goed, steeds
+lager, steeds dieper in de waterkuil gleed...</p>
+
+<p>Dit duurde een half uur, een uur, anderhalf<span id="p.33" class="blznr"></span> uur?... Ik weet het
+niet meer. Doch het scheen eindeloos. Tot dan eindelijk een korte,
+driftige machine-bel tingde, en dadelijk stond de motor stil.
+Tegelijk klonken weer de korte bevelen van den commandant naar het
+bedieningspersoneel.</p>
+
+<p>De matrozen werkten haastig en handig; ... het siste door de dikke
+buizen langs de wanden; ... in de peilglazen daalde het water; ...
+met zenuwachtige stoten schokte de naald over het wijzerbord, dat ik
+nog steeds bestaarde.</p>
+
+<p>Maar dan klonk er boven me, in het nauwe torentje, een zacht
+geknars; daar tuimelde een eerste schemerende lichtstraal van
+omhoog; en ook een frissche luchtstoot streek van boven tot ons
+neer.</p>
+
+<p>Reeds klauterden de zeelaarzen van den commandant door het kokertje
+naar het dek; uit het tunneltje riep hij naar me, of ik hem niet
+wilde volgen?</p>
+
+<p>Door de toren-opening stroomde die goede sterke lucht van de zee als
+een krachtige stortvloed omlaag; ik moest er tegenin klimmen.</p>
+
+<p>Toen, vlak over den rand van het dek-torentje, zag ik haar weer: de
+zee!</p>
+
+<p>Ze lag kalm, met stil gekartel van goud-ge<span class="hyphen"></span><span id="p.34" class="blznr"></span>kamde golfjes; als een
+maatloos koepelend dak welfde zich daarboven de blauwe effen hemel.</p>
+
+<p>En ineens stuwde het gezonde bloed naar mijn wangen terug, zoodat
+die koele kloeke commandant spottend naar me riep:</p>
+
+<p>"Daar beken je weer kleur!... Je had straks toch geen last van
+zeeziekte?"</p>
+
+<p>Neen, ik weet zeker, dat het ditmaal geen zeeziekte geweest was;
+maar ik jokte er maar liever om, en antwoordde hem, dat ik me straks
+een beetje onpleizierig had gevoeld. Ik zei dit maar, omdat het wat
+dwaas zou geweest zijn, tegenover dien wakkeren zeeofficier, over
+een gevoel van angst te hebben moeten spreken.</p>
+
+<p>Hij liet me ook niet aan het woord.</p>
+
+<p>"Zooals je hebt gezien, is er eigenlijk niets aan, om zoo'n
+duikpartij mee te maken aan boord van een onderzeeër!..."</p>
+
+<p>Van verre kwam de torpedo-boot "W<span class="expand_spacing">ajan</span>g" full-speed op ons af; de
+zwarte rook-slierten joegen er achter aan.</p>
+
+<p>"Weet je wat," overlegde m'n duikboot-commandant; "als je onze
+duikbeweging nu eens goed wilt zien, dan laat ik je aan boord van de
+"W<span class="expand_spacing">a<span class="hyphen"></span></span><span id="p.35" class="blznr"></span><span class="expand_spacing">jan</span>g" afzetten. Straks duikt de "L<span class="expand_spacing">ucto</span>r" nog eens voor
+je, en dan kun je alles van boord prachtig zien. Afgesproken?"</p>
+
+<a id="11_commandant"></a>
+<div style="text-align:center">
+<img src="images/11_commandant.jpg" alt="{Illustratie: 11_commandant.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>Reeds praaide hij den commandant van de torpedoboot, of die me wilde
+komen opnemen.</p>
+
+<p>En zoo heb ik dan de tweede duikproef kunnen zien van af het andere
+schip.<span id="p.36" class="blznr"></span></p>
+
+<p>Daar zag ik van het dek van den "W<span class="expand_spacing">ajan</span>g" wat er nu gebeurde aan
+boord van m'n onderzeeër. Eerst kwamen de matrozen uit het torentje
+gekropen, takelden het verschansinkje af, gaven de koperen stangen
+naar omlaag; dan verdwenen ze één voor één van het dekje; het laatst
+wipte de commandant zijn zeelaarzen over den rand van het torentje,
+daalde in het nauwe kokertje af. Dan sloot weer langzaam het deksel
+boven hem dicht.</p>
+
+<p>Eenige minuten bleef de onderzeeër zoo varen, een streep van het
+glimmende dekje boven water, het eenzame torentje er boven-uit, met
+een klein vlokkig schuimkopje voor den boeg, en wat wild water
+achter zijn schroef. Het leek aldus een vreemd en geheimzinnig,
+eigenlijk een onbeheerd vaartuig, een schepping van Jules Verne,
+zooals dit vaartuig daar nu zonder menschelijk leven erop of erin,
+voort schoof door de zee.</p>
+
+<p>Nu begon langzaam het torentje te zakken; het dekje was het eerst
+verdwenen, dan dompelde ineens het torentje onder, ... een smal wit
+randje, &mdash; en niets meer.</p>
+
+<p>Dit duurde weer een half uur; misschien lan<span class="hyphen"></span><span id="p.37" class="blznr"></span>ger, wellicht korter.
+Het scheen me alweer een eeuwigheid...</p>
+
+<p>Ik wist wat daar onder water nu gebeurde!... Ik kon ze me
+voorstellen, die zwijgende, moedige, kerels, ieder bij zijn eigen
+toestel, klaar bij de kranen en hefboomen; het turen naar de
+peilglazen, het staren op het wijzerbord, waarlangs de naald
+regelmatig voortschokte ... vooruit .... achteruit... En midden in
+het vaartuigje, in het nauwe torentje, de commandant, het stuurwiel
+in de handen, en hoe zijn bevelen kalm en kort naar beneden klinken
+moesten, om eentonig herhaald te worden door de matrozen en
+machinisten.</p>
+
+<p>Ik wist immers alles wat daarginds &mdash; waar? &mdash; nu zou gaan gebeuren,
+te midden van het wilde gewentel der wielen en het gestamp van den
+motor; met den snoerenden band om de slapen, de wrange lucht in de
+beklemdheid van die kleine stalen gevangenis, die meters diep ergens
+onder de zee voort-schoot.</p>
+
+<p>En ik wachtte maar, wachtte ... <span class="expand_spacing">tot</span> ergens boven de wijde
+eenzaamheid der zee zich iets zou vertoonen.</p>
+
+<p>Toen, in-eens, vlak naast onzen "W<span class="expand_spacing">ajan</span>g",<span id="p.38" class="blznr"></span> borrelde even het water,
+en meteen kwam het kleine torentje boven water uit!</p>
+
+<p>Ik zag het deksel opengaan; uit het kokertje staken het hoofd en de
+schouders van den commandant; ... ik zag zijn witte trui, ik
+onderscheidde zelfs de blonde knevels, opgedraaid boven den
+vroolijken mond.</p>
+
+<p>En eensklaps begon ik te wuiven naar dat vreemde, wonderlijke
+verschijnsel, naar die kleine, zonderling gestreepte schelp, die
+daar als van den zeebodem opgedoken kwam.</p>
+
+<p>Nooit bracht ik vuriger groet aan onze Nederlandsche Marine dan
+toen!</p>
+
+<br>
+<br>
+<br>
+<br>
+<span id="p.39" class="blznr"></span><a id="chapter04"></a>
+<div style="text-align:center">
+  <span class="hiddenText">Van een Amerikaanschen kapitein en een leuken scheepsdokter {Illustratie}</span>
+  <img src="images/12_Van_een_amerikaanschen_kapitein.jpg" alt="[Illustratie: Van een Amerikaanschen kapitein en een leuken scheepsdokter]" style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<p>Er wordt wel eens beweerd, dat in den tegenwoordigen tijd de
+gezelligheid is zoek geraakt, welke vroeger het maken van lange
+zee-reizen kenmerkte. Tot op zekere hoogte is dit waar. Dat komt,
+omdat onze moderne zeeschepen veel te groot zijn, om het den
+reizigers mogelijk te maken, hetzij het geheele vaartuig van boeg
+tot plecht, van beneden tot boven te leeren kennen; en dat komt ook,
+omdat het aantal passagiers dikwijls te groot is, soms wel ettelijke
+duizenden, zoodat iemand gedurende de reis zich voelt, of hij zich
+bevindt in een vreemd stadje, waarvan de bewoners alle talen der
+wereld spreken, van wie er niet één bij een ander behoort, zoodat er
+bijna niemand is, die gedurende de reis eenig belang stelt in zijn
+omgeving.</p>
+
+<p>Hoe grooter het schip, waarmee je vaart, &mdash;<span id="p.40" class="blznr"></span> hoe sterker je dit
+verschijnsel zult waarnemen. Doch aan den anderen kant is dus ook
+waar gebleven, dat hoe kleiner het schip is, waarop je een zeereis
+maakt, hoe meer gelegenheid je hebt, met de mede-passagiers en ook
+met de leden der bemanning kennis te maken.</p>
+
+<p>Zoo herinner ik me als een van m'n aardigste zee-reizen den langen
+overtocht van Yokohama, de Japansche haven aan de oostkust van het
+Aziatische werelddeel, naar San Francisco, de westelijke haven van
+het Amerikaansche werelddeel.</p>
+
+<p>En van eenige der eigenaardigste leden der equipage, den kapitein en
+den scheepsdokter, wil ik jullie vertellen, om jullie een indruk te
+geven van twee van zulke bizondere personages aan boord.</p>
+<br>
+<p>
+De kapitein sprak onvervalscht Amerikaansch; daartoe kneep hij zijn
+neus dicht, zonder zijn handen te gebruiken, en probeerde dan zijn
+gerekte klanken er door te snauwen; hij was ònverstaanbaar. Zelfs
+zijn landgenooten betreurden dit, want hij moest een hartelijk man
+zijn, die met iedereen een dagelijksch praatje trachtte te maken, en
+waardig aan het hoofdeinde der tafel plaats nam,<span id="p.41" class="blznr"></span> en
+verontschuldigingen voor zijn schip bedacht, wanneer het soms hevig
+slingerde op den weinig-stillen Stillen Oceaan.</p>
+
+<p>De kapitein hield des Zondags inspectie, en sprak dan Japansch met
+de Japansche bemanning, en Chineesch met de koks en tafelboys, en
+Engelsch met de passagiers, en zuiver Amerikaansch met zijn
+stafofficieren, &mdash; maar er was nooit iemand, die hiervan iets
+navertellen kon; niemand kon hem ooit verstaan. Hij gaf ook eens een
+korte verklaring bij de vertooning van een reeks lichtbeelden over
+Japan en de Vereenigde Staten, doch noch Japanners, noch Amerikanen
+herkenden zijn ongetwijfeld belangrijke aardrijkskundige
+aanduidingen.</p>
+
+<p>Zondag-ochtends leidde hij de godsdienstoefening in het groote
+salon, dat dan met Amerikaansche en Japansche vlaggen behangen werd;
+hij snauwde dan door zijn neus bladzijde na bladzijde van de
+gebruikelijke formulieren af. Alleen de scheepsdokter, die hem als
+voorzanger ter zijde stond, was daaraan gewend, en wist wanneer hij
+den kerkgangers het teeken moest geven, om met de gezamenlijke
+antwoorden in te vallen.<span id="p.42" class="blznr"></span></p>
+
+<p>Toch was hij een uiterst voorkomend kapitein! Want toen na den
+tienden dag de Hawaï-eilanden in de buurt kwamen en iedereen hem het
+onmogelijke kwam smeeken, om toch wat sneller vaart te maken dan de
+matige 325 mijl per dag, opdat wij niet 's ochtends, maar des avonds
+tevoren op Hawaï zouden aankomen, liet hij de machines halve kracht
+draaien om ons dus onzen zin te geven, opdat onze aankomst 's avonds
+viel.</p>
+
+<a id="13_iedereen"></a>
+<div style="text-align:center">
+<img src="images/13_iedereen.jpg" alt="{Illustratie: 13_iedereen.jpg}" style="float:left; padding:5px; width:50%; height:auto; max-width:800px;">
+</div>
+
+<p>Hij was een goed zeeman. Al ging onze reis niet vlug, wat niet zijn
+schuld was, toch kwam hij precies op tijd aan den overkant, na
+zeventien gelijkvormige dagen met niets dan zee en lucht, van den
+eenen kant van de grootste onzer wereldzeeën naar den anderen. En
+omdat er &mdash; behalve de nietige Hawaï-eilandjes &mdash; op heel dien
+langen weg geen stukje land, geen rotsje, geen zandkorreltje was, om
+er zijn koers naar te richten, vond<span id="p.43" class="blznr"></span> ik het &mdash; zooals ik trouwens
+èlke zeevaart knap vind &mdash; een kranig stukje zeemanschap van hem.</p>
+
+<p>Hij was een gelukkig zeeman bovendien, want als zijn reputatie gold,
+dat, zoo lang hij reeds tusschen Japan en Amerika voer, hij op elke
+reis naar San Francisco één dag had weten uit te winnen. Dat hij op
+zijn terugvaart dan telkens weer een dag verloor, vergat men
+wel-is-waar. Maar merkwaardig was dit verschijnsel toch wel. En de
+dokter, die zich verbeeldde, dat hij veel geest bezat, hield eens,
+terwijl al de jonge Amerikaansche meisjes dicht om hem heen zaten,
+een soort openbare rekenles, om uit te rekenen, dat de kapitein
+feitelijk <span class="expand_spacing">een jaar</span> ouder was dan hij zich uitgaf, omdat hij bij
+het bereiken van zijn 50-jarig kapiteinschap, met gemiddeld zeven
+jaarlijksche reizen van Yokohama naar San Francisco, ongeveer 365
+dagen zou hebben gesmokkeld. Toen de "Nippon-Maroe" op den zevenden
+dag na het vertrek van Japan den 180sten lengtegraad passeerde, was
+het dus de dokter, die een "drink" voorstelde op den smokkelenden
+kapitein; waarop deze weer een dankdronk uitbracht,<span id="p.44" class="blznr"></span> welke echter
+voor niemand recht verstaanbaar was.</p>
+
+<a id="14_meisjes"></a>
+<div style="text-align:center">
+<img src="images/14_meisjes.jpg" alt="{Illustratie: 14_meisjes.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>Ik denk wel, dat hij de rekenkundige opmerking maakte, dat hij op
+zijn heen-en-weer reizen evenveel dagen <span class="expand_spacing">oostwaarts reizende</span> won,
+als <span class="expand_spacing">terugreizende naar het westen</span> verloor.<span id="p.45" class="blznr"></span></p>
+
+<p>De verklaring hiervan is de volgende, jongens! </p>
+
+<p>De 180ste lengtegraad splitst den wereldbol in twee deelen. Bij
+elken graad, welke in westelijke richting wordt afgelegd, is er een
+verschil in zonnetijd van 4 minuten. Voor 2 x 180 of 360 graden
+geeft dit 360 x 4 = 1440 minuten, of 24 uur. Door het kunstmiddeltje
+toe te passen van den 180sten graad passeerende een dag te
+verspringen, houdt men de tijdrekening in orde. Toen Magelhaen zijn
+eerste reis om de wereld van oost naar west volbracht, passeerde hij
+in September 1519 den 180sten graad; bij zijn terugkomst bemerkte
+hij, tot zijn niet geringen schrik, dat hij één dag ten achter was,
+zoodat hij en zijn katholiek scheepsvolk steeds op verkeerde dagen
+hadden gevast!</p>
+
+<p>
+Na den kapitein was de dokter de voornaamste man aan boord. Hij
+gedroeg er zich dan ook naar. Voor de zieken had hij slechts weinig
+tijd over, hetgeen in hun waarachtig belang was, zooals hij eens
+zelf met treffende zelfkennis opmerkte.</p>
+
+<p>Er was een Amerikaansche dame, die zich op<span id="p.46" class="blznr"></span> elk uur van den dag in
+steeds aantrekkelijker toiletten kleedde, en die de eenige was, in
+staat, den dokter bij zijn beroep te houden. Zij was bij het
+aan-boord-gaan uit haar rijtuig gevallen, had daarbij haar arm
+gekneusd. Met Amerikaansche onpreutschheid liet zij ons allen haar
+arm bekijken; doch alleen de dokter mocht die aanraken.</p>
+
+<p>Er waren eenige ziekte-gevallen onder de voorschip-passagiers, doch
+daar dit "voor de brug" bleef, liet hij de behandeling aan een der
+bootslieden over. De zeezieke Japanners, die zijn hulp inriepen,
+bekeek hij op een afstand, omdat hij als Amerikaan de meening
+verkondigde, dat hij geen Japanners kon uitstaan, omdat hij hun gele
+huidskleur niet verdragen kon.</p>
+
+<a id="15_vreemdeling"></a>
+<div style="text-align:center">
+<img src="images/15_vreemdeling.jpg" alt="{Illustratie: 15_vreemdeling.jpg}" style="float:left; padding:5px; width:20%; height:auto; max-width:200px;">
+</div>
+
+<p>Eénmaal trad hij slechts als dokter op. Een dikke vreemdeling
+verscheen, met een stevig aangelegd hoofdverband aan tafel. "Wat
+beteekent dàt?!" vroeg iedereen. En toen fluisterde de een den ander
+toe, dat er in het rooksalon door de heeren onderling de een of
+andere verjaardag was gevierd, en het slingerend schip een der
+heeren zijn evenwicht<span id="p.47" class="blznr"></span> had doen verliezen, zoodat deze met zijn hoofd
+op een tafelrand was gevallen. Gelukkig was de dokter er toevallig
+bij geweest.</p>
+
+<p>"O!" zeiden de andere passagiers, ondeugend lachend, "zoo! zoo! was
+de dokter tegenwoordig geweest bij dat verjaardagsfeestje!"</p>
+
+<p>Iedereen begreep toen wel, dat het er gloeiend feestelijk moest zijn
+toegegaan onder leiding van den scheepsdokter.</p>
+
+<p>Onze dokter diende aan boord voornamelijk, om het gezelschap
+gedurende de lange reis in de goede stemming te houden. Hij had
+kleine handjes, vooral kleine voetjes, die in witte dekschoentjes
+gekneld staken; hij droeg onberispelijk uitgesneden ochtend-,
+wandel- en diner-jasjes, en onder zijn hoogen halsboord tipte een
+marinestrikje, dat als een vlindertje boven het glanzend
+overhemd-plastron fladderde.</p>
+
+<p>Hij nam na tafel alle jonge meisjes beurt om beurt onder den arm en
+wandelde met elk driemaal het dek af; en de oudere dames vertrouwden
+hem al haar hartsgeheimen toe, wanneer hij gezellig naast haar
+dekstoel kwam aanschuiven en geduldig haar lange verhalen aanhoorde.
+Hij zong met<span id="p.48" class="blznr"></span> een aardig smachtend tenoortje, en behalve wat wijsjes
+uit operettes, kende hij ook malle negerliederen en Spaansche
+ballade's, en neuriede drenzige Japansche geisha-liedekens.</p>
+
+<a id="16_tenoortje"></a>
+<div style="text-align:center">
+<img src="images/16_tenoortje.jpg" alt="{Illustratie: 16_tenoortje.jpg}" style="float: left; padding:5px; width:20%; height:auto; max-width:800px;">
+</div>
+
+<p>Maar Zondagsochtends zat hij toch weer heel ingetogen naast den
+kapitein en wist precies, wanneer hij het teeken aan de gemeente
+moest geven om in te vallen; bij de plechtige gezangen zong zijn
+smachtend tenor-stemmetje, hoog boven het gemurmel der anderen uit.</p>
+
+<p>
+De dokter was ook een vurig beoefenaar en practisch voorstander van
+sport. Hij bezat een oud jachtgeweer en daarmede lokte hij sommigen
+onzer op de achterbrug, en bedacht een toestel, dat de vele leege
+spuitwaterfleschjes in zee wierp, en ieder die een fleschje aan
+scherven schoot, werd statig ingeschreven op een uitvoerige lijst
+van prijswinners, om den laatsten dag plechtig gehuldigd te worden.
+Op de dokterslijst stond ten slotte èlkeen, want hij wist zijn
+wedstrijden zoo in te<span id="p.49" class="blznr"></span> richten, dat elke passagier kans had op een
+der tallooze Stille Oceaan-kampioenschappen.</p>
+
+<p>'s Morgens kreeg ieder der passagiers, die dan al aan dek was
+gekomen, een langen schuifstok in de hand en moest met platte houten
+schijven mikken naar een nummerbord, dat op de planken afgeteekend
+stond. Deze kamp won een zeer luidruchtig Amerikaansch juffertje uit
+Philadelphia, van wie vooral de jongelui veel werk maakten, totdat
+er gemompeld werd, dat een der oudere heeren met
+streepjes-opschrijven in haar voordeel geknoeid zou hebben, om aldus
+zelf een streepje voor te krijgen. De partij slagbal won de
+Amerikaansche groep glansrijk tegen de andere vreemdelingen; maar de
+partijen waren niet eerlijk verdeeld, omdat elk Amerikaan een verzot
+slagbalspeler is, en er onder de anderen waren, die den slagknuppel
+voor het eerst en zelfs ten-onderste-boven hanteerden. Doch den
+volgenden dag legde Amerika het weer af met touwtrekken; en dat de
+tegenpartij het won, kwam door den Spanjaard, die, naar zijn
+listigen aard, het eind van het touw stiekum door een dekring had
+gehaald. Een hinderniswedstrijd won de Belg, die<span id="p.50" class="blznr"></span> alléén bij de
+eindstreep aankwam, omdat alle overige nationaliteiten voor het
+roetvat teruggeschrokken waren. De Zwitser won den kegelwedstrijd;
+Bill, de Amerikaan, won het diabolospel; een Japanner won, dank zij
+zijn vlugge en verrassende sprongen, den schermwedstrijd; en de vele
+andere behendigheids-wedstrijden werden gewonnen door elk der dames
+één.</p>
+
+<p>Nederland won óók een wedstrijd &mdash; <span class="expand_spacing">ik</span> mag er mij op beroemen! Want
+àl de sportende heeren deden mee aan dien hardloopwedstrijd. Die
+leuke scheepsdokter had 't bedacht; en dit ging zoo. We hadden elk
+een fleschje bier in de hand; aan het eind van het dek zaten de
+niet-sportende heeren met een kurketrekker op ons te wachten. Ze
+hadden ons fleschje te ontkurken, haastig leeg te drinken, en wie
+van ons dan het eerst zijn leege fleschje weer aan het begin van het
+dek terugbracht, had 't gewonnen.</p>
+
+<p>Ieder onzer koos zijn eigen partij-genoot. Er was een dikke oude
+Duitsche heer en die wilde wel mijn helper zijn.</p>
+
+<p>Dat won ik ze toen allemaal af, met wel een half dek voorsprong!
+Want toen ik tegelijk met de ande<span class="hyphen"></span><span id="p.51" class="blznr"></span>ren kwam aangerend, had de
+Duitscher met beproefde hand den kurketrekker op de kurk gezet;
+meteen plukte hij er vaardig de kurk uit; met één klokkend geluid
+was het fleschje al door hem leeggedronken. Zelfs kon ik stapvoets
+terugwandelen naar de eindstreep, terwijl de rest zich nog wanhopig
+zat te verslikken.</p>
+
+<a id="17_kurketrekker"></a>
+<div style="text-align:center">
+<img src="images/17_kurketrekker.jpg" alt="{Illustratie: 17_kurketrekker.jpg}" style="float: right; padding: 5px; width:30%; height:auto; max-width:800px;">
+</div>
+
+<p>Bij dit alles was de dokter de spelleider, de wedstrijd-regelaar, de
+kamprechter. Bij de prijsuitdeeling voerde de kapitein wel-is-waar
+het woord, doch de dokter moest het daarna duidelijkshalve nog eens
+over doen. Dan ontving élke dame een zijden zakdoekje en élke heer
+een paar manchetknoopen met den scheepsnaam er op, want elk van ons
+had immers een wedstrijd gewonnen.</p>
+
+<p>Toen ik het gewonnen knoopenpaar eerlijk wilde deelen met mijn
+Duitsche wedstrijdgenoot, wilde deze daarvan niets weten; de
+Duitscher lachte gemoedelijk en zei: "Ik heb het beste deel gehad
+... het bier!"</p>
+
+<br style="clear:both;">
+<br>
+<br>
+<br>
+<span id="p.52" class="blznr"></span><a id="chapter05"></a>
+<div style="text-align:center">
+  <span class="hiddenText">Scheepsspreekwoorden {Illustratie}</span>
+  <img src="images/18_Hoofdstuk_Scheepsspreekwoorden.jpg" alt="[Illustratie: Scheepsspreekwoorden]" style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<p>Die aan de steng kan komen, zal de vlag wel krijgen.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>"Ik zal vóór niet afvallen", zei de stuurman, en hij stond
+achter het roer.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>Naar de Oost is de wereld nog niet.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>Wie jufferhanden heeft, moet met geen matrozen
+klop-in-'t-handje spelen.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div><span id="p.53" class="blznr"></span>
+
+<p>Wie onder zeil is gegaan, moet aan boord blijven.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>'t Is leuk zeilen met den wind achter.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>De voorspoedige wind maakt geen goed matroos.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>Het moeten hooge masten zijn, die bij 't zwerk zullen zeilen.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>Geef een hond een kwaden naam, dan mag hij wel over boord
+springen.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>Een vrouwenhaar trekt meer dan een marszeil.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div><span id="p.54" class="blznr"></span>
+
+<p>"Daar geef ik de vierkante wereld om," zei de matroos.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>Men moet het roer leggen over het boord, waar men het wil
+binden.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>Een goed zeeman valt ook wel eens over boord.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>Als de wind komt voor den regen,
+      <br>Daaraan is niet veel gelegen:
+      <br>Maar als regen komt voor wind,
+      <br>Berg je zeilen dan gezwind.
+    </div>
+</div>
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>De beste stuurlui staan aan wal;
+      <br>De slechte vindt men overal!
+    </div>
+</div>
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div><span id="p.55" class="blznr"></span>
+
+<p>Aan woorden en aan wind, neem altijd wat tegen het krimpen.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>"Het is koel op zee," zei de snijder, en hij voer over den
+Amstel.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>Zeeroovers tegen huns gelijken doen zelden goede zaken.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>Hij ziet gaarne zout water, maar in zijn moeders vischketel.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>Daar dienen geen twee groote masten op één schip.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>Wie raakt er in den mars zonder touwtrappen en klimmen?</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div><span id="p.56" class="blznr"></span>
+
+<p>"Alle vrachten moet men lichten!" zei de schipper en hij smeet
+het eerst zijn vrouw over boord.</p>
+
+<div style="text-align: center;">&mdash;o&mdash;</div>
+
+<p>"Een stuivertje kan raar rollen," zei de matroos; want hij vond
+bij Kaap de Goede Hoop het stuivertje terug, dat hij bij Vlaardingen
+verloren had.</p>
+
+<br>
+<br>
+<br>
+<br>
+<span id="p.57" class="blznr"></span><a id="chapter06"></a>
+<div style="text-align:center">
+  <span class="hiddenText">Met de Koningin aan boord van een onzer Oorlogschepen {Illustratie}</span>
+  <img src="images/19_Hoofdstuk_Oorlogsschepen.jpg" alt="[Illustratie: Met de Koningin aan boord van een onzer Oorlogschepen]" style="width:100%; height:auto; max-width:95%;">
+</div>
+
+
+<p>Den dag, dat onze Koningin zich had voorgenomen, een officieel
+bezoek te brengen aan een der oorlogschepen der Nederlandsche
+Marine, was het zulk afschuwelijk weer, dat niet slechts de leden
+der hofhouding, maar ook de marine-autoriteiten den raad meenden te
+moeten geven, af te zien van deze inspectie, en het betreden van het
+oorlogschip tot eenige dagen later uit te stellen, tot het booze
+weer wat gebeterd zou zijn.</p>
+
+<p>Natuurlijk wilde de Koningin hiervan niets weten. Al gaf de
+stormwaarschuwingsdienst te Vlissingen nog zulke onheilspellende
+berichten, de bezoekster had dezen dag vastgesteld voor haar
+kennismaking met haar Nederlandschen oorlogsbodem en zijn bemanning;
+&mdash; weer of geen weer.<span id="p.58" class="blznr"></span> zij sprak als haar wensch uit, dat de tocht
+buitengaats zou plaats hebben. En zoo ging dit officieele
+koninklijke bezoek dan ook door.</p>
+
+<a id="20_olie-jassen"></a>
+<div style="text-align:center">
+<img src="images/20_olie-jassen.jpg" alt="{Illustratie: 20_olie-jassen.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>Omdat dit het éérste bezoek was, dat onze Koningin aan boord van een
+der Nederlandsche oorlogsschepen zou brengen, was ik daar een boord
+genoodigd. Met nog een anderen journalist. Als goede kameraden en
+vrienden hadden we op onze manier krijgsraad gehouden. En daarna
+hadden we den commandant van het oorlogsschip onze<span id="p.59" class="blznr"></span> bezwaren kenbaar
+gemaakt. Niet dat wij er tegenop zagen, bij zulk stormweer den tocht
+naar buiten mee te maken &mdash; als immers de Koningin het goede
+voorbeeld gaf! &mdash; maar we voelden ons eenigszins belachelijk, nu we
+daar aan boord zouden hebben te verschijnen, gekleed volgens de
+hof-etiquette, namelijk in de zeer weinig zeemansachtige dracht van
+rok-witte-das en hoogen hoed!</p>
+
+<p>De commandant, een wijs man, wist aanstonds raad. Hij liet ons in
+olie-jassen steken, verschafte ons zuidwesters, zoodat we er
+waarlijk <span class="expand_spacing">eenigszins</span> als loodsen uitzagen. Aldus waren we ook beter
+bestand tegen het grimmige weer, dat van alle kanten ons
+pantserschip besprong, toen het den boeg buitengaats stak. Aldus
+ontkwamen we ook tevens aan de anders ongetwijfeld ons deel zijnde
+belachelijkheid van hooggehoede landrotten aan boord van een
+oorlogschip, dat den koninklijken standaard laat wapperen!</p>
+
+<p>
+Dadelijk buiten de Vlissingsche haven begon het oorlogschip te
+slingeren en te stampen, dat het een lust was. De hooge bezoekster
+had zich zoolang in de commandantskajuit begeven, ten<span class="hyphen"></span><span id="p.60" class="blznr"></span>einde pas
+later aan dek te verschijnen, wanneer het schip buiten zou zijn.</p>
+<br>
+<p>
+Ik wil jullie wel vertellen, hoe ik mij dien tusschentijd nuttig
+maakte, door dit oorlogschip eens wat beter te bekijken. Er waren
+eenige der zeeofficieren, zich dadelijk beschikbaar stellende, om
+aan mijn nieuwsgierigheid te voldoen.</p>
+
+<p>En als ik daarvan voor jullie hier iets over vertel, dan is dit
+minder om te vertellen van al de oorlogstoerustingen, welke aan
+boord van een groot oorlogschip natuurlijk onmisbaar zijn, dan wel
+om jullie aandacht te vestigen op eenige bizonderheden, wat betreft
+de behandeling van dit schip, zijn besturing, commando- en
+communicatiemiddelen, waardoor zoo'n oorlogsbodem zooveel afwijkt
+van schepen der handelsvloot.</p>
+
+<p>Daar is al dadelijk de zware commandotoren, waarvan het bovenste
+gedeelte gepantserd is, en dat zich hoog boven het dek verheft,
+alsof hij het geheele schip beheerschen wil. In het gevecht is in
+dezen toren de plaats van den commandant van het schip; van hieruit
+overziet hij den strijd, hier verneemt hij de resultaten van het
+geschutvuur<span id="p.61" class="blznr"></span> op den vijand, zendt zijn bevelen uit naar de
+batterij- en machinekamers, bepaalt zijn koers en regelt de vaart.</p>
+
+<p>In deze kleine ruimte wordt hij terzijde gestaan voor de bediening
+der spreekbuizen, sein-inrichtingen, het roer en somtijds nog de
+richt-middelen der torpedo-lanceer-inrichtingen, door twee of drie
+officieren, den roerganger en een of twee man. Het uitzicht naar
+buiten wordt verleend door een spleet tusschen den torenwal en een
+opschroefbare torenkap. De afstand tot den vijand, van af
+uitkijk-bordessen met afstandmeters bepaald, en de verbetering
+&mdash; zoo noodig! &mdash; in verband met de, uit een observatiepost in den
+mast waargenomen aanslagen der weggeschoten granaten, dit alles
+wordt naar een algemeen seinstation onder in het schip overgeseind.
+Ook worden hierheen de bevelen gemeld, op welk doel gevuurd moet
+worden en met welk soort munitie.</p>
+
+<p>Dit alles liet ik me met de grootste belangstelling uitleggen. Welk
+een monster is toch zoo'n gepantserde oorlogsbodem!</p>
+
+<p>Maar hoewel onze vaart met dit zwaar-gewapend vaartuig stormachtig
+was, zoodat het oorlog<span class="hyphen"></span><span id="p.62" class="blznr"></span>schip steigerde op de grauwe, schuim-gekopte
+golven, &mdash; toch was de tocht een vreedzame. Ons oorlogschip trok,
+God-zij-dank! niet ten oorlog uit. Wij hadden de Koningin aan boord
+voor een vredelievende inspectie!</p>
+
+<p>En terwijl de bezoekster nog in de tot statievertrek ingerichte
+commandants-kajuit vertoefde, ging ik met mijn hulpvaardige
+geleiders het verdere schip rond. Ze lieten me alles zien, waarin ik
+als onbevaren, niet-militaire leek slechts belang kon stellen. En
+dat was veel, &mdash; zooals je wel kunt begrijpen. Wie van jullie had
+daar niet in mijn plaats aan boord willen zijn!</p>
+
+<p>Zoo zag ik het bovengenoemde seinstation, geplaatst beneden in het
+schip, evenals de sein- en communicatiemiddelen, onder de waterlijn
+van het schip gelegen, en dus beschut voor 's vijands vuur. Daar
+waren te vinden de stuurinrichtingen, de spreekbuizen en schellen,
+kompassen en verschillende telefoon-aansluitingen met de batterijen
+en machinekamer.</p>
+
+<p>Daar aanschouwde ik den ziekenboeg, met de daarachter gelegen
+operatie-kamer; verder de volks-logiezen, de tafels en banken in het
+mid<span class="hyphen"></span><span id="p.63" class="blznr"></span>den geplaatst, de kisten tegen boord, de kastjes tegen den
+muur, met het eetgerei van Janmaat daarin; de hangmatten netjes
+opgetuigd, ter eere van het deftig bezoek aan boord.</p>
+
+<a id="21_oorlogschip"></a>
+<div style="text-align:center">
+<img src="images/21_oorlogschip.jpg" alt="{Illustratie: 21_oorlogschip.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>En nu gingen we langs de batterijen, voorbij de groote vuurmonden,
+door de munitiekamers, &mdash; kortom, alles wat tot een modern
+oorlogschip behoort, en waardoor zoo'n stalen oorlogsbodem in staat
+moet zijn, een vijandelijken aanval te doorstaan, en, als het moet,
+ook zelf de kanonnen af te vuren, teneinde de eer onzer
+Nederlandsche vlag hoog te houden.<span id="p.64" class="blznr"></span></p>
+
+<p>Daar hoorde ik boven aan dek het joelen der matrozen!</p>
+
+<p>Ik spoedde me naar boven.</p>
+
+<p>Even had ik dus een blik mogen slaan aan boord van een onzer groote
+oorlogschepen, een vluchtigen indruk opgedaan van het scheepsleven
+aan boord. Misschien kon ik me alles nu beter voorstellen, wanneer
+later gesproken werd van de daaraan verbonden harde ontberingen;
+maar ook zou ik me duidelijker kunnen voorstellen, wanneer er sprake
+zou zijn van al de vele aantrekkelijkheden, welke het leven aan
+boord van een oorlogschip kenmerken.</p>
+
+<p>Prachtige kerels! dacht ik.</p>
+
+<p>Dat vrije gevoel van den zeeman, zich losvoelend van het beklemmende
+steedsche, van het alledaagsche, van het gewone gedoe aan land; een
+vrije kerel midden op den oceaan, aan alle kanten omringd door een
+oneindige watermassa, boven zich het onmetelijke hemelruim.</p>
+
+<p>Hoe leeren ze aan boord van zoo'n oorlogsschip de moeilijkheden
+overwinnen; hoe gaan ze hier op elkaar vertrouwen; hoe worden hier
+de karakters gevormd en gestaald;<span id="p.65" class="blznr"></span> hoe leert men elkaar over-en-weer
+waardeeren!</p>
+<br>
+<p>
+Toen ik aan dek kwam, bleek de storm nog kwaadaardiger te zijn gaan
+spoken.</p>
+
+<a id="22_koningin"></a>
+<div style="text-align:center">
+<img src="images/22_koningin.jpg" alt="{Illustratie: 22_koningin.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>Telkens spatten de zware zeeën tegen de scheepswanden; en dan
+striemde het water met driftige slierten, als zweepslagen zoo
+scherp, over het dek, dat glom van het overstroomende water.<span id="p.66" class="blznr"></span></p>
+
+<p>Maar daarop lette ik niet. Ik wilde mijn aandacht geven aan iets
+anders dan aan het woeste geweld van den storm. Ik stond
+weggescholen, terzijde van de commandobrug, gehuld in m'n oliejas,
+den zuidwester stevig om den kin gebonden.</p>
+
+<p>De Koningin was aan dek verschenen; zij had haar verlangen te kennen
+gegeven, het manoeuvreeren van het oorlogsschip, staande naast den
+kapitein, te volgen. En ik was heel nieuwsgierig, hoe onze Koningin
+zich daar staande zou houden op de commando-brug van het
+zwaar-slingerende schip.</p>
+
+<p>Daar zag ik nu boven op de commando-brug, in den driesten wind en
+het gestriem der regenbuien, terwijl telkens de driftige golven zich
+te pletter kwamen beuken tegen ons bakboord, &mdash; daar zag ik omhoog
+het kleine figuurtje eener jonge vrouw staan, de Koningin. Zij was
+gehuld in een eenvoudig grijzen regenmantel; met de eene hand hield
+ze den hoed vast, met de andere klemde zij den mantel samen, omdat
+deze telkens bol opwoei in den rukkenden stormwind.</p>
+
+<p>Op de reede lagen enkele onzer oorlogssche<span class="hyphen"></span><span id="p.67" class="blznr"></span>pen, op de wilde zee te
+hobbelen, om hun Koningin met vlagsein en kanon-gebulder het saluut
+te brengen. Voor elk dezer bodems had de Koningin haar groet; van de
+hooge brug van ons schip boog ze telkens even, een bevallige,
+koninklijke nijging voor elk donderend saluut, voor elken dalenden
+standaard. Zij bleef rustig staan in den storm.</p>
+
+<p>En als dan de revue was afgeloopen, en de Schout-bij-nacht met
+oprechte woorden van bewondering de Koningin toesprak, om haar hulde
+te brengen namens de Nederlandsche Marine, haar dankend voor haar
+bewijs van belangstelling, waardoor de banden nog meer versterkt
+waren, welke onze marine verbonden met Hare Majesteit, &mdash; toen
+antwoordde zij eenvoudig en kalm met een: "Ik dank u voor de
+gevoelens, die u vertolkt namens mijne marine."</p>
+
+<p>Op dit "m<span class="expand_spacing">ijn</span>e" werd, naar het mij voorkwam, even door onze
+Koningin de klemtoon gelegd, zooals zij dit weet te doen, wanneer
+zij zoo zuiver onze Nederlandsche taal uitspreekt.</p>
+
+<p>En ik, &mdash; als toeschouwer tegenwoordig geweest bij deze eerste
+kennismaking van de Koningin met de Zee, &mdash; ik heb na dèzen dag
+nooit vergeten,<span id="p.68" class="blznr"></span> hoe zij daar, op de commando-brug staande van haar
+oorlogsbodem, onbewogen in de felle stormslagen, zich dit recht
+verworven had.</p>
+
+<br>
+<br>
+<br>
+<br>
+<span id="p.69" class="blznr"></span><a id="chapter07"></a>
+<div style="text-align:center">
+  <span class="hiddenText">'n Tochtje met/de nieuwe Reddingboot {Illustratie}</span>
+  <img src="images/23_Hoofdstuk_Reddingboot.jpg" alt="[Illustratie: 'n Tochtje met/de nieuwe Reddingboot]" style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<p>Ik wil jullie hier iets vertellen over de manier, waarop in ons land
+het reddingwezen ter zee geregeld is.</p>
+
+<p>Waarlijk niet een van de minst belangrijke onderdeelen van onze
+vaderlandsche zeevaart, jongens!</p>
+
+<p>In Nederland bestaan er twee vereenigingen, welke er haar
+afzonderlijk werk van maken, zorg te dragen, dat er bij storm aan
+onze kwade kust en bij het verkeeren van schepen in nood, hetzij
+ergens op het strand, dan wel bij een der vele brokkelige
+insnijdingen in onze kustlijn van rivier of binnenzeeën, dadelijk
+pogingen in het werk kunnen worden gesteld, om een schipbreuk te
+voorkomen, en zoo zulk een ramp onherstelbaar<span id="p.70" class="blznr"></span> is, tenminste de
+opvarenden veilig en wel aan land te brengen.</p>
+
+<p>Hier zijn twee namen, die elke Nederlandsche jongen uit het hoofd
+moet kennen: de "N<span class="expand_spacing">oord- en Zuid-Hollandsche Redding Maatschappi</span>j",
+gevestigd te Amsterdam, en de "Z<span class="expand_spacing">uid-Hollandsche Maatschappij tot
+Redding van Schipbreukelinge</span>n", waarvan de zetel te Rotterdam is te
+vinden.</p>
+
+<p>Over de heldhaftige daden van de eigenlijke redders hebben jullie in
+een vorig hoofdstuk al een afzonderlijk verhaal gelezen, namelijk
+dat van den Levensredder uit Den Helder, "opa" Rijkers, die goed
+geteld 36 reddingen en 471 geredden op z'n boekje heeft staan!</p>
+
+<p>Maar hier wilde ik jullie het een en ander vertellen over de manier,
+waarop een van de nieuwe reddingbooten dezer maatschappijen haar
+eerste stormreis volbracht. En daaraan moet ik wel laten voorafgaan
+een beschrijving van de inrichting dezer redding-maatschappijen,
+&mdash; iets wat jullie om den drommel niet mogen overslaan!</p>
+
+<br>
+<p>Het was bijna honderd jaar geleden, dat aan<span id="p.71" class="blznr"></span> de kust bij Huisduinen
+een scheepsramp plaats greep, die de menschen zoo deed ontstellen en
+hen zóózeer overtuigde, dat onze reddingsmiddelen geheel onvoldoende
+waren, dat men in het jaar 1824 besloot de handen ineen te slaan en
+het reddingwezen in Nederland behoorlijk te regelen. In dat jaar
+werden toen beide maatschappijen tegelijk gesticht; de een zetelde
+te Amsterdam, de ander te Rotterdam, beide het werk aldus
+verdeelende, dat de eene maatschappij zich zou belasten met de
+kustbewaking langs den noordkant, en de tweede met de verzorging van
+het reddingwezen langs de zuidelijke kusten van ons land.</p>
+
+<a id="24_kust-stations"></a>
+<div style="text-align:center">
+<img src="images/24_kust-stations.jpg" alt="{Illustratie: 24_kust-stations.jpg}" style="float:right; padding:5px; width:60%; height:auto; max-width:800px;">
+</div>
+
+<p>Beide maatschappijen richtten daarop een aantal kust-stations op,
+voorzien van het noodige reddingmateriaal, hetwelk bij voorkomende
+gevallen, onder deskundige leiding, ter beschikking van onze stoere
+kustbewoners gesteld kon worden, om een poging te wagen, de in
+doodsnood verkee<span class="hyphen"></span><span id="p.72" class="blznr"></span>rende medemenschen op zee ter hulp te snellen.
+Geregeld werden oefeningen gehouden met booten, schiet-toestellen om
+lijnen over te brengen tusschen het schip in gevaar en de
+reddingboot of de kust; de daartoe beschikbaar gestelde redders
+werden ook geoefend in het bijbrengen van drenkelingen. Kortom, het
+geheele moeilijke reddingwerk werd zoo goed mogelijk geregeld, om
+steeds gereed te zijn, wanneer daarginds in de dolle, witte branding
+een schip in gevaar verkeert.</p>
+
+<p>Het aantal schipbreukelingen, reeds gered dank zij de middelen der
+beide maatschappijen, bedraagt niet minder dan 7000
+menschenlevens...! Je ziet dus, dat dit nog eens de moeite waard mag
+heeten.</p>
+
+<p>Willen jullie ook weten, waar deze stations langs onze kust te
+vinden zijn?</p>
+
+<p>De "Noord- en Zuid-Hollandsche Redding-Maatschappij" heeft de hare
+te Rottum, Schiermonnikoog, Ameland, Terschelling, Vlieland, Texel,
+Nieuwediep, Callantsoog, Petten, Egmond, Wijk-aan-Zee, IJmuiden,
+Zandvoort, Noordwijk, Katwijk, Moddergat, Harlingen, Gaast en Hinde<span class="hyphen"></span><span id="p.73" class="blznr"></span>
+loopen. Tezamen beschikken deze "stations" over 34
+redding-vaartuigen, waarvan 2 motor-reddingbooten en 20
+lijnwerp-toestellen.</p>
+
+<p>De "Zuid-Hollandsche Maatschappij tot Redding van Schipbreukelingen"
+heeft "stations" te Ter-heijde, 's Gravenzande, Hoek-van-Holland,
+Brielle, Hellevoetsluis, Oudorp, Brouwershaven, Burgsluis,
+West-Kapelle, Vlissingen en Sluis aan de Wielingen. Het materiaal
+bestaat uit 16 reddingvaartuigen, waarvan 2 motor-reddingbooten en 2
+stoom-reddingbooten, en 10 lijnwerp-toestellen.</p>
+
+<a id="25_wagen"></a>
+<div style="text-align:center">
+<img src="images/25_wagen.jpg" alt="{Illustratie: 25_wagen.jpg}" style="width:95%; height:auto; max-width:800px;">
+</div>
+
+<p>De reddingbooten, welke niet met behulp van een stoommachine of
+motor worden voortbewogen &mdash; natuurlijk zijn deze laatste de beste
+&mdash; worden voortbewogen door riemen en zeilen; ter<span class="hyphen"></span><span id="p.74" class="blznr"></span>wijl ze nog
+onder-verdeeld kunnen worden in zelfrichtende- en niet-zelfrichtende
+booten.</p>
+
+<p>De eerste soort booten worden meestal gevonden op plaatsen, waar het
+reddingstation gelegen is aan een haven, zoodat de reddingboot langs
+een helling in de haven kan worden neergelaten. De
+<span id="cor0001" class="corrected" title="[Original text: niet-zelf-richtende reddingboot]">niet-zelfrichtende reddingboot</span> is meer een strandboot en moet met
+behulp van een wagen over het strand naar de plaats worden gereden,
+waar de redders zich het dichtst bij de schipbreuk bevinden.</p>
+<br>
+<p>
+Eer ik jullie iets over zoo'n redding-vaart zelve vertel, moet
+jullie me nog even je aandacht schenken, om jullie te beschrijven,
+hoe het meest voorkomende type reddingboot, dus de strandboot, er
+wel uitziet.
+
+De boot is voorzien van een dek, zooals alle reddingvaartuigen in
+Nederland er een bezitten; en hieronder bevinden zich 8
+water-ontlastbuizen, welke dienen om het overstroomende water weer
+dadelijk kwijt te raken. De ruimte onder het dek is zooveel mogelijk
+opgevuld met koperen luchtkisten. Ook vin' je er een
+water-ballasttank in;<span id="p.75" class="blznr"></span> verder een middenzwaard voor het evenwicht der
+boot; en natuurlijk het noodige zeiltuig.
+
+De eigenlijke inventaris &mdash; de beteekenis van dit woord begrijpen
+jullie wel uit het volgende &mdash; bestaat uit riemen, van eschhout
+vervaardigd, zwemvesten van kapok, een anker en een sleepzak. Deze
+laatste dient, om, bij het landen door een hooge zee, het dwars- en
+omslaan van de reddingboot te verhinderen.</p>
+
+<p>De door een machine voortbewogen reddingbooten worden niet
+voortgestuwd door een schroef; neen, hier wordt het systeem
+toegepast, dat het water met kracht wordt uitgestooten, hetgeen de
+vereischte voortbewegingskracht vormt. De machine brengt namelijk
+een centrifugaalpomp in beweging, die het zeewater door een breede
+buis in het vlak van het vaartuig opzuigt. Deze buis vertakt zich
+weer in buizen, welke naar voren en achteren buitenboord uitmonden.
+Door het water naar achteren te spuiten, beweegt de machine dus de
+boot vooruit; spuit ze het water naar boven, dan beweegt het
+vaartuig zich achteruit. Terwijl men ook, door aan de eene zijde het
+water vooruit en de andere zijde achteruit te doen uit<span class="hyphen"></span><span id="p.76" class="blznr"></span>spuiten, de
+boot kan besturen. Natuurlijk begrijpen jullie wel, dat het een
+groot voordeel oplevert, dat zulke booten niet op een schroef zijn
+aangewezen om vooruit te gaan.</p>
+
+<p>De vaklui beweren echter, dat het aller-beste model voor een
+reddingboot datgene is, waar een motor de voortbewegende kracht
+oplevert voor de machine. Beide maatschappijen hebben er eenige op
+haar voornaamste "stations" ter beschikking.</p>
+<br>
+<p>
+En al is het nu niet bepaald gisteren gebeurd, toch wil ik jullie
+hier iets vertellen over een dezer motor-reddingbooten, en hoe ze in
+dienst werd gesteld op een stevigen stormdag in de kwaje maand
+November.</p>
+
+<p>De stormwind gierde langs het zwerk, zwaar weer uit het noordwesten,
+en een zee zoo ruw, als je maar wenschen kon voor een proeftocht met
+een nieuwe reddingboot, die het bewijs had te leveren wat ze waard
+was!</p>
+
+<p>Drie dagen achtereen duurde de proefvaart. Maar de nieuwe motorboot,
+"De Brandaris" geheeten, naar den geweldigen vuurtoren op
+Terschelling, ranselde het ruige water, en met haar<span id="p.77" class="blznr"></span> sterken kop
+rameide ze de wilde waterbergen, die haar woest besprongen.</p>
+
+<p>Al dadelijk buiten de Oranje-sluizen, de rumoerige Zuider-Zee op,
+liep de boot z'n 8 mijl per uur, en dat tegen het tij in. 's Morgens
+acht uur buiten en 's middags 4 uur al in Terschelling binnen. Dat
+is 72 zee-mijlen. Niet kwaad voor 'n begin!</p>
+
+<p>Al dadelijk kon de boot ook laten zien, hoe ze zich hield in het
+Stortemelkgat, waar 'n zee stond van wat-ben-je-me! Dat ging best.
+Den volgenden dag blies de wind nog wat harder. De zeelui schatten
+de kracht van den wind in meters per sekonde; het woei uit het kwade
+noordwesten met een vaart van 6 tot 7 meter. 'n Holle zee. Ja, dat
+was wel wat de nieuwe reddingboot begeerde, om haar proef af te
+leggen!</p>
+
+<p>De schipper van "De Brandaris" koerste door het Boomkensdiep tot de
+vaarton aan den Engelschen Hoek, naar de gevaarlijke Zandplaat, waar
+zoovele schepen vast raken in den storm; en dan door den ingang van
+het Thomas Smit Gat. Het water roerde zich ongemakkelijk. Niet meer
+dan 14 voet water, &mdash; dat is niet veel als de zee hol staat!<span id="p.78" class="blznr"></span></p>
+
+<a id="26_zeerobben"></a>
+<div style="text-align:center">
+<img src="images/26_zeerobben.jpg" alt="{Illustratie: 26_zeerobben.jpg}" style="float:left; padding:5px; width:50%; height:auto; max-width:800px;">
+</div>
+
+<p>Maar hij dee 't! Aan den wal stonden al die zeerobben uit te kijken.
+Dat zijn daar allemaal zoowat vaklui. Als er bij de eilanden boven
+Den Helder 'n schip in nood zit, staan ze al bij bosjes op hun kans
+te loeren, om mee te helpen "gnusjen", &mdash; zoo noemen ze daar het
+reddingwerk met hun eigen woord.</p>
+
+<p>Zoo heel veel vertrouwen hadden ze aan den wal niet, toen die
+"nieuwe motoor" de wilde zee op ging...</p>
+
+<p>Maar na haar eersten proeftocht door stug weer, met een stormwind
+uit den leelijken hoek, kregen ze er wat meer eerbied voor!</p>
+
+<p>De volgende dag was echter 'n nog smeriger dag. "Zooveel te beter",
+dacht het volk van "De Brandaris", &mdash; "nou kunnen we eens laten zien
+wat onze boot precies kan in den storm!"</p>
+
+<p>D'r stond buiten een hooge zee, en de wind was pal noord geloopen.
+Weer het Stortemelk<span class="hyphen"></span><span id="p.79" class="blznr"></span>gat in, tot de stompe ton daar, die het nummer 3
+draagt; toen bij ton nummer 5, bij het Schuitengat, naar de
+buitengronden. Br! zooals 't er spookte!... Maar toch
+heen-en-thuis-terug, een afstand van 16 zeemijl, in zoowat twee uur.
+Mooi zoo!</p>
+
+<p>Toen ging de wind minderen. Maar de schipper kende dat wel. Buiten
+was het heele water "dicht" en vol branding. Terug, dat ging niet;
+en dwars door zee leek al te gevaarlijk, zelfs voor een
+reddingboot...</p>
+
+<p>En daar wil het geluk, dat gemeld wordt, hoe er buiten een schip zit
+vastgeloopen. Van Ameland was het bericht geseind, en vijf
+sleepbooten stoomden er op af, om 'n handje te helpen. Later bleek,
+dat het schip zich zelf had kunnen vrij maken; maar dat wisten de
+kapiteins van de sleepbooten toen nog niet. En ook de schipper van
+"De Brandaris" wist dat evenmin. Zoo werd 't dus een soort
+wedstrijd, wie er het eerst bij zou zijn.</p>
+
+<p>Nu was het aardige van het geval, dat de sleepbooten, die daar toch
+anders al wat zware zee gewend waren, met het nijdige weer er de
+brui<span id="p.80" class="blznr"></span> aan gaven, den kortsten weg te nemen; dan hadden ze door
+dat gemeene Thomas Smit Gat moeten sturen. Maar de reddingboot koos
+den kortsten weg, dwars er door. Terwijl de vijf andere buiten-om
+stoomden.</p>
+
+<p>Ze konden de kleine reddingboot zien werken in de zware branding.</p>
+
+<p>En toen dan "De Brandaris" er goed door kwam, had ie 't ook voor
+goed gewonnen bij het Terschellingsche zeevolk. Daar gingen de
+petten en mutsen af. En joelen en wuiven naar dat kleine, sterke,
+kranige ding!</p>
+
+<p>Zoo was zijn proefvaart, het pleziertochtje van de nieuwe
+motor-reddingboot.</p>
+
+<p>Later heeft ze wel bewezen wàt ze inderdaad waard was, als ze er
+ècht uit moest, op 'n schipbreuk af, om ginds menschen te redden van
+den dood!<span id="p.81" class="blznr"></span></p>
+
+<br>
+<br>
+<br>
+<br>
+<a id="chapter08"></a>
+<div style="text-align:center">
+  <span class="hiddenText">Op een "Reuze"-Schip {Illustratie}</span>
+  <img src="images/27.Hoofdstuk_Reuze-schip.jpg" alt='[Illustratie: Op een "Reuze"-Schip]' style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<p>Wil ik jullie eens een beschrijving trachten te geven van een van de
+grootste schepen, die de wereld-zeeën bevaren?</p>
+
+<p>Ik noem er den naam niet van. Helaas! wie weet, of er vandaag of
+morgen zoo'n prachtige drijvende stad niet door den een of anderen
+gluiperigen onderzeeër in den grond wordt geboord?</p>
+
+<p>Het Nederlandsche schip, dat ik op het oog heb, en waarop ik een
+reis over den Atlantischen Oceaan heb gemaakt, van de Amerikaansche
+hoofdstad New-York naar Europa, dit schip was zóó groot, dat de
+week, welke ik er aan boord doorbracht, veel te weinig tijd was, om
+het geheele vaartuig te leeren kennen.<span id="p.82" class="blznr"></span></p>
+
+<p>De afmetingen van dien kolos waren eventjes 250 meter lengte, met
+een diepgang van 10 meter; en de inhoud was tusschen de 30.000 en
+40.000 scheepstonnen.</p>
+
+<p>Het aantal menschen dat de reis tegelijk met me maakte, bedroeg
+ongeveer 5000 personen. Ik heb ze niet nauwkeurig geteld. Ze waren
+over het geheele schip verdeeld, &mdash; van de commando-brug, tot diep
+onderin de laagste scheepsruimten, waar de machine-vuren worden
+gestookt.</p>
+
+<p>Om het schip voort te bewegen waren machines noodig, en deze werden
+aan den gang gehouden door electriciteit en stoom, waarvoor dag en
+nacht een aantal geweldige vuren moesten worden gestookt. Om de
+benoodigde voorraad steenkool aan boord te laden, waren noodig
+geweest 30 treinen, elk bestaande uit 28 tien-ton-wagens, geladen
+met steenkool.</p>
+
+<p>Teneinde al die menschen gedurende de reis te voeden, had men aan
+boord als proviand meegenomen een hoeveelheid vleesch, welke
+afkomstig was van 50 koeien, 150 schapen, evenveel varkens, alles
+geslacht in halve of kwart-beesten. Deze vleesch-voorraden waren in
+de koelkamers opge<span class="hyphen"></span><span id="p.83" class="blznr"></span>hangen, opdat gedurende de geheele reis &mdash; zelfs
+voor het geval, dat zoo'n reis langer dan eenige weken mocht duren
+&mdash; steeds versch vleesch op tafel zou zijn. Verder bestond het
+proviand uit onnoemelijke hoeveelheden boter, kaas, vruchten (6000
+kilo), meel (40.000 kilo), thee, koffie, wijnen, &mdash; en dit alles in
+reusachtige voorraden.</p>
+
+<p>Om het schip te besturen, de machines te bedienen, de vuren te
+stoken, de dekken en kajuiten schoon te houden, om al die passagiers
+van 1ste, 2de en 3de klasse te bedienen, waren er meer dan 1000 man
+personeel noodig.</p>
+
+<a id="28_gezagvoerder"></a>
+<div style="text-align:center">
+<img src="images/28_gezagvoerder.jpg" alt="{Illustratie: 28_gezagvoerder.jpg}" style="float:right; padding:5px; width:40%; height:auto; max-width:800px;">
+</div>
+
+<p>Eerst natuurlijk het hoofd van alles &mdash; zoowel de baas over het
+schip, als over de bemanning en de passagiers &mdash; de gezagvoerder,
+terzijde gestaan door een tiental hoofdofficieren, alle voorzien van
+het kapiteins-diploma; vervolgens 350 man machine-personeel, staande
+onder toezicht van 30 gediplomeerde machi<span class="hyphen"></span><span id="p.84" class="blznr"></span>nisten-officieren.
+Teneinde het eten behoorlijk en lekker klaar te maken, waren er 60
+koks werkzaam; terwijl een 500 bedienden, ingedeeld volgens
+verschillende rangen, en aan boord aangeduid als "hofmeesters",
+zoowel mannelijke als vrouwelijke, voor de bediening der passagiers
+hadden te zorgen.</p>
+
+<p>Dan mag ik de aanwezigheid niet vergeten van eenige doktoren, van
+drie telegrafisten voor de <span id="cor0003" class="corrected" title="[Original text: bediening der toestelllen]">bediening der toestellen</span> der draadlooze
+telegrafie; en om dit alles te regelen een viertal
+"administrateurs". Een afzonderlijk orkest telde twintig uitnemende
+beroeps-muzikanten. Er waren afzonderlijke bedienden voor de
+telefoon-toestellen, welke in elke kajuit en in elk slaapvertrek
+waren aangebracht. Ook bevonden zich eenige drukkers aan boord, want
+dagelijks verscheen een keurig verzorgde scheeps-krant, met allerlei
+nieuws van de wereld gevuld, en met aardige prentjes van de
+voornaamste gebeurtenissen, welke gedurende de reis aan boord plaats
+grepen.</p>
+
+<p>En eindelijk de passagiers, die van Amerika naar Europa moesten
+worden overgebracht.</p>
+
+<p>Onze passagiers-lijst eerste-klas telde 700 na<span class="hyphen"></span><span id="p.85" class="blznr"></span>men; die van de
+tweede klas 600, die der derde klas 2000. Van deze laatsten waren de
+meesten landverhuizers, die van de Nieuwe Wereld naar de Oude terug
+wenschten te keeren, nadat ze eenige jaren geleden waarschijnlijk
+dezelfde reis in omgekeerde richting hadden afgelegd.</p>
+
+<p>Alles tezamen ongeveer 4000 passagiers.</p>
+<br>
+<p>
+Wat van de inrichting van het schip zelf te vertellen?... Een
+levend wonder!</p>
+
+<p>De mooiste kamers aan boord waren geen zier minder smaakvol
+ingericht dan de logeerkamers in onze prachtigste hôtels. Bij de
+eerste klas-kamers behoorde een afzonderlijke badkamer; bij sommige
+afzonderlijke salonnetjes. De groote salons, de eetzalen en
+zitkamers, de muziekzaal en de bibliotheek waren elk in een
+afzonderlijken bouwstijl ingericht. Er was een aparte
+gymnastiekzaal, met alle mogelijke toestellen voor gymnastiek en
+verschillende soorten sport. Wilde je zwemmen, dan was er een
+Romeinsch bad van 68 voet lengte en 41 voet breedte, zoowel met
+watervalletjes als water-ververschers.</p>
+
+<p>Zoo leefde ik daar in één doorloopende verba<span class="hyphen"></span><span id="p.86" class="blznr"></span>zing, de zeereis
+makende aan boord van zoo'n modern reuzen-schip!</p>
+
+<p>Waarin ik het meeste belang stelde, was echter wel de vraag, hoe het
+toch mogelijk was, zoo'n geweldig drijvend gevaarte niet slechts aan
+den gang te brengen en aan den gang te houden, &mdash; doch hoe het
+wenschelijk vernuft er in geslaagd was, machines te vervaardigen,
+krachtig genoeg, om dit alles met een sneltreinvaart dwars over den
+Atlantischen Oceaan te stuwen?</p>
+
+<p>Want zulke groote schepen varen tegenwoordig met een snelheid van
+500 zeemijlen per etmaal. Dus zien ze kans, in ongeveer tien dagen
+den afstand af te leggen tusschen New-York en onze Europeesche
+havens. Kijk maar eens na op jullie atlassen, wat dit beteekent!</p>
+
+<p>Gedurende mijn reis waren er dan zelfs nog lastige en overhaastige
+passagiers, mopperende, omdat het hun nog niet snel genoeg naar den
+zin ging! Nu moet ik er jullie bij zeggen, dat er inderdaad een
+staking onder de stokers was uitgebroken, kort vóór het schip van
+Amerika zou vertrekken. De directie had toen ander stokerspersoneel
+in dienst moeten nemen, en die men<span class="hyphen"></span><span id="p.87" class="blznr"></span>schen waren niet zoo goed voor
+hun nieuwe taak berekend als de anderen. Hieruit leeren jullie, hoe
+zelfs het stokersvak een handwerk is, dat vakkennis vereischt. In
+elk geval was dit oorzaak, dat ons schip iets minder snel liep, dan
+zijn gewone snelheid te halen, waartoe het anders in staat zou zijn
+geweest. En zoo scheelde het ons zelfs een halven dag op den
+overtocht van het eene werelddeel naar het andere.</p>
+
+<p>Jullie zouden waarschijnlijk even verbaasd als ik geweest zijn, dat
+zoo iets onbelangrijks, als het steenkolen-bijgooien op de
+scheepsvuren, zulk een groot schip zooveel in snelheid kan doen
+schelen. En toen ik tegenover een van de machinekamer-officieren
+hierover mijn verwondering uitsprak, was hij wel zoo vriendelijk,
+mij uit te noodigen, met hem mee omlaag te dalen naar de
+stookplaatsen, om me eens te laten zien, wat het wel te beteekenen
+heeft, een modern schip te <span class="expand_spacing">stoken</span>.</p>
+<br>
+<p>
+'t Was een tocht als ter hellevaart! Het schip zelf is groot en
+mooi, met zijn breede gangen en ruime dekken, de salons en trappen,
+met eetzalen en halls; overal de weeldeversiering en de zor<span class="hyphen"></span><span id="p.88" class="blznr"></span>gelijke
+bediening, zoodat je het idée "schip" al dadelijk kwijt bent, en je
+je in een weelderige buitenplaats gelogeerd denkt. Maar daar voert
+de scheepsingenieur me de lange gangen door, de trappen af, veel
+lager dan de passagiersverdiepingen. Door ijzeren deuren, die
+middenin het schip een soort van gepantserde gevangenis afsluiten,
+kom je in de machineruimten. Onder je voeten, door een vloer van
+ijzeren stangen, zie je het snelle geflits van blinkende dingen, die
+met lange zuchtende armslagen omlaag en omhoog springen; in diepe
+ronde deksels kruipen zij weg, en bliksemsnel schieten ze omhoog,
+alsof het een woeste uitval naar je is. Steile gladde trapjes voeren
+nog dieper. En nu gaat de verdere tocht langs vreeslijke raderen,
+die geluidloos rondsuizen, een blinkenden cirkel met hun wentelende
+glimspaken beschrijvend. Overal drijven lange stangen zware metalen
+stoothamers vooruit; hun gladde geluidloosheid, met niets dan het
+zachte slurpende geluid van de vette olie, die overal neerdruipt,
+geeft er iets geheimzinnig-angstigs aan. Daar is dan een laag
+ijzeren deurtje, waar je bukkend door moet kruipen; meteen slaat een
+vette benauwde<span id="p.89" class="blznr"></span> stikkend-zware hitte je tegen. Langs een hoogen,
+zwarten ketelwand, zóó heet, dat je zoover mogelijk terugdeinst
+tegen het ijzeren beschot, moet je nog verder.</p>
+
+<a id="29_kerels"></a>
+<div style="text-align:center">
+<img src="images/29_kerels.jpg" alt="{Illustratie: 29_kerels.jpg}" style="width:90%; height:auto; max-width:800px;">
+</div>
+
+<p>En eindelijk sta je in een schemerlichte, rumoerige ruimte, waar
+vuile kerels, onherkenbaar zwart hun spookgezichten, groote vuile
+plekken op hun naakte lijven, voor de woeste hitte van de ronde open
+haarddeuren werken. Met lange stangen wroeten zij in die vlamkuilen,
+tot een vurige vonkenregen vooruit stuift, en over den vloer
+rondspat. Overal staan groote zwarte hoo<span class="hyphen"></span><span id="p.90" class="blznr"></span>pen steenkool op den grond.
+Zonder rusten scheppen zij, als mijnwerkers onder in de aarde, hun
+schoppen er in, zwaaien schep na schep de steenkool in de blakerende
+brand-muilen. Telkens kleppert met mokerend geluid de haarddeur
+dicht; maar dadelijk rammelt daarnaast weer een andere open. En
+zonder ophouden scheppen de schoppen er het zwarte gruis in.</p>
+
+<p>Hoe vlugger ze werken, hoe dieper ze elken schopvol met steenkool in
+den vuurhaard mikken, hoe handiger ze met hun stangen de gloeihitte
+onder den ketel weten uit te spreiden, des te grooter hitte geven de
+haarden, des te meer stoom leveren de ketels, en des te sneller
+klieft ons schip het water.</p>
+
+<p>Toen ik weer boven op dek kwam, na eerst het morspak uitgetrokken en
+mij van rook, gruis en olie gereinigd te hebben, was er een
+wandelconcert op het open tweede-dek. De muziekkapel speelde een
+vroolijk programma; de passagiers wandelden druk pratend het lange
+dek af. In den rooksalon hadden eenige ondernemende Amerikanen een
+weddingschap aangegaan om vijftig dollar op de vaart van het schip.
+Toen de uitslag bekend<span id="p.91" class="blznr"></span> werd gemaakt, was er <span id="cor0002" class="corrected" title="[Original text: een algemeen gegemopper,]">een algemeen gemopper,</span>
+dat er niet harder gestoomd werd.</p>
+
+<a id="29b_heer"></a>
+<div style="text-align:center">
+<img src="images/29b_heer.jpg" alt="{Illustratie: 29b_heer.jpg}" style="float:right; padding:5px; width:20%; height:auto; max-width:800px;">
+</div>
+
+<p>Een lawaaiïg heer, die met Duitschen tongval Engelsch sprak, schold,
+met z'n sigaar in duur bandje tusschen de tanden, op het geluier van
+die beunhazen beneden in de stookplaatsen, die het schip eenige uren
+zouden doen missen bij aankomst thuis.</p>
+<br>
+<p>
+Wat me niet minder aan boord trof waren m'n medereizigers, de
+derde-klas-passagiers. Ze zijn op het voorschip gehuisvest. Overdag
+leven ze op het dek van dit scheepsgedeelte. Van de hooge
+verschansing, die het promenadedek afsluit, kun je omlaag kijken als
+in een kuil. Daar zie je dan beneden, hoe al die armoe op elkaar
+hokt, en den langen dag maar troosteloos zit uit te staren over de
+groote, zwijgende zee. Het zijn voor het meerendeel
+beklagenswaardige menschen, omdat de meesten landverhuizers zijn,
+die naar hun vaderland in Europa terugkeeren, nadat zij in Amerika
+niet geslaagd zijn om werk te vinden.<span id="p.92" class="blznr"></span></p>
+
+<p>Op de heenreis, naar Amerika, bestond er nog altijd de hoop, die hen
+ophield; ze waren wel arm en mislukt, ook ontmoedigd uit hun
+vaderland vertrokken; doch het nieuwe vaderland liet immers alles
+verwachten met zijn lokkenden naam: Amerika!</p>
+
+<p>Nu zij daar echter ook mislukten, nog meer verarmden, hun laatste
+restje moed verloren hadden, leidt hun laatste tocht hen naar het
+vaderland terug!</p>
+
+<p>Maar dan is ook alle fut en kracht, alle moed er uit. Zoo'n troep
+huiswaarts keerende landverhuizers, ouwe mannen, vermoeide vrouwen,
+onverschillige jonge-kerels, uitgezwakte kinderen daar bij elkaar te
+zien zitten, is het ellendigste wat jullie je bedenken kunt, omdat
+je weet, dat zelfs het laatste schijntje hoop hun ontnomen werd. 't
+Is dan niets anders dan nog een restje menschelijk uitschot, zoodat
+je medelijden om hunnent wille je in opstand brengt tegen al die
+promenade-concerten en de weelde der salons, tegen de smulpartijen
+aan tafel. Maar zelfs wanneer je gevoel zich door hun ellende mocht
+laten verteederen, dan zijn er de zware hekken, welke de
+verschillende<span id="p.93" class="blznr"></span> klassen van elkaar scheiden; en is er ook nog een
+bordje, net als in "Artis", waarop geschreven staat: "het is ten
+strengste verboden, voorwerpen naar de derde-klas-passagiers te
+werpen."</p>
+
+<br>
+<br>
+<br>
+<br>
+<span id="p.94" class="blznr"></span><a id="chapter09"></a>
+<div style="text-align:center">
+  <span class="hiddenText">Stuurstoel-opschriften {Illustratie}</span>
+  <img src="images/30_Hoofdstuk_Stuurstoel-opschriften.jpg" alt='[Illustratie: Stuurstoel-opschriften]' style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>Ik vaar gelijk een held nae veer gelegen kusten,
+      <br>Was het niet om het geld, veel liever zou ik rusten.
+      <br>En blijven op het land en houden mijn gemak
+      <br>En drinken een glas wijn of rook een pijp toebak.
+    </div>
+</div>
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>
+    </div>
+</div>
+  De schipper zeilt in zee, de koopman blijft aan strant,
+  Zoo gaat de koopman voort te waater en te lant.
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div><span id="p.95" class="blznr"></span>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>
+    </div>
+</div>
+  In 't kouwe Groenlant in Straat Davis vangt men vis
+  Daar hondert man aan één genoeg had op den dis.
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>
+    </div>
+</div>
+  Klaas Joosten van der Marken is schipper van dees schuit,
+  Om met Gods zegen te varen, daar zijn wij over uit; 
+  'k Wensch maar een goede vracht, om eerlijk van te leven.
+  Ik hoop de Hemel zal mij die ook altyt geven.
+  Wij varen altyt voort of 't droog is ofte diep;
+  De jager slaat maar deur; de wind zit in de zwiep.
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>De mensch, die seilt sijn coerse wel,
+      <br>Die Godt neemt tot zijn metgezel.
+    </div>
+</div>  
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>Moog Sint Pieters Scheepje hellen,
+      <br>Toch zal 't nooit vergaan,
+      <br>Blijf op God uw hope stellen,
+      <br>Gij zult vast en zeker staan.
+    </div>
+</div>  
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div><span id="p.96" class="blznr"></span>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>Die wil varen en sijn getije niet can gissen,
+      <br>Noch sijn tou can splissen,
+      <br>Noch sijn geit en can bewaren,
+      <br>Die en dient op alle uuren niet te vaeren.
+    </div>
+</div>  
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>Heyl hem, die op Godt vertrout,
+      <br>En op nering schepen bouwt.
+      <br>Maar die een Schip wel bouwen kan,
+      <br>Dat is een Meester Timmerman.
+    </div>
+</div>  
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+      <br>"Door de keel
+      <br>Kan veel!"
+      <br>Sprak kaptein Vanderhoopen,
+      <br>Want hij zag
+      <br>Op een dag,
+      <br>Dat hij zijn driemaster had verzopen.
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<span id="p.97" class="blznr"></span><a id="chapter10"></a>
+<div style="text-align:center">
+  <span class="hiddenText">Als je zeeziek bent {Illustratie}</span>
+  <img src="images/30b_Als_je_zeeziek_bent.jpg" alt='[Illustratie: Als je zeeziek bent]' style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<p>D'r zijn menschen, die al zeeziek worden bij de lucht van een
+botboerkar. Je zou zoo iets <span class="expand_spacing">over</span>gevoeligheid kunnen noemen.</p>
+
+<p>Zóó erg ben ik niet!... Maar toch kan ik slechts weinig zeelucht
+verdragen. Dat is spijtig. En wel omdat ik juist zoo heel veel van
+de zee hou'. Maar niet van de zee-<span class="expand_spacing">ziekte</span>!...</p>
+
+<p>Daar lokt die zee, met altijd weer haar krachtigen golfslag; zee
+tegen, zee van achter, zee aan bakboord, zee aan stuurboord.</p>
+
+<p>Is er prachtiger bewegelijkheid denkbaar?.... want zoo ben ik toch
+ook weer, dat als een zee zònder golfslag en glad ligt, zoo'n
+beweginglooze zee me maar als half ècht voorkomt!</p>
+
+<p>Dus ben ik onverbeterlijk. Telkens wanneer ik tegenover die zee sta,
+bedenk ik weer een tochtje,<span id="p.98" class="blznr"></span> al is het maar 'n spelevaartje van één
+dag, mits ik op dien wijden plas mag.</p>
+
+<p>Maar ook onverbeterlijk ben ik dan, wat m'n zeeziekte betreft. Nog
+geen uur, of...</p>
+
+<p>Maar laat ik jullie vertellen!</p>
+
+<p>Ik herinner me, hoe ik eens een indruk wilde wekken omtrent mijn
+algemeene bevarenheid ter zee. Tegenover me had ik een eenvoudig
+man, die wel àlles had willen gelooven wàt ik hem ook maar zou
+verteld hebben, &mdash; ... slechts dit ééne geloofde hij niet!</p>
+
+<a id="31_eenvoudig"></a>
+<div style="text-align:center">
+<img src="images/31_eenvoudig.jpg" alt="{Illustratie: 31_eenvoudig.jpg}" style="float:left; padding:5px; width:30%; height:auto; max-width:800px;">
+</div>
+
+<p>'t Was schipper Schaap uit Huizen. En toen we samen waren uitgevaren
+op zijn bottertje, van het bijna verzande Zuiderzee-haventje van ons
+Gooische kustplaatsje, wilde ik hem al den eersten avond aan boord,
+onder het maal van roggebrood met gebakken bot, gaan vertellen, dat
+degeen, dien hij als passagier aan boord had, maar niet zoo'n gewone
+landrot was; maar dat ik gevàren had, àlle wereld-zeeën over!</p>
+
+<p>Hij begon er eigenlijk zelf over; want toen hij wat lang moest
+blazen over den rand van zijn<span id="p.99" class="blznr"></span> kommetje koffie, nog te heet om te
+drinken, &mdash; en haast hadden we ook volstrekt niet, omdat ik geteekend
+had voor minstens een week, om het leven van een botvisscher op onze
+Zuider-zee eens op m'n gemak af te kijken, &mdash; toen sprak hij goedig,
+na me zijn ouwe verhalen van bijna zestig jaar varen op dien plas te
+hebben verteld:</p>
+
+<p>"En jij, mejong, dat zel hier wel je eerste vaart zijn op 't zoute
+water, wàt?"</p>
+
+<p>"Nee!" zei ik. Ik houd niet van opsnijden, bij voorkeur niet
+tegenover eenvoudige menschen; maar ik wilde mijzelf op dit
+oogenblik een houding geven. &mdash; "Neen!" herhaalde ik, "schipper
+Schaap, daar zou je je nou net mee vergissen!"</p>
+
+<p>"Hè-je méér zee 'ézien!?" deed hij ongeloovig.</p>
+
+<p>"Meer dan je zou denken," sprak ik, een weinig gewichtiger dan hier
+juist noodig scheen; maar schipper Schaap moest het maar aanstonds
+weten.</p>
+
+<p>"Kom nou!" grinnikte hij nog ongelooviger; hij had een slok koffie
+genomen, spoelde er met bolle wangen z'n mond mee. "Kom nou!",
+spotte hij met zijn glundere oogjes, en hij spoelde den teug in-eens
+naar binnen, "wou jij er 'n ouwe botvisscher tussche neme?"<span id="p.100" class="blznr"></span></p>
+
+<p>Ik gevoelde me een weinig geprikkeld; ik houd ervan, dat menschen,
+die naar me luisteren, me ook gelooven zullen, tenminste, dat ze
+zich gedragen, <span class="expand_spacing">alsof</span> ze me gelooven. Dus sprak ik op een toon, die
+in het lage roefje van de botboot wat gezwollen moet geklonken
+hebben:</p>
+
+<p>"Ik heb zelfs véél gevaren!"</p>
+
+<p>"Hê je waarachtig, mejonge?", vroeg Schaap, weer met dat kleine
+twinkeltje in z'n oogen, wat ik niet kon verdragen. "Laat maar 's
+hoore wàt jij al zoo gevare hèt." Hij keek strak in z'n kommetje,
+waarin de koffie schommelde als een zwarte zee!</p>
+
+<p>Dus begon ik met mijn opsomming:</p>
+
+<p>"De Noordzee; ken jij die soms?"</p>
+
+<p>"Nee," antwoordde schipper Schaap deemoedig, "alleen van hooren
+zeggen; tegeswoordig gaat er veel jong volk op de trawlers mee naar
+buiten. Maar ik ben nooit zoo ver van 'uis 'eweest."</p>
+
+<p>"Meer dan ééns ben ik naar Engeland overgestoken, dan eens van
+Amsterdam uit, dan weer van den Hoek, ook wel over Vlissingen."</p>
+
+<p>"Sjonge! Sjonge!", schudde de ouwe schipper z'n hoofd, "hê-je?"<span id="p.101" class="blznr"></span></p>
+
+<p>Hij spotte nu niet meer, maar aan zijn turen in de koffie-kom meende
+ik toch te merken, dat ik hem nog niet geheel overtuigd had. Ik zou
+hem den vollen laag moeten geven. Ik herinnerde me een zekere
+jeugd-reis naar den Levant.</p>
+
+<p>"Als jongen al heb ik een groote zeereis gemaakt," somde ik op, "het
+Engelsche Kanaal door, de Golf van Biscaye met Kaap Finistère,
+Afrika met den Apenberg, en aan den anderen kant Gibraltar op den
+hoogen rots, de Italiaansche kust langs, dan Griekenland, Turkije,
+Klein-Azië, langs de Afrikaansche noordkust terug..."</p>
+
+<p>Schipper Schaap had zijn koffie leeg-gedronken; hij schudde langzaam
+z'n ouwe hoofd.</p>
+
+<p>"Wat 'n lande, mejong!... En dat wou je allemaal 'evare hebbe?"</p>
+
+<p>Hij was bepaald ergerlijk ongeloovig, die ouwe Zuider-Zee-vaarder.
+Ik ging echter voort, terwijl mijn stem nog altijd gezwollener klonk
+dan mijn bedoeling was:</p>
+
+<p>"Den Atlantischen Oceaan ben ik overgestoken naar Amerika..."</p>
+
+<p>"Heb je dàt water ook al bevaren?" vroeg hij.</p>
+
+<p>Ik vervolgde: "Tusschen Amerika en Azië ligt<span id="p.102" class="blznr"></span> de Stille Oceaan..."</p>
+
+<p>"Sjonge! Sjonge!", schuddebolde Schaap over zijn leege koffie-kom;
+"wat 'n water op de wereld toch! Ben je daar òvèràl 'eweest?"</p>
+
+<p>"Dwars overgestoken van San Francisco naar Yokohama, in 'n dikke
+twee weken, met slechts één etmaal op Hawaï...."</p>
+
+<p>Hij scheen nu toch onder den indruk te komen. Dus vervolgde ik
+triomfantelijk:</p>
+
+<p>"Heb je wel 's gehoord van de Gele Zee, schipper?"</p>
+
+<p>"Is 't water daar geel?", vroeg hij terug.</p>
+
+<p>"Nee," zei ik; "maar de Chineezen en de Japanners wonen daar in de
+buurt, en daarom noemen ze 't er zoo, denk ik."</p>
+
+<p>Schipper Schaap schudde nog altijd zijn ouwen grijzen kop.</p>
+
+<p>"Sjonge, Sjonge!" dee-die; "je vertelt me daar wat 'n wonders!...
+Maar wil <span class="expand_spacing">ik</span> je nou 'rs wat vertelle?"</p>
+
+<p>"Nu?" antwoordde ik, half ongeduldig, half nieuwsgierig wat er zou
+volgen.</p>
+
+<p>"Wel me-jong, ik 'eloof d'r niet één woord van."<span id="p.103" class="blznr"></span></p>
+
+<p>"Wat!... Waarom niet?!"</p>
+
+<p>Hij veegde zijn dunne, spottende lippen droog met den achterkant van
+zijn eeltige hand, sprak rustig:</p>
+
+<a id="31_waarom"></a>
+<div style="text-align:center">
+<img src="images/31_waarom.jpg" alt="{Illustratie: 31_waarom.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>"Dat zal ik zegge, mejong... As jij dat àlles 'ezien 'êt!... <span class="expand_spacing">as</span>
+jij al die groote zeeën van de wereld gevaren zou willen hebbe,
+&mdash; .... wel, dan zou jij hier, op dit ongelukkige plasje water, dat
+ze Zuijer-Zee noeme, d'r niet uitzien als<span id="p.104" class="blznr"></span> 'n grauwe, erwt, die
+'n weeklang in 'n regenton te weeken hèt 'elegen... En nou jij!"</p>
+
+<p>Ik heb op dat oogenblik gedacht aan een humeurigen uitval naar dien
+braven ouwen Schipper Schaap. Maar ik bedacht me, ik beheerschte me;
+ik zei niets.</p>
+
+<p>Want waarachtig, &mdash; Schipper Schaap had op dat oogenblik gelijk!</p>
+
+<p>Ik was al wéér zee-ziek!<span id="p.105" class="blznr"></span></p>
+
+<br>
+<br>
+<br>
+<br>
+<a id="chapter11"></a>
+<div style="text-align:center">
+  <span class="hiddenText">Een overlevende van/de Shimonoseki {Illustratie}</span>
+  <img src="images/33_Hoofdstuk_Shimonoseki.jpg" alt='[Illustratie: Een overlevende van/de Shimonoseki]' style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<p>Shimonoseki! ... wie van jullie heeft dezen naam gehoord, hetzij bij
+de aardrijkskunde &mdash; , dan wel in de geschiedenis-les?</p>
+
+<p>Shimonoseki! voor ons land is het de herinnering van al meer dan 50
+jaar geleden, aan een kranig staaltje van marinedurf; voor Japan
+beteekent Shimonoseki den aanvang van een groote omwenteling in de
+tweede helft der negentiende eeuw, welke dit land van een
+achterlijke <span id="cor0004" class="corrected" title="[Original text: Oostersche mogendheid]">oostersche mogendheid</span>, binnen den tijd van een halve
+eeuw tot een van de voornaamste wereld-mogendheden deed klimmen.</p>
+
+<p>Ik zie geen kans, jullie in dit boekje, gewijd aan enkele
+belangrijke gebeurtenissen van Nederlands<span id="p.106" class="blznr"></span> zee-geschiedenis uit den
+laatsten tijd, uitvoerig te vertellen het indertijd roemrijk
+avontuur van Shimonoseki; maar het is aardig dat ik het jullie wel
+in het kort kan vertellen, opgeschreven uit den mond van den
+laatsten overlevende.</p>
+
+<p>Hoe deze het me vertelde, moeten jullie hier maar lezen!</p>
+
+<p>Ik verlangde naar een levend en kleurrijk verhaal, naar het relaas
+van de zèlf-beleefde en nu zelf-na-vertelde gebeurtenissen uit dien
+Japanschen oorlog.</p>
+
+<p>Speelde ons land daarbij niet een belangrijke rol, omdat het op ònze
+vlag was, dat de verraderlijke Japansche Daimios den aanslag
+ondernamen? Was het niet een Nederlandsch oorlogsschip, de "Medusa",
+dat toen het eerst en het hevigst in het vuur was geweest? En was er
+niet nog één der opvarenden van dit schip in leven, die mij er van
+zou kunnen vertellen?</p>
+
+<p>Ik wist waar ik den man moest zoeken. Ik had uitgevischt, dat ergens
+aan een der Amsterdamsche bruggen een heel oude man z'n dagelijksch
+kostje ophaalde; de oud-matroos, krasse kerel van een stuk in de
+tachtig, scharrelde z'n<span id="p.107" class="blznr"></span> verdiensten bijeen als karrentrekker! Zijn
+naam was ik ook te weten gekomen: hij heette Jan van Beeren.</p>
+
+<p>Ik stapte er op af, om m'n held van Shimonoseki te zoeken. Het hoofd
+vol van zeemansverhalen en van bloedige episodes uit dien zeeslag,
+waarbij ons Nederlandsche oorlogsschip zoo duchtig was bekogeld,
+maar niettemin, dwars door den ijzeren regen heen, zijn weg had
+vervolgd, om straks terug te keeren en bij de voorsten te zijn, die
+het bombardement op de Japansche kustbatterijen openden, deel te
+nemen aan de landing, welke de Japansche troepen op de vlucht dreef,
+en hun geschut vernagelde.</p>
+
+<p>Hij behoefde me niet van moeilijke Oostersche politiek, noch van
+Japansche ingewikkelde staatsintriges te vertellen; ik was hiervan
+behoorlijk op de hoogte. Wat ik hem slechts wilde vragen, was me te
+vertellen zijn verhaal van oud-matroos aan boord van de "Medusa",
+van dien eersten onverwachten overval, en daarna over de tuchtiging
+der Japanners.</p>
+
+<p>Een levende bladzijde krijgsgeschiedenis, een roemrijk, zelf-beleefd
+hoofdstuk uit het verleden,<span id="p.108" class="blznr"></span> verteld door een der overlevenden,
+&mdash; dit verwachtte ik van hem!</p>
+<br>
+<p>
+Evenwel, ik had de méér dan vijftig jaren vergeten, die ons
+scheidden van 1863. En vergeten was ik ook, hoe men in een halve
+eeuw tot een ouden man kan worden; dat een armelijk sjouwerleven,
+met sappelen om het dagelijksch brood, iemand zijn frischheid als
+verteller kan doen verliezen; en ook, dat het baantje, om dag in dag
+uit de groente- en bakkerskarren tegen een brug te helpen optrekken,
+waarvoor soms een betaling, uit medelijden, met 1 cent geschiedt,
+iemand het heldhaftige voorkomen van rustend zeeheld kan doen
+verliezen.</p>
+
+<p>Jan van Beeren, de karre-trekker van een der Amsterdamsche bruggen,
+toont zich wel heel oud onder zijn last van jaren; als een verarmde
+stakkerd ziet hij er uit. Over z'n sjofele smalle schouders draagt
+hij het touw met den haak, waarmee hij de handkarren de niet eens
+hooge brug helpt optrekken; in een hand draagt hij een roestigen
+stang, welke vermoedelijk voor hetzelfde doel moet dienen.</p>
+
+<p>Hij stond er te wachten tot een kar de richting<span id="p.109" class="blznr"></span> van de brug zou
+nemen. Er reden op dit uur maar weinig karren voorbij. Een enkele
+maal strompelde hij een van de gracht aanratelende handkar tegemoet;
+maar telkens riep de man, die achter de kar te duwen liep: "Nee,
+laat maar, ouwe!"; een paar maal riepen ze er bij: "Ik kan 't alleen
+wel af!" En dan bleef het oude kereltje daar maar staan, de pet diep
+op de grauw-grijze haren, het touw gestrengeld over de magere
+schouders, weggedoken in het slobberjasje, de verzakkende broek
+<span id="cor0005" class="corrected" title="[Original text: plooiig over]">plooiïg over</span> z'n schuiten van schoenen.</p>
+<br>
+<p>
+Toen stapte ik hem opzij, en keek hem in zijn verweerde, vermoeide
+gelaat, waarin de oude oogen sufferig staarden, en vroeg:</p>
+
+<p>"U is wel Jan van Beeren, niet?"</p>
+
+<p>"Jawel..." zei-die, en hij schoof een bevende hand omhoog, om naar
+zijn petrand te zoeken.</p>
+
+<p>"Laat je saluut maar," probeerde ik gemoedelijk te doen.</p>
+
+<p>"Jawel..." mummelde zijn ouwe slappe mondje terug.</p>
+
+<p>"Ik heb van je gehoord," zei ik, luid en duidelijk, bij zijn
+verwezen kijken; "je bent toch Jan<span id="p.110" class="blznr"></span> van Beeren, die de geschiedenis
+van de "Medusa" nog heeft meegemaakt?"</p>
+
+<p>"Jawel, jawel..." verschrok hij zoo'n beetje, en langzaam keek-ie
+rond naar weerskanten van de brug, of er geen klantjes wilden
+geholpen wezen. Maar er was geen kar te zien.</p>
+
+<p>"'t Is nou niet druk," trachtte ik te beginnen. Maar in-eens zei ik:
+"Je moest er nu vandaag maar verder 'n vrijen dag van maken, Van
+Beeren, en dan drinken we samen een glaasje bier, en rooken 'n
+sigaartje, en als je wilt, vertel je me wat van die ouwe historie
+met je "Medusa", want daar ben ik nieuwsgierig naar geworden, omdat
+het net zoowat vijftig jaar geleden moet zijn, niet?"</p>
+
+<p>Toen keek hij me weer aan, heel oud en ernstig met z'n slappe,
+suffende oogen, en zei met bevend lip-geprevel:</p>
+
+<p>"Ik drink geen bier, ziet-u ... enne rooke doen ik ook liever niet,
+ziet-u..."</p>
+
+<p>"Dat zei ik ook maar zoo, Van Beeren, en als je 't mij vraagt, heb
+ik ook liever 'n kop warme koffie. Want 't is hier in Amsterdam nog
+geen Japan, man!"<span id="p.111" class="blznr"></span></p>
+
+<p>Maar die grap ging volstrekt niet op, omdat hij alweer de gracht
+afkeek, of d'r geen kar aankwam, waaraan hij z'n centje zou kunnen
+verdienen.</p>
+
+<p>"Kom nou!" monterde ik den ouwen man op; "laat ik je dat daggeldje
+nou 's mogen betalen. En als we dan samen daar in het
+Volkskoffiehuis op den hoek ons bakje troost gingen drinken?"</p>
+
+<p>"Jawel..." mompelde hij.</p>
+
+<p>En achter me aan strompelde hij de brug af naar het koffiehuis.</p>
+
+<a id="34_koffie"></a>
+<div style="text-align:center">
+<img src="images/34_koffie.jpg" alt="{Illustratie: 34_koffie.jpg}" style="float:right; padding:5px; width:55%; height:auto; max-width:800px;">
+</div>
+
+<p>Daar hebben we lang en langzaam over onze heete koffie geblazen, en
+dat smaakte den ouwen man en mij wat goed, omdat het weer zóó'n
+griemelige dag was, dat het mummelmondje van het ouwetje wel scheen
+te beven van de kou.</p>
+
+<p>Hij zei maar telkens weer: "jawel ... jawel";<span id="p.112" class="blznr"></span> en soms wisselde hij
+dit af met een bedenkelijk: "Vijftig jaar, mot u bedenke, dat is nou
+alweer zoo lang gelee', ziet u"...</p>
+
+<p>Zoodat dit het on-succesvolste onderhoud was, dat ik ooit met iemand
+voerde. En een geschiedkundige verhandeling zou ik het niet durven
+noemen, omdat ik mijn vragen van een omslachtige uitvoerigheid en
+duidelijkheid moest maken, terwijl de antwoorden daarop slechts
+volgen met een aarzelend hoofd-schudden van den grauw-grijzen kop,
+of met een suffig "jawel..."</p>
+
+<p>"Maar die Japanneezen hadden toch niet van tevoren gewaarschuwd,
+toen de "Medusa" daar door de Straat van Shimonoseki kwam aanvaren,
+niet?"</p>
+
+<p>Hij wachtte lang, schudde toen gewichtig z'n ouwen kop, scheen iets
+te willen zeggen, maar zei niets.</p>
+
+<p>"Ze schoten goed, wat?" vroeg ik. "Vlogen de flarden d'r af?"</p>
+
+<p>Hij keek me uit de moeie oogen aan, zocht lang in zijn herinnering,
+mummelde toen:</p>
+
+<p>"Jawel ... jawel... Nou, en of!"</p>
+
+<p>"Hadden jullie nog gewonden aan boord? ...<span id="p.113" class="blznr"></span> of gesneuvelde
+kameraden?... want zij mikten goed die rakkers, hè?"</p>
+
+<p>Hij wachtte weer lang, en toen: "Wel vier dooie..."</p>
+
+<p>"En gekwetsten ook?"</p>
+
+<p>Hij mompelde z'n stopwoordje weer:</p>
+
+<p>"Jawel ... ook gekwetste..."</p>
+
+<p>En toen, alsof hij zich verontschuldigen wilde over zijn gebrek aan
+memorie, half stotterend: "U mot bedenke ... dat 's al weer zoo lang
+gelee' ... vijftig jaar, ziet-u..."</p>
+
+<p>Daarop keek hij me verwezen aan na dezen uitvoerigen zin, bewoog de
+lippen nog wat na, of hij naar woorden zocht; maar schudde dan
+eindelijk, dat-ie het zich toch niet meer wist te herinneren.</p>
+<br>
+<p>
+Neen! den zeeslag bij Shimonoseki uit 1863 heb ik niet voor me zien
+opleven!</p>
+
+<p>En m'n ouwe zeeman kan het waarachtig niet helpen, dat dit al zoo
+lang geleden heeft plaats gehad.</p>
+
+<p>Jan van Beeren was toentertijd matroos tweede klas; hij was al in de
+dertig, toen hij het bombar<span class="hyphen"></span><span id="p.114" class="blznr"></span>dement meemaakte; met de landingsdivisie
+aan wal sprong, de gele Japannertjes als een zwerm musschen voor
+zich uitdreef, de kanonnen vernagelde, den opmarsch land-inwaarts
+meemaakte.</p>
+
+<p>Wat weet hij er nog van in zijn oude suffige brein?... Wat weet hij
+daar nog van na te vertellen?... Welke herinneringen van
+gesneuvelde en gewonde kameraden van toen komen hem nog voor de
+moeie, omfloerste oogen, wanneer men hem dat alles wil laten
+navertellen?</p>
+
+<p>... "Jawel ... jawel... Hoe lang is dat nou al weer gelee', vijftig
+jare, ziet-u..."</p>
+
+<p>Zoodat ik, uit medelijden voor dat afgeleefde ouwentje, maar weer
+met hem opstapte, nadat de koffie was leeggedronken.</p>
+
+<p>Daar strompelde hij weer met me mee. Naar huis ging hij niet. Wat
+zou hij op dit uur thuis doen, bij z'n ouwe vrouw, bij z'n
+zestigjarige ziekelijke dochter? D'r kwamen nog wel karren, die hij
+z'n haak kon aanslaan. D'r waren misschien nog 'n paar centjes te
+verdienen dien dag. Dat extra-handgeldje van me was altijd
+meegenomen. 't Was 'n karig broodje, dat-ie elken dag bij z'n<span id="p.115" class="blznr"></span> brug
+bij-mekaar scharrelde, zoodat hij blij was met z'n buitenkansje.</p>
+
+<p>Dus nam ik afscheid van Jan van Beeren. Hij tastte verlegen naar z'n
+petrand, toen ik hem een hand toestak:</p>
+
+<p>"Nou, Jan van Beeren, en wel bedankt voor het praatje, en dat was me
+toen dan toch maar 'n heele geschiedenis met die "Medusa", en ik
+hoop, dat 't je goed zal blijven gaan, hoor. En dat 't wat druk mag
+blijven met de karren hier aan de sluis... En dan zien we mekaar
+nog wel 's terug onder zoo'n warm bakje koffie, niet?"</p>
+
+<p>Maar hij keek alweer naar links en naar rechts, of d'r geen karren
+aankwamen, die misschien van z'n hulp gediend zouden zijn.</p>
+
+<br>
+<br>
+<br>
+<br>
+<span id="p.116" class="blznr"></span><a id="chapter12"></a>
+<div style="text-align:center">
+  <span class="hiddenText">Op oude Uithangborden {Illustratie}</span>
+  <img src="images/35_Hoofdstuk_Uithangborden.jpg" alt='[Illustratie: Op oude Uithangborden]' style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>De mensch is als een schip, de wereld als een zee,
+      <br>De Bijbel mijn kompas, de hemel is de reê;
+      <br>Wel neem ik dan een loods voor 't stranden;
+      <br>Dat is de goede geest:
+      <br>Heeft die alleen het roer in handen,
+      <br>Dan ben ik niet bevreesd.
+    </div>
+</div>
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>De Haringbuis
+      <br>Vaart uit en t'huis
+      <br>Om pekelharing te vangen in touwen,
+      <br>Waarnaar janken jongen en ouwen.
+      <br>Men vangt ze in 't razende holle water,
+      <br>En ze worden gesmuld door Begijn en Pater.
+    </div>
+</div>
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div><span id="p.117" class="blznr"></span>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>Is God met ons, wie kan ons deeren,
+      <br>Zoo wij zeilen of laveeren?
+      <br>Dit is in het Marktschip van Leiden op Zeelant
+      <br>Wel voorzien van zeil, treil en want.
+    </div>
+</div>
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>Die in de lij
+      <br>Mij vaart voorbij,
+      <br>Zal hebben een Rijksdaalder, en 't gelag vrij.
+    </div>
+</div>
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>Mijn kind,
+      <br>Daar is een rak in de wind.
+      <br>Wilt het zeil wat nat maken,
+      <br>Wij zullen dit hoekjen wel te boven raken.
+    </div>
+</div>
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>O Heer! bewaert ons alle,
+      <br>Sinte Pieters Schepe mag helle
+      <br>Maer ten sal niet omme-valle.
+    </div>
+</div>
+
+<div style="text-align: center;"><br>&mdash;o&mdash;</div><span id="p.118" class="blznr"></span>
+
+<div style="text-align: center;">
+    <div style="display: inline-block; text-align: left;">
+      <br>Laat haters haten
+      <br>Wat Godt mij gunt.
+      <br>Wie laadt en lost
+      <br>Die is zijn kost.
+    </div>
+</div>
+
+<br>
+<br>
+<br>
+<br>
+<span id="p.119" class="blznr"></span><a id="chapter13"></a>
+<div style="text-align:center">
+  <span class="hiddenText">De Millioenen-schat op/den Zeebodem {Illustratie}</span>
+  <img src="images/36_Hoofdstuk_Millioenen-schat.jpg" alt='[Illustratie: De Millioenen-schat op/den Zeebodem]' style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<p>Kijk 's, dit is nu een van die verhalen, prachtig beginnend, maar
+omdat ik het jullie vertellen moet, zooals de geschiedenis inderdaad
+is gebeurd, heel nuchter afloopend, helaas! Ik ben namelijk aan het
+zoeken geweest naar een goud-schat, begraven ginds aan de westkust
+van het eiland Terschelling.</p>
+
+<p>Ha! ik wist uit oude boeken, hoe voor een waarde van millioenen
+guldens in een oud wrak, een Engelsch oorlogsfregat uit het laatst
+der achttiende eeuw, dat omstreeks 1800 schipbreuk leed in het
+gezicht van dit eilandje, achter gelaten moest zijn. Ik wist
+eveneens uit overlevering, hoe<span id="p.120" class="blznr"></span> telkens gretig daarnaar gezocht was
+in vroegere jaren; hoe men allerlei pogingen in het werk gesteld
+had, door te dringen tot den bodem der hier zoo roerige en
+veranderlijke zee; hoe men met onvoldoende hulpmiddelen had gezocht
+onder het zee-oppervlak. Maar steeds was de diep onder het zand
+begraven schat onvindbaar gebleven. De overblijfsels van het
+indertijd, meer dan een eeuw geleden op onze kust jammerlijk
+verongelukte schip had men wel kunnen terugvinden; ook de ligplaats
+van het steeds dieper in het kustzand wegzinkende wrak had men met
+vrij groote juistheid kunnen vaststellen. Doch onder de
+verschillende wrakstukken van het vergane schip, "Lutine" geheeten,
+vond men nimmer het gezochte goud.</p>
+
+<p>En toch, voor een bedrag van ongeveer twaalf millioen aan gouden en
+zilveren staven moest daar nog steeds onaangeroerd voor Terschelling
+liggen!</p>
+
+<p>Begrijpen jullie niet, hoe dit op mijn verbeeldingskracht werkte?</p>
+
+<p>Het was niet eens de begeerte naar den schat zèlf, welke me daarheen
+dreef. Doch het avontuur,<span id="p.121" class="blznr"></span> de goud-expeditie, het zoeken en vinden op
+zich zelf, oefenden zulk een magnetischen invloed, dat ik het
+eindelijk niet meer kon uithouden.</p>
+
+<p>Ik wist, hoe ginds op de reede van Terschelling weer opnieuw
+ernstige pogingen in het werk werden gesteld om, dank zij de
+nieuwste technische hulpmiddelen van reusachtige, door machines
+gedreven zuigbuizen, tot diep op den zeebodem doordringende, het in
+den loop der tientallen jaren steeds meer verzande wrak vrij te
+maken, en dan door met uitnemende toestellen voorziene duikers een
+onderzoek te laten instellen naar de juiste ligging van het op den
+zeebodem rustende wrak, en aldus de juiste plaats vast te stellen,
+vanwaar men den millioenenschat in veiligheid zou kunnen brengen.</p>
+
+<p>Eindelijk!... wie weet! zouden de duikers er wellicht in slagen, de
+meer dan honderd jaren in de diepte bewaarde gouden en zilveren
+staven naar boven te dragen!</p>
+
+<p>Van die aangrijpende, uitvoerige geschiedenis van het Engelsche
+oorlogsfregat uit de achttiende eeuw &mdash; o! een prachtig, maar
+droevig verhaal op zich zelf! &mdash; was er één herinnering,<span id="p.122" class="blznr"></span> welke me op
+dit oogenblik het meeste belang inboezemde. Ik wist, dat er een oude
+aanteekening bestond, vermeldende de juiste ligging van het
+scheepswrak, zijn diepte onder het zee-oppervlak, ook precies de
+inrichting van het uit elkaar gevallen schip.</p>
+
+<p>Met een vriend, die dit waardevolle papiertje in zijn bezit had,
+maakte ik de vrij omslachtige reis naar het noorden, over Friesland
+gaande, per Harlingsche scheepsgelegenheid naar het eilandje
+Terschelling overstekende.</p>
+
+<p>We werden daarginds gewacht door eenige ingewijden in de
+schatzoekerij, die evenzeer als wij, popelden om nu eindelijk uit de
+laatste overblijfsels van de "Lutine" den even geheimzinnigen als
+kostbaren schat aan zijn onverbiddelijke schat-bewaarster, de zee,
+te ontrukken.</p>
+
+<p>Hoe wij daarginds te werk gingen, wil ik jullie hier in mijn
+waarachtig verhaal vertellen. Maar bereidt je er meteen op voor, dat
+de zee slimmer, machtiger, ongenaakbaarder bleek dan we gemeend
+hadden dat zij was, en dat zij ons nauwelijks een tipje van den
+sluier liet opheffen. Want de millioenenschat, de gouden en zilveren
+staven, de<span id="p.123" class="blznr"></span> op den zeebodem rustende staven, bleven ook voor ons even
+onbereikbaar als voor al die andere goudzoekers vóór ons...</p>
+
+<p>Toch geen reden voor mijn lezers, hoop ik, om mijn verhaal van het
+"Lutine"-goud niet aan te hooren, of er de popeling niet van mee te
+leven!</p>
+
+<p>Ik sprak daar even over de, uit vroegere eeuwen bewaard gebleven,
+aanteekening over de ligging van dit wrak voor de kust van ons
+Waddeneiland.</p>
+
+<p>Het oude schetskaartje van het wrak van de "Lutine" stond geteekend
+op een stukje perkament, verfrommeld en in zijn naden gescheurd, en
+niet veel grooter dan een hand. De buitenomtrek van het fregat was
+met een gestippelde lijn aangegeven, de gebroken verschansing was
+aangeduid met eenige streepjes; 'n kanon scheen met twee strepen
+geschetst; met haaltjes en krasjes waren de plekken aangegeven, waar
+zich de ballastbrooden en de roestlagen bevonden; twee gekruiste
+ankers gaven de plaats van de voorplecht aan.</p>
+
+<p>Het was over dit merkwaardig stukje perka<span class="hyphen"></span><span id="p.124" class="blznr"></span>ment, den sleutel
+wellicht, die ons den millioenenschat zou ontsluiten, dat het
+Terschellingsche onderhoud liep.</p>
+
+<p>Wij waren daartoe bijeen gekomen in de woning van een oud-kapitein
+van de groote vaart, die daar wat aardig op het eilandje woont in
+een van de huisjes van het geklinkerde hoofdstraatje.</p>
+
+<p>Zijn vrouw, een geboren Terschellingsche, die ook van varen weet uit
+den diensttijd van haar man, had zelve ons de deur geopend, toen ik
+me in reeds vroeg avond-duister op het stoepje aanmeldde.</p>
+
+<p>"Nu moet je je maar niet verbazen, wanneer je den heelen avond over
+niets anders dan over millioenen hoort spreken!" had men mij van
+tevoren opgehitst. O! ik had zulk een opwekking niet noodig: ik
+verlangde genoeg naar al de geheimzinnigheden, die het verdronken
+goud omgaven!</p>
+
+<p>"De andere heeren zijn er al," fluisterde de vrouw van den
+kapitein-in-ruste.</p>
+
+<p>Er was overigens niets geheimzinnigs aan deze dame; evenmin aan de
+kraaknette achterkamer, waar het lamplicht gedempt scheen over de
+tafel,<span id="p.125" class="blznr"></span> waarom-heen behalve de gemoedelijke gastheer, nog drie
+andere bezoekers gezeten waren.</p>
+
+<p>Ik lette onder het wederzijdsche kennismaken met nieuwsgierigheid op
+dit drietal.</p>
+
+<p>Zij waren gekleed in nette uniformen, blauw laken met vergulde
+knoopen; een droeg de vier kapiteinsstrepen over den mouw, op zijn
+borst had hij gehecht een smal lint, in vele kleuren, doch geen
+orde-teekenen of medailles hingen daaraan.</p>
+
+<p>Hij werd voorgesteld als de bevelvoerder van het vreemde
+bergingsschip de "Lyons".</p>
+
+<a id="37_snor"></a>
+<div style="text-align:center">
+<img src="images/37_snor.jpg" alt="{Illustratie: 37_snor.jpg}" style="float:right; padding:5px; width:25%; height:auto; max-width:200px;">
+</div>
+
+<p>Ik had hem reeds op zijn schip in de haven gezien; als een stevige
+veertiger had ik hem geschat, verzorgd zeeman met prettig gelaat,
+volstrekt niet zoo'n gewild onbehouwen zeemans-uiterlijk; zelfs
+waren ietwat verzorgd de einden van zijn snor tot twee punten
+gedraaid, die ver naar links en rechts uitpriemden.</p>
+
+<p>Nu, van dichter-bij, zag ik zijn hoekigen neus en de fijne sterke
+kin; terwijl hij voorover leunde, zijn armen over de tafel gevouwen,
+het hoofd wat<span id="p.126" class="blznr"></span> schuin boven zijn schouders vooruit gestoken, scheen
+hij me een prachtigen kerel, ondernemend type, een durf-al; maar
+tegelijk trof me zijn bedachtzame schranderheid, als hij het hoofd
+ophief en daarbij den jongensachtig-leuken kijk uit zijn
+licht-blauwe oogen.</p>
+
+<p>Hij sprak een duidelijk, helder Engelsch; later bleek, hoe hij in
+zijn varensleven over alle zeeën van den aardbol had gezworven,
+zoodat hij zich ook wel in andere talen klaar en verstaanbaar wist
+uit te drukken.</p>
+
+<p>De twee anderen, die ik eerst had aangezien voor den eerste en
+tweede officier van de "Lyons", werden nu ook voorgesteld; ze
+stonden wat stijf op, niet makkelijk in hun uniformpakken, en bij
+het hand-uitsteken drukte ik twee stevige eeltige handen.</p>
+
+<a id="38_ruw"></a>
+<div style="text-align:center">
+<img src="images/38_ruw.jpg" alt="{Illustratie: 38_ruw.jpg}" style="float:left; padding:5px; width:25%; height:auto; max-width:200px;">
+</div>
+
+<p>De eene vertoonde boven zijn correcte uniform een ruw gezicht,
+weinig verbrand maar verweerd; blonde knevel onder een zwaren neus;
+hij staarde wat quasi-achteloos voor zich uit, scheen zich niet op
+zijn plaats te voelen. Maar de ander, met<span id="p.127" class="blznr"></span> z'n bol donker,
+glad-geschoren gelaat, glinsterde van Iersche oolijkheid; hij had,
+zooals hij daar naast zijn kameraad zat, schijnbaar iets overgenomen
+van diens onverschilligheid; maar hij bleek bij-de-pinken, want
+telkens als zijn kapitein hem in het gesprek mengde, had hij
+dadelijk en precies zijn antwoord klaar.</p>
+
+<a id="39_glad"></a>
+<div style="text-align:center">
+<img src="images/39_glad.jpg" alt="{Illustratie: 39_glad.jpg}" style="float:right; padding:5px; width:25%; height:auto; max-width:200px;">
+</div>
+
+<p>Ze bleken twee bekende duikers te zijn.</p>
+
+<p>En nu gingen de vragen en antwoorden over hun duikersarbeid.</p>
+
+<p>Dit gesprek?...</p>
+
+<p>Ik zou er "Twintig Duizend Mijlen onder Zee" van Jules Verne of "De
+Roode Flibustier" van Falkland nog eens op na moeten lezen, om aan
+me zelf te controlearen, of die boeken-fantasie van een sterker
+bekoring was dan deze werkelijkheid!</p>
+
+<p>Intusschen leek het, of dit alles de gemoedelijkste zaak ter wereld
+was.</p>
+
+<p>We dronken een wijn-grogje en rookten een sigaartje, alsof het
+gesprek over een gezellig kletspraatje liep.<span id="p.128" class="blznr"></span></p>
+
+<p>En toch spraken wij over een millioenen-schat van goud en zilver,
+begraven op den bodem der zee van het Terschellingsche strand.
+Daarover hadden deze duikers gewandeld, met hun handen hadden ze het
+goud bijna aangeraakt'</p>
+
+<p>De kapitein vertelde, alsof het iets heel gewoons gold:</p>
+
+<p>"De duikers hebben nu al twee groote kanonnen bovengebracht;
+vervolgens de twee ankers van de voorplecht, wegende ongeveer 4000
+kilo; en dan hebben ze de plek gevonden, waar de ballastbrooden
+midscheeps liggen; en ook de moeilijk te naderen plek daarachter. Is
+'t zoo niet, Palmer?"</p>
+
+<p>"Een roestlaag is 't, sir," antwoordde de eerste duiker.</p>
+
+<p>"Een laag saâm-geroeste kogels, sir," vulde de tweede duiker aan.</p>
+
+<p>De kapitein vertelde, hoe de zuigbuis van zijn schip inmiddels al
+een kuil had gezogen van 36 voet diepte, zoodat het wrak, dat op 48
+voet diepte op een kleibank rustte, nu bijna geheel vrij van zand
+was. Telkens wanneer de groote buis omlaag werd gelaten boven het
+wrak, zoog ze ver<span class="hyphen"></span><span id="p.129" class="blznr"></span>schillende voorwerpen van het wrak omhoog:
+spijkers, bouten, knoopen, kogels! &mdash; "Maar ook al een handje vol
+piasters!" zei de kapitein en zijn blauwe oogen lachten; hij
+knip-oogde naar ons.</p>
+
+<p>Tegelijk stond onze gastheer op en ging naar de donkere voorkamer,
+vanwaar hij terug kwam met twee witte zakjes. Terwijl hij ze op de
+tafel plaatste, rinkelde het zachtjes. Nadat hij de touwtjes had
+losgemaakt, schudde hij beide zakjes leeg en hield een hand vol
+munten onder het lamplicht.</p>
+
+<p>Het waren groote, zware zilverstukken, zwart en verweerd; één was er
+echter bij, pronkend blank met een glans zelfs van nieuwheid; om den
+beeltenaar stonden duidelijk de letters te lezen:</p>
+
+<div style="text-align: center;">"H<span class="expand_spacing">ispan; et. Ind. Re</span>x."</div>
+
+<p>Het waren Spaansche munten; heele, halve en kwart-piasters.</p>
+
+<p>"Die eene heeft u zeker opgepoetst voor deze gelegenheid?" vroeg ik.</p>
+
+<p>"Wel nee!" riep de oud-kapitein, ... "dat is juist het wonderlijke!
+... Het eene oogenblik<span id="p.130" class="blznr"></span> komt er een bonk roest boven, waaruit je met
+geweld de munten moet loshakken; ze zijn dan zoo zwart en vuil, dat
+je haast niet kunt uitmaken wat voor geldstuk het is. En een
+oogenblik later zuigt de buis een gave munt op, zooals deze, zoo,
+dat je zou zweren, dat-ie nog geen halven dag onder water gelegen
+heeft"</p>
+
+<p>Toen de kapitein van de "Lyons":</p>
+
+<p>"Een van de kanonnen, die de duikers vonden, hebben we
+geladen-en-wel boven water gehaald! De heele boel zat onder een laag
+roest; maar de laad-proppen, de kogel, zelfs het kruit, hebben we
+achter-een-volgens uit den loop gehaald... Ik wil niet beweren, dat
+we het kanon nog hadden kunnen afschieten, maar 't kruit was na meer
+dan een eeuw behoorlijk droog gebleven!"</p>
+
+<p>Er scheen geen bepaalde plek te zijn, waar de geldstukken indertijd
+gezonken waren. En dit kwam volkomen uit met een mededeeling van
+omstreeks 1800; want toen men in die gouddagen de vaatjes met
+geldstukken trachtte op te visschen, had men dit zóó begeerig en
+onhandig gedaan, dat sommige vaten lossprongen en al hun geldswaarde
+weer omlaag stortte, zoodat de mun<span class="hyphen"></span><span id="p.131" class="blznr"></span>ten daar overal verspreid liggen
+op den zeebodem in de buurt van het wrak.</p>
+
+<p>Trouwens, wat bekommerde men zich toentertijd om zoo'n handvol
+Spaansche matten?</p>
+
+<p>Maar ook nu waren het geen Spaansche munten, waarnaar gezocht werd!</p>
+
+<p>Men zocht immers naar de gouden en zilveren staven!</p>
+
+<p>En gebogen, over het oude perkamenten kaartje, werd nu vastgesteld,
+dat de verborgen schat zich bevinden moest onder de dikke laag
+vastgeroeste kogels.</p>
+
+<p>"Die kogels!" piekerde de kapitein, "die hinderen me meer dan me
+lief is!"</p>
+
+<p>Zoo kwamen we te beraadslagen over de kogels, die daar nog beneden
+lagen.</p>
+
+<p>Lang en ernstig praatten zij daarover. De duikers werden telkens in
+het gesprek betrokken, om inlichtingen te geven. Dan was het
+opvallend, hoe precies zij wisten te rapporteeren wàt zij daar op
+hun geheimzinnige, duistere tochten onder water gezien hadden.</p>
+
+<p>Juist, zoo was 't immers geweest! De constabel- of ammunitie-kamer
+van de "Lutine" had zich<span id="p.132" class="blznr"></span> boven de schatkamer in de piek van het
+schip bevonden. En als men van een bepaalde plaats van het wrak de
+oude kogels omhoog bracht, kon dit dus ook niet anders dan dezelfde
+plek zijn, waar de gouden en zilveren staven nog altijd lagen.</p>
+
+<p>Toen stelde de kapitein de vraag, waarop het aankwam; lakoniek
+antwoordden de duikers er op.</p>
+
+<p>"Die roestlaag, waarvan dus sprake is, en welke de vorige zoekers
+steeds onaangeroerd lieten, hebben jullie die ooit gevonden?"</p>
+
+<p>"Yes, sir."</p>
+
+<p>De kapitein schoof het verweerde schetskaartje naar hen toe:</p>
+
+<p>"Wijs me eens waar die roestlaag ligt?" vroeg hij.</p>
+
+<p>"Ziet u deze plek?... Dààr hebben wij hoofdzakelijk gezocht."</p>
+
+<p>"Dit beteekent dus, dat de roestlaag, die men tot dusver
+onaangeroerd heeft gelaten, zich op de plek bevindt, waar de
+overblijfselen van de vroegere schatkamer liggen."</p>
+
+<p>"Dus die roestlaag?"</p>
+
+<p>"Is een laag kogels en kruit en roest, die een eeuw lang als deksel
+boven den verborgen schat dienst heeft gedaan!"<span id="p.133" class="blznr"></span></p>
+
+<p>"Hoe groot is die laag?", vroeg de kapitein. Zijn oogen glinsterden
+bij een plotseling bedenksel.</p>
+
+<p>"Twaalf meter lang en tien meter breed, sir!", antwoordde de eene
+duiker, de Ier, die tot dusver slechts met één oor scheen te
+luisteren, maar toch, zonder zich een oogenblik te bedenken, wist te
+antwoorden, hoe het er uit zag daar beneden bij het wrak, dat hij
+scheen te kennen als het binnenste van zijn zak.</p>
+
+<p>"En de dikte?"</p>
+
+<p>"Een meter, sir!"</p>
+
+<p>"Hoeveel schat je het gewicht?"</p>
+
+<p>"Honderd ton, sir," schatte de andere duiker, omdat zijn makker
+ditmaal even langer nadacht.</p>
+
+<p>"Ik zou eerder zeggen: iets minder dan twee honderd ton, sir."</p>
+
+<p>"We hebben 't!", zei kapitein Gardiner. "Ik wil er wat om verwedden,
+dat de roestlaag, die op dit kaartje bij het achterschip staat
+aangeduid, en die onze duikers telkens hebben betreden, de plaats
+moet zijn, waar we de zilveren en gouden staven van de 'Lutine'
+zullen vinden."</p>
+
+<p>Hij zei dit niet opgewonden; maar langs zijn<span id="p.134" class="blznr"></span> hoekigen neus boorden
+zijn twee lichte oogen; de sterke kin stak vooruit, alsof hij zoo
+toe wilde springen op den geheimzinnigen schat.</p>
+
+<p>Ik dacht: als er ooit een kerel is, die het goud van den nukkigen
+zeebodem kan afhalen, dan moest hij het zijn!</p>
+
+<p>"Morgenochtend vroeg, bij het eerst tij stoomt de "Lyons" er heen
+&mdash; en morgen brengen we de eerste staven boven!" mompelde de
+kapitein. Dit was ons wachtwoord; en zoo keerden we dien nacht naar
+het dorps-hotelletje terug.</p>
+
+<p>De Engelsche kapitein en z'n twee duikers stapten naar het haventje,
+waar hun schip aan den steiger lag, de vuren aan, de smook
+kringelend uit de pijp, dadelijk klaar om zee te kiezen.</p>
+
+<a id="40_deur"></a>
+<div style="text-align:center">
+<img src="images/40_deur.jpg" alt="{Illustratie: 40_deur.jpg}" style="float:left; padding:5px; width:35%; height:auto; max-width:300px;">
+</div>
+
+<p>Onze gastheer sloot zorgvuldig de deur achter ons; vanwege zijn
+Spaansche matten, denk ik. En mijn reisvriend en ik kuier<span class="hyphen"></span><span id="p.135" class="blznr"></span>den naar
+ons hotelletje terug. Hij stak zijn arm door den mijne en kwam
+vertrouwelijk los.</p>
+
+<p>"Mag ik je een raad geven?", zei hij gemoedelijk. "Je hebt nu den
+heelen avond hooren spreken over goud en millioenen &mdash; over
+millioenen en goud! En nu verwacht je stellig, morgen eindelijk den
+grooten schat te zullen zien?"</p>
+
+<p>Twijfelde hij dan zelf?</p>
+
+<p>"Maar de kapitein en z'n duikers.......", wilde ik opmerken.</p>
+
+<p>"Zulke menschen zijn onbetaalbaar," antwoordde hij. "Met zijn schip
+ligt hij nu al een jaar bij Terschelling en bij elk geschikt weer
+stoomt hij naar buiten, naar de plek waar diep onder water het wrak
+ligt. Bij èlke nieuwe poging is de kapitein overtuigd, dat hij
+eindelijk zal slagen, het lang gezochte goud te vinden."</p>
+
+<p>"Zoekt hij dan naar iets dat niet bestaat?"</p>
+
+<p>"O! 't is mijn overtuiging, dat het goud zich nòg in het wrak van de
+"Lutine" bevindt. En ik ben er even zeker van, dat den een of
+anderen dag de pogingen zullen slagen. Zoodat de heele schat, die
+daar op den zeebodem ligt, te voorschijn gebracht zal worden.
+Maar..."<span id="p.136" class="blznr"></span></p>
+
+<p>Hij brak zijn zin af. Ik vulde hem dus aan:</p>
+
+<p>"Je rekent dus zelf niet vast op het resultaat van morgen?"</p>
+
+<p>Hij gaf geen direct antwoord.</p>
+
+<p>"We moesten nu maar gaan slapen... De kapitein is een man van z'n
+woord: eer hij uitstoomt, laat hij ons halen. En het zal zijn schuld
+niet zijn, als het morgen nog altijd de groote dag niet is!"</p>
+<br>
+<p>
+Maar slapen deed ik slecht in het primitieve Terschellingsche
+slaapkamertje, waar de houten wanden kraken, als de wind maar even
+over het duin zucht, en waar de sitsen gordijnen slecht sluiten voor
+de vensters.</p>
+
+<p>Zoo kwam 't, dat de vuurtoren, die den naam draagt van "Brandaris",
+me met z'n lange statige lichtbundels, die als vier flitsende spaken
+van een onzichtbaar wiel door den hoogen donkeren nacht
+rondwentelen, me wakker hield, omdat zijn licht zich telkens door
+dien kier boorde. Dan dacht ik aan deze lichtpijlen, in hun
+onafgebroken rondzwaai langs heel den wijden horizon cirkelend, van
+den avond tot den morgen, en hoe ze tel<span class="hyphen"></span><span id="p.137" class="blznr"></span>kens ook even moesten
+strijken langs de verre plek op zee, naar het westen, waar omlaag
+het "Lutine"-wrak lag.</p>
+
+<p>'s Morgens vroeg &mdash; 't grauwde nog van nanacht &mdash; werd er al aan de
+deur getikt van onze slaapkamer.</p>
+
+<a id="41_getikt"></a>
+<div style="text-align:center">
+<img src="images/41_getikt.jpg" alt="{Illustratie: 41_getikt.jpg}" style="float:right; padding:5px; width:30%; height:auto; max-width:300px;">
+</div>
+
+<p>'n Scheepsmaatje bracht de boodschap: "Over 'n half uur stoomt het
+schip naar buiten."</p>
+
+<p>Binnen 't half uur waren we aan boord.</p>
+
+<p>"U hadt niet behoeven te ontbijten; we gaan eerst stevig
+breakfasten, omdat we toch buiten de haven moeten wachten."</p>
+
+<p>Met overleg en knippend z'n ooghoeken als een timmerman, die
+waterpas moet meten, scharrelde intusschen de loods de stoomboot het
+haventje uit.</p>
+
+<p>'t Is er wat krap, met niet veel water in de Terschellingsche haven.</p>
+
+<p>"Nog wat lieboord!" zooals de lui hier zeggen... "Zoo!... En nou
+maar zwaaien met 't<span id="p.138" class="blznr"></span> 't tij, en laat maar vallen je anker, tot we ons
+kistje met dynamiet aan boord hebben."</p>
+
+<p>Wij zaten achter een stevig Engelsch ontbijt in de <span id="cor0006" class="corrected" title="[Original text: mesroom]">messroom</span>, met den
+kapitein en z'n vrouw, den eersten officier en den eersten machinist
+en nog een jong Engelschman in politiek, die me werd voorgesteld als
+een fotograaf van een Engelsch dagblad, die hier aan boord vertoefde
+met de opdracht van zijn blad, net zoo lang op Terschelling te
+blijven tot hij de eerste goudstaaf van de "Lutine" voor zijn blad
+gefotografeerd zou hebben.</p>
+
+<p>Zou 't vandaag zijn?</p>
+
+<p>Maar het loodsje op de brug, nadat hij z'n pruim voor een sigaartje
+had verwisseld, trok zijn beweeglijke mondhoeken neer en tegen het
+optimisme van den kapitein in, beweerde-ie, dat de wind te vast zat
+in 't Noorden; dan had je buiten altijd veel last van water en
+beweging.</p>
+
+<p>Langs het duin kwamen een paar mannetjes geloopen. De één droeg een
+klein kistje op den rug: dit moest zwaar zijn, want het gewicht
+drukte hem voorover en hij liep met voorzichtige zware stappen.</p>
+
+<p>'n Roeibootje was al uit de davids neergelaten,<span id="p.139" class="blznr"></span> roeide op het strand
+toe; nu kon je door den kijker zien, hoe 't kistje zorgzaam in de
+sloep werd gezet. Daarop roeide het bootje met regelmatig riemgeplas
+naar ons schip.</p>
+
+<p>"Dat is dertig pond, die ze achter uit 't duin zijn wezen opgraven."</p>
+
+<p>"Wat?"</p>
+
+<p>"Dynamiet."</p>
+
+<p>De kapitein krabbelde in het kaartenhuis op de brug al weer vlug een
+schets, zooals hij zich de roestlaag op het wrak voorstelde, en hoe
+hij die met zes dynamietpatronen deel voor deel aan stukken, zou
+laten springen.</p>
+
+<p>"Wat zeg je van den wind?" vroeg ik het loodsje, dat rookte als een
+schoorsteen en meteen pruimde op het lurkje van z'n sigaar.</p>
+
+<p>Buiten de kust deinden de golven in rumoerige gelederen aan.</p>
+
+<p>"Als de wind naar het Oosten loopt!", zei de kapitein met zijn
+sjeuig optimisme, "dan kunnen meteen de duikers omlaag."</p>
+
+<p>"D'r zit vuil aan de lucht," bromde het loodsje.</p>
+
+<p>De duikers zaten op het voorschip hun duikerspakken in orde te
+brengen.<span id="p.140" class="blznr"></span></p>
+
+<a id="42_verdwijnt"></a>
+<div style="text-align:center">
+<img src="images/42_verdwijnt.jpg" alt="{Illustratie: 42_verdwijnt.jpg}" style="float:left; padding:5px; width:40%; height:auto; max-width:800px;">
+</div>
+
+<p>Als hoofdlooze lijken hingen de leege caoutchouckleeren te drogen.
+De koperen helmen werden in een van de kamertjes van het tweede dek
+bewaard; daar lagen ook de trossen en luchtbuizen, de gewichten en
+zware schoenen, die ze noodig hadden voor hun toilet. Want het is
+heel uitvoerig, zooals een duiker in de kleeren wordt gestoken. In
+zijn baaien ondergoed is hij gekleed, wanneer hij zijn beenen in de
+twee gummi-broekspijpen steekt, die van onderen in den vorm van een
+schoen afgesloten zijn; met moeite wringen ze hem het open borststuk
+over het bovenlichaam; zijn handen moet hij inzeepen om ze door de
+nauwe mouwen te doen glijden; dan wordt hem een soort koperen harnas
+over borst en schouders geschroefd, en daarover past de zware helm
+met twee glazen kijkgaten ter weerszijden, en een rond voorruitje,
+dat tot het laatste oogenblik wordt opengelaten.<span id="p.141" class="blznr"></span></p>
+
+<p>Dan hangen ze hem nog stukken lood op borst en rug, en de zware
+schoenen worden hem aangegespt; in den gordel steekt het lange mes
+in de koperen schede; de trossen touw windt hij om het middel.</p>
+
+<p>Zoo toegerust kan een duiker zich boven water bijna niet bewegen
+door al het gewicht, dat hij moet torsen; log, moeilijk, traag,
+werkt hij zich zelf over de verschansing heen, plonst voet voor voet
+het trapje af, tot hij onder water verdwijnt.</p>
+
+<p>Er is al een zwaar gewicht uitgeworpen met een touw er aan, en
+daarlangs laat hij zich omlaag zakken, tot hij op den zeebodem is
+aangekomen.</p>
+
+<p>Intusschen zendt de machinale luchtpomp hem geregeld lucht toe. En
+nauwlettend houdt een matroos bij de verschansing de wacht, met de
+lange luchtslang en het seintouw in de hand, om op elk teeken, dat
+de duiker van beneden zendt, onmiddellijk bedacht te zijn.</p>
+
+<p>Zou er straks gedoken worden?</p>
+
+<p>'t Weer verslechterde!</p>
+<br>
+<p>
+We waren nu buitengaats. De zee wipte ons schip telkens op een
+golfkop omhoog, liet het<span id="p.142" class="blznr"></span> schip dan weer met een plons omlaag
+glijden. Overal kwamen uit het Noorden de brekende golven aangerold;
+de witte koppen ravotten holder-bolder aan.</p>
+
+<p>"'t Is wel geen zwaar weer," zei het loodsje, "maar windstil is toch
+anders."</p>
+
+<a id="43_dobberden"></a>
+<div style="text-align:center">
+<img src="images/43_dobberden.jpg" alt="{Illustratie: 43_dobberden.jpg}" style="width:95%; height:auto; max-width:800px;">
+</div>
+
+<p>Toen dobberde daar midden in de wilde zee een tonnetje op-en-neer.
+En iets verder danste, telkens als het deinende water viel, een
+puntstok omhoog; en daar opzij danste nog een boei:</p>
+
+<p>Vòòr op de plecht rammelde het anker; de stoomlier stond dreunend te
+zuigeren bij het anker-vieren.</p>
+
+<p>"Hier is 't!"</p>
+
+<p>We dobberden boven de plek, waar het "Lutine"-wrak gezonken lag.<span id="p.143" class="blznr"></span></p>
+
+<p>Er was niets te zien. Niets scheen in deze wijde oneindigheid van
+zee te zijn, teneinde eenig houvast te geven aan de verbeelding.
+Alleen de boeien dansten onrustig op-en-neer. Bij elk dal, dat zich
+vormde tusschen twee waterbergen, kwam de dobberende stok boven
+water.</p>
+
+<p>Anders was hier niets te zien.</p>
+
+<p>O! hoe scheen die roerige zee nu heerlijk brutaal met ons te
+spotten, en hoe veilig verborg en bewaarde ze haar schat!</p>
+
+<p>Slechts één kleine plek scheen zich in den rumoerigen warrel der
+golven vlak te strijken, een oppervlak van nog geen tien meter in
+het vierkant, zoodat de kapitein er mijn aandacht op moest vestigen.
+Daaromheen joegen de golven voor den wind uit en stootten op de
+zandbank; overal wringelde hun wilde beweging door het water. Hier,
+op deze plek, was de diepe kuil in het zand gezogen en daarboven
+braken dus de eindelooze golven niet tot schuim.</p>
+
+<p>Dit was alles...</p>
+
+<p>De zee rondom verhief zich allengs tot driftiger beweging.</p>
+
+<p>"Zal er gedoken worden?"<span id="p.144" class="blznr"></span></p>
+
+<p>Eèn van de Engelsche duikers was door den kapitein op de brug
+geroepen; die had even naar de lucht gekeken en naar het woelige
+water; toen had hij van "neen" geschud.</p>
+
+<p>"Haal maar op je anker!" commandeerde het loodsje. En terwijl hij
+een nieuwe pruim nam, stuurde hij het schip naar de haven terug.</p>
+
+<p>"Straks loopt de wind naar het Oosten," mompelde de kapitein.</p>
+
+<p>"De wind zit vast", zei de ander. "En àls-ie verandert, kruipt-ie
+naar 't Westen."</p>
+<br>
+<p>
+'s Avonds gierde de wind nog uit het Noorden.</p>
+
+<p>Zoodat het er heel druk en knus was in het hotelletje, waar de
+eerste officier van het schip en de fotograaf van het Engelsche blad
+met toewijding tegen de biljartballen stootten; waar de notabelen
+skat speelden; waar wij onzen troost zochten bij het klik-klak van
+eindelooze spelletjes domino.</p>
+
+<p>Tusschen dit verzetje door werd een algemeen gesprek gevoerd. Dat
+liep altijd maar weer over den verborgen schat in zee.<span id="p.145" class="blznr"></span></p>
+
+<p>"'t Zal 'n verlies zijn voor Terschelling als ze die millioenen
+ophalen!"</p>
+
+<p>Dadelijk 'n ander.</p>
+
+<p>"Ophalen?... Geen cent zit d'r meer in dat wrak!"</p>
+
+<p>En weer 'n ander:</p>
+
+<p>"Ik geef d'r grif 'n voorschot op!"</p>
+
+<p>Terwijl buiten 'n regenbui over de duinen striemt en over het dorpje
+kletst, zwaait de onaandoenlijke "Brandaris" zijn vier verre
+lichtstrepen over de zee, welks horizon hij in onmetelijken kring
+rondcirkelt.</p>
+
+<p>Zoo gaan we vroeg naar bed.</p>
+
+<p>En daar is dan weer het krakende hout van de beschotten. En ook is
+er nog de kier in het gordijn.</p>
+
+<p>En ik dommel in, terwijl ik droom hoe we den volgenden dag meer
+geluk zullen hebben.</p>
+<br>
+<p>
+Doch den volgenden dag gaat het duikerschip in het geheel niet uit.</p>
+
+<p>"Straks zal de wind wel naar het Oosten schieten", voorspelt de
+kapitein.</p>
+
+<p>Maar het loodsje loopt langs den wal; zijn<span id="p.146" class="blznr"></span> handen diep in de zakken
+van zijn stijve broekspijpen; hij kent den wind en 't water en 't
+tij al zoo lang.</p>
+
+<a id="44_zakken"></a>
+<div style="text-align:center">
+<img src="images/44_zakken.jpg" alt="{Illustratie: 44_zakken.jpg}" style="float:left; padding:5px; width:25%; height:auto; max-width:200px;">
+</div>
+
+<p>"Da's voorloopig mis met de "Lutine"."</p>
+<br>
+<p>
+En den daarop-volgenden dag is de wind nog nukkiger.</p>
+
+<p>Weer 'n dag later schijnt hij te willen ruimen. Maar dan krimpt hij
+hoe langer hoe meer. Tot hij pal noord-west blaast. 'n Holle zee. En
+wit van schuim raast het boven de buitengronden.</p>
+
+<p>Zoo moeten we dan den eenen dag na den anderen werkeloos wachten.
+Maar uit den zwarten rand van de gele pijp van het duikerschip in de
+haven rafelt de rook, omdat de machines dag en nacht stoom-op
+houden.</p>
+
+<p>Zoodra bedaart de wind, en ligt de zee wat vlakker, of 't gaat
+immers naar buiten!</p>
+
+<p>Dan wringt het loodsje de boot de haven weer uit, en 't gaat weer
+den Spathoek om, den Stortemelker voorbij, de buitengronden over,
+tot waar de boeien dobberen boven de vreemd-stille plek in zee...<span id="p.147" class="blznr"></span></p>
+
+<p>Maar zóó lang heb ik niet gewacht.</p>
+
+<p>Ik heb jullie toch vantevoren gezegd, dat mijn verhaal spannend
+begon, maar nuchter eindigt?</p>
+
+<p>We moesten eindelijk de terugreis wel aanvaarden. Tot verbazing van
+den kapitein. Had hij al niet bijna een jaar zijn geduld geoefend?
+Had hij niet telkens gewacht op het gunstige weer, en dan gevischt!
+En als de wind om was, had hij dan weer niet geduldig gewacht, tot
+morgen en overmorgen.</p>
+
+<p>'t Goud lag daar immers te wachten!</p>
+
+<p>Wachtte het al niet honderd jaren?</p>
+
+<p>Men had nu, dank zij het oude perkamenten kaartje, de plek ontdekt,
+waar de schat verborgen lag, beneden de roestlaag, tot één
+geweldigen vloer verhard.</p>
+
+<p>Was er niet alle zekerheid, dat de gouden en zilveren staven
+daaronder lagen?</p>
+
+<p>Eèn lading dynamiet, en dit dekschild zou aan splinters slaan.</p>
+
+<p>En daaronder zou dan immers de schat bloot liggen, slechts voor het
+oprapen, de millioenen van de "Lutine", bestemd voor den gelukkigen
+volhardenden zoeker!<span id="p.148" class="blznr"></span></p>
+
+<p>De kapitein liet ons gaan. Wanneer we dan niet langer konden blijven
+wachten op Terschelling, zou hij ons een telegram nazenden naar
+Amsterdam, zoodra hij de eerste goudstaaf zou gevonden hebben...</p>
+
+<p>Ik reisde met mijn vriend den langen weg terug, weer naar Harlingen,
+per trein naar Leeuwarden, en zoo op huis aan.</p>
+
+<p>Voelden wij ons als teleurgestelde schatzoekers?</p>
+
+<p>Neen! Mijn reisgenoot allerminst!</p>
+
+<p>Dit was niet z'n eerste tocht geweest naar Terschelling, en hij zou
+er nog wel meermalen moeten heen reizen. Uit zijn brieventasch vol
+documenten zou hij wellicht weer andere stukken opdiepen, geel van
+ouderdom, maar telkens belangrijk, om de nieuwe verwachting, die ze
+zouden wekken.</p>
+
+<p>En ik?... Ik was evenmin teleurgesteld.</p>
+
+<p>Ik wacht slechts op het beloofde telegram.</p>
+
+<p>Maar ik wacht nog steeds.</p>
+
+<p>Ik ben overtuigd, dat het komen zal.</p>
+
+<p>En dan?... Dan zal ik voor jullie het slothoofdstuk schrijven over
+het "Lutine"-wrak, en zooals de zee met halsstarrigheid haar schat
+bewaakt heeft, doch hoe zij dien ten laatste<span id="p.149" class="blznr"></span> toch heeft moeten
+afstaan aan de menschen.</p>
+
+<p>Dàn zal ik me kunnen voorstellen, hoe op het kleine ver-affe
+Terschelling de kantige, geweldige "Brandaris" zich als een vlammend
+uitroepteeken omhoog zal heffen ter eere van den schat, die het meer
+dan een eeuw aan zijn kust belichtte.</p>
+
+<p>Hoelang zal dit nog duren?</p>
+
+<p>Hoelang nog, eer ik voor jullie het jongensboek met het volledige
+verhaal van de "Lutine" mag schrijven?</p>
+
+<br>
+<br>
+<br>
+<br>
+<span id="p.150" class="blznr"></span><a id="chapter14"></a>
+<div style="text-align:center">
+  <span class="hiddenText">VERHAAL van/een ZEILTOCHT dat zoo vroolijk begint en zo droevig
+eindigt {Illustratie}</span>
+  <img src="images/45_Hoofdstuk_Verhaal_van_een_zeiltocht.jpg" alt='[Illustratie: VERHAAL van/een ZEILTOCHT dat zoo vroolijk begint en zo droevig
+eindigt]' style="width:100%; height:auto; max-width:95%;">
+</div>
+
+<p>Ik stond met Hendrik op de plecht van onze zeilboot. Hendrik was de
+schipper, de patentste, de meest bevaren, de wel-bespraaktste
+schipper, die jullie je kunt voorstellen. Het schip dreef lui en log
+met het langzame tij af. We hadden niets anders te doen, dan den
+wacht houden bij het ankerspil. Slechts van tijd tot tijd moesten we
+de armen uit de mouwen steken om den spilbout aan te vatten. Maar
+den meesten tijd hadden we er het luieren toe te doen. De boot dreef<span id="p.151" class="blznr"></span>
+immers van zelf! En dan kortte Hendrik zich en mij den tijd met z'n
+schippers-verhalen. Daarbij verschoof hij regelmatig z'n
+tabaks-pruimpje van de linker- naar de rechterwang.</p>
+
+<p>Zoo raakte hij dan, met bei' z'n armen leunend over den spilbout,
+aan het babbelen. Hij begon met zijn onafscheidelijk, half
+grinnekend, half ernstig stopwoordje van "Kcha! kcha!" dat hij
+steeds gebruikte, als hij met een van zijn schippers-verhalen begon.</p>
+
+<p>"Kcha! kcha!... Hendrik kan van alles!... daarveur is 't-ie z'n
+leven lang schipper 'eweest. En zoo'n zeilbootje bouwen, dat leeren
+wijlui waterschippers zoo met 't waaien mee!"</p>
+
+<p>Hij ving zijn verhaal aan. Dat waren altijd van die kneuterige
+verhalen, waarnaar ik telkens weer genoegelijk stond te luisteren.
+Ik leunde naast hem, ook met beide handen gesteund tegen den tweeden
+spilstok. En je zit daar maar wat best tot luisteren op zoo'n
+bolder.</p>
+
+<p>Hij begon te vertellen.</p>
+
+<p>"Laat me je nou vertelle van m'n notarisbootje. Ik heb d'r net an
+verdiend wat ik d'r an verdiene wou, en "dank je nog wel, Hendrik!"
+zei de<span id="p.152" class="blznr"></span> ouwe notaris toen ik 'm 'n hand reikte om 'm met z'n karkas
+in z'n eige bootje te helpen, want eigelijk was 't bootje voor z'n
+zoon, die door Onze Lieve Heer met 'n bochel was geschape."</p>
+
+<p>"Wat was dat wel voor 'n scheepje?" vroeg ik; want ik stelde
+hoegenaamd geen belang in een, mij onbekenden, notaris, maar wel in
+het bootje, door Hendrik op stapel gezet.</p>
+
+<p>"Dat was nou 'n niet te groote sloep, m'neer," begon Hendrik
+peinzend, en hij scheen zich nog iets anders dan z'n schepping te
+herinneren, "ik had d'r 'n mastje bijgemaakt met touwwerk en zeil,
+en groen in de verf met 'n knap wit biesje langs de boorden.</p>
+
+<a id="46_hand"></a>
+<div style="text-align:center">
+<img src="images/46_hand.jpg" alt="{Illustratie: 46_hand.jpg}" style="float:left; padding:5px; width:40%; height:auto; max-width:400px;">
+</div>
+
+<p>'n Bootje, meneer, om alles mee te ondernemen; om mee te roeien,
+want de riemen had ik er bij gemaakt; om in te visschen, want 'n
+aardig kaartje met gaatjes als een zeef had 'k er midden-in
+geprutst; om mee te zeilen, want de zwaardjes hingen 'm links en
+rechts langs<span id="p.153" class="blznr"></span> z'n ribbekes. Nee, 'n kiel had ik 'm niet 'egeven, want
+de notaris wou juist 't bootje hebben, om te visschen, zonder nou
+altijd met z'n bottines aan de waterkant te staan. En vandaar de
+boot, dat ziet m'neer zoo.</p>
+
+<a id="47_zolder"></a>
+<div style="text-align:center">
+<img src="images/47_zolder.jpg" alt="{Illustratie: 47_zolder.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>"Notaris!" zeit Hendrik, "je zult je bootje hebben, eer de rematiek
+je langs je beenen sluipt." Meteen Hendrik aan 't prakkiseeren.
+Eerst was daar de vrouw en ... 't hout. De vrouw doet altijd wat
+opstandig as ik daar met zoo'n warm plannetje thuis lei. &mdash; "Wat zit
+je weer op 'n houtje te knabbelen, Hendrik?" oproerde ze. Maar ik
+zei niks anders dan: "Hou<span id="p.154" class="blznr"></span> jij d'r je gezicht nou 's buiten. Hendrik
+prakkiseert hoe ie 't zal flikken." Toen hadden we drie weken
+ondeugend weer in de kajuit, want ze wou weten, waartoe ik al die
+planken 't vlieringtrappie opsjouwde. Maar Hendrik had 'n handbalk
+over 't luik geleid, en as ze d'r van benee' 'an kwam rommelen,
+hield Hendrik z'n eige sjakes."</p>
+
+<p>'t Schippertje glunderde bij de herinnering; hij verschoof z'n
+pruimpje, en omdat de schuit nog recht op den stroom verder
+treuzelde, had hij niet beter te doen dan doorpraten.</p>
+
+<p>"Drie weken heb ik 'ezeid, is 't niet m'eneer? Nou dan! 't Benne d'r
+nog geen zeuventien daagjes 'eweest, of ie stond al droog in de
+groene verf en glimmend in de vernis as 'n penantkast in de
+poelitoer. Ik sla 't luik met 'n spijker dicht, want m'n wijf lei
+maar te zaniken van de rommel die Hendrik op zolder had 'emaakt.
+Maar ik schuif zoo op m'n toffels naar 't "Witte Paard," en ik roep:
+"Kcha! kcha! jonges, wie drinkt d'r eerst 'n glaasje bier voor de
+notaris z'n cente, en steekt dan 'n handje uit om Hendrik te
+helpen?" Zoo krijg ik wel 'n half dozijn van die kaajschip<span class="hyphen"></span><span id="p.155" class="blznr"></span>pers mee.
+&mdash; "Wat is d'r loos, Hendrik?" vragen ze me buiten! Maar ik zeg
+alleenig maar: "Hebben jullie ooit een schip op zolder 'ezien,
+jonges?"</p>
+
+<a id="48_rondje"></a>
+<div style="text-align:center">
+<img src="images/48_rondje.jpg" alt="{Illustratie: 48_rondje.jpg}" style="width:70%; height:auto; max-width:800px;">
+</div>
+
+<p>&mdash; "Wat wil die nou!" stoeien ze. Tot ik ze 'n dubbele lijn in d'r
+handen gaf. &mdash; "Nou strak houwe, manne, en zachtjes aan, dat jullie
+me moeders schoorsteen niet mee omlaag halen." M'n wijf stond met 'n
+gezicht as 'n vuile lucht an 't vlieringtrappie te sjagrijnen.
+"Skiet nou op", lach ik inwendig, "as je wat zien wilt wat je nooit<span id="p.156" class="blznr"></span>
+'ezien heb, wijf, steek je temet je hoofd tusschen je
+kozijnblommetjes, want daar zweeft d'r 'n boot omlaag." Ik tippel
+naar boven, sla 'n takel uit, wikkel 'n tros om de boot, en steek
+m'n pet door 't zolderraam. "Kenne we al halen, Hendrik?" roepen m'n
+mannen van benee. "Ho!" schreeuw ik kwaad terug, want ik had
+vergeten de maat te nemen van 't venstergat. En m'n boot kon d'r
+niet door. "'n Momentje, jonges! en hou 't lijntje maar zoolang
+strak!" Want ik was toch zoo kwaad van binnen, dat m'n wijf nog zou
+triomfeeren. En ik neem m'n gereedschap en ik hak zoo 't heele
+venster met sponning en al an splinters, en 'n paar ouwe pannen
+kieper ik net op den neus van m'n toffel, en wat spanten van 't dak
+zaag ik door. 't Was maar 'n arm huur-huizie, mot u redeneere,
+m'neer, en dat dak zat er toch maar zoowat bovenop 'ekleefd. Later
+heb ik 't al weer eigenhandig bijgepriemd. Maar ik schreeuw: "Nou,
+jonges, laat 'm zweven!" En meteen halen ze 't lijntje door de takel
+en schiet me de boot de ruimte in!"</p>
+
+<p>'t Schippertje kletste van de pret 'n hand op z'n knie. Hij mikte 'n
+langen bruinen straal over<span id="p.157" class="blznr"></span> 't ankerspil en grinnikte z'n plezier uit
+met z'n gekke: "Kcha! kcha!", hetgeen krek op 'n spottenden
+eksterroep leek.</p>
+
+<a id="49_takel"></a>
+<div style="text-align:center">
+<img src="images/49_takel.jpg" alt="{Illustratie: 49_takel.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>"En je vrouw, Hendrik!"</p>
+
+<p>"Eerst wille we 't anker wat halen, m'neer", raadde Hendrik. En
+onder het inplanten van den spilbout in het vierkante gat van 't
+spilblok, grin<span class="hyphen"></span><span id="p.158" class="blznr"></span>nikte hij, glunderend van binnenpret: "M'n vrouw,
+m'neer? Die heeft Hendrik in geen vier dagen thuis 'ezien, want we
+benne 't bootje met 'n paardje wezen rije naar m'neer de notaris...
+Dat vertel ik je temet. Eerst je anker vieren, m'neer. Hup! twee!
+.... hup! twee!"</p>
+
+<p>Het zware anker was met rinkelend geweld omlaag gedreund; daarna
+hadden Hendrik en ik uit alle macht onze beide spilbouten in het
+blok gestoken, om den roestigen ketting rond het blok te winden,
+wijl de schuit weer op stroom was komen drijven.</p>
+
+<p>Hendrik, daarna de houding aannemende van een, op zijn wapen
+rustenden hellebardier, bekauwde z'n porteriekje, en vroeg waaraan
+hij was toegekomen.</p>
+
+<p>"Je zou dat nieuwe bootje voor den notaris immers naar 'm toe
+rijden, was je aan 't vertellen?"</p>
+
+<p>" Juustement, m'neer, dat nieuwe bootje, dat ik voor dat
+bochelzoontje van de notaris had 'emaakt, zou ik d'r heen rijje,
+want vare was te ver, en ook vanwege 't vernis, want zóó'n glimming
+heb u nou nooit of nergens 'ezien als om die schuit straalde!"<span id="p.159" class="blznr"></span></p>
+
+<p>Hij droogde zich het dampende voorhoofd, want Hendrik had tot
+gewoonte, zich bij elke werkzaamheid van pure opgewondenheid in het
+zweet te zwoegen.</p>
+
+<p>"Toen de boot dan in de lucht hong, as 'n vlieger an z'n touw, krijg
+ik de ingeving. M'n wijf stond d'r tramontanen te zamelen achter de
+horretjes, maar ik schreeuwde omlaag naar de schippers: "Leg effe
+jullie lijntje om die boom, dan ben ik zoo beneej'." En mèt stond ik
+bij ze omlaag. "As ik nou 'n kar met peerd had, dan zouen jullie pas
+lachen!" zei de gek. Want ze stingen al maar vroolijkheidjes te
+maken naar die zweefboot, alsof die zoo van 'n karmisspul was. Eén
+laat de lijn los en roept naar me: "Je zel je kar hewwe, Hendrik!"</p>
+
+<p>De andere jonges goggelen naar me: "Wat let ons, of we late je lijn
+skiete, en je bootje left an schilvers asse we met z'n alle niet
+magge mee rije!" &mdash; "Houw jullie de lijn stijf, en al de manne magge
+mee in de boot óp de kar!" zeg ik eerlijk terug; want 't waren
+zoowat goeiïge hajebaje, die wel erris 'n verzetje mochte. Daar
+steekt m'n vrouw d'r hoofd uit tusschen de reseda's: "Jij<span id="p.160" class="blznr"></span> gaat niet
+mee, Hendrik!" gilt ze. Maar meteen late de jonges de lijn door de
+takel vieren, en skiet me die boot bijna twee vaam omlaag. En zij
+d'r hoofd weer 'eborgen achter d'r horretjes. Rijdt me al peerd en
+wagen veer; die drieste makker op de bok. En wij met z'n alle de
+boot op de wagen 'epast en vast'esjord en Hendrik kommendeeren as in
+'n oorlogssloep: "An de rieme! en met Gods zegen, &mdash; drieéje!"</p>
+
+<p>Zoo rijje we ons steegje uit, en koope 'n graantje in 't "Witte
+Hert," en rijje fijn de straat door, en koope 'n graantje op de
+hoek, waar 't ruite-wapen uithangt, en rijje de heele stad door, en
+legge overal aan, en koope overal effe 'n klein glaasje van 't een
+of ander, want de notaris had 'ezeid dat-ie zelf de transport-kosten
+wou dragen. Nou, we zitte daar in die boot, net asse matrozen, maar
+de riemen hieuw ik weg 'eborgen, want d'r zou geen spatje aan 't
+spul bederven, eer Hendrik de boot had afgeleverd. We rijje 'n lange
+weg, en we rijje perjuu nog wel een eindje om ook, en as 't zoo pas
+geeft, roept Hendrik naar die drieste koetsier voorop: "Hou' nou 's
+je peerd in, man, want we raken buuten asem<span id="p.161" class="blznr"></span> van 't roeien!" En daar
+sting dan altijd wel, as Hendrik liet strijken, 'n gelegenheid voor
+'n dorstig varensman."</p>
+
+<a id="50_wagen"></a>
+<div style="text-align:center">
+<img src="images/50_wagen.jpg" alt="{Illustratie: 50_wagen.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>Hendrik's glimmende kop was nu een en al gegrinnik van
+herinneringspret; den spilbout had hij laten zakken, achter zich, en
+langzaam daarmee bewegende, wees hij: "Zoo stond Hendrik achter<span id="p.162" class="blznr"></span> in
+de boot, as 'n stuurman an z'n roer, en die manne op de roeibankjes,
+en dat alles boven op de kar; op 't nokkie zat de koetsier, met 'n
+merakelschebrom in. Maar we kwamen d'r. En 't was nog knap vroeg,
+met nog geen streepie licht an 't duuster. Toen kommedeert Hendrik:
+"Vast, manne! nou 'ezwegen, of jullie verbeurt je handgeld!" En stil
+as nonnetjes rijdt me de kar de tuin van de notaris binnen, net voor
+de slaapkamer van de jongeheer met z'n bult, want voor die was 't
+presentje bestemd. Zoo benne we daar zitten blijven, tot 't boven
+wat begon te klare; de rieme buiten boord, 't zeiltje 'eheschen, 't
+fokkie voor an de mast, en allemaal zwijgen as moffe uit 't
+beeldespul.</p>
+
+<a id="51_verbaasd"></a>
+<div style="text-align:center">
+<img src="images/51_verbaasd.jpg" alt="{Illustratie: 51_verbaasd.jpg}" style="float:left; padding:5px; width:45%; height:auto; max-width:400px;">
+</div>
+
+<p>Wordt eerst de notaris wakker, wrijft zich zijn oogen uit, zet zich
+z'n fok op, en schuift me van verbouwereerdheid 't raam open... "Wat
+is dàt nou!" &mdash; "Je bootje, m'neer de no<span class="hyphen"></span><span id="p.163" class="blznr"></span>taris!" salueer ik en al
+m'n manne make groot-saluut, as de jongeneer van Hendriks stem
+wakker wor' en in z'n slaaphempie voor de ramen komt dansen. "M'n
+komplement!" zeit de notaris, "'t lijkent me 'n knap stuk werk, maar
+hoe prakkiseer je 't, Hendrik, om zonder water te raken die boot
+hier 'n m'n tuin te rijje?" &mdash; "We rijjen 'm ook nog voor je te
+water, notaris, maar eerst wou ik je op je nuchtere maag laten
+genieten van de vernis!" En ik schreeuw naar m'n koetsier, die te
+slaapknikken zit: "Vor-uit, drieste, naar de waterkant; en jullie
+zette me de boot te water, zonder dat d'r 'n krasje an mankeert!"...
+Die notaris, wat 'n man van ervaring was, neemt Hendrik ampart
+en zeit tegen me: "Die mannen die je 'eholpen hebben, Hendrik, late
+die 'n glazie bier gaan drinken op je gezondheid en op mijn
+rekening." &mdash; "Dat hebbe ze al 'edaan, m'neer de notaris," tik ik an
+m'n petrand; "we bennen zoo al 'n dag an 't manevreeren met uwé's
+bootje, en 't kan nog knap 'n dag extra worre eer we weer bij moeder
+thuis legge, want zoolang as ik nou al vaar, en toch ben ik al als
+klein kind op 'n skuit 'eboren, heb ik nog nooit of<span id="p.164" class="blznr"></span> ooit 'n schip
+over de weg zien rije. Of wat jij, m'neer de notaris?"</p>
+
+<p>Hier moest Hendrik weer den ketting vieren, want ons drijvend schip
+was dwarsstroom gegleden, en juist moest het met wetenschap om een
+der uitstekende strekdammen geloodst worden.</p>
+
+<p>Waarvan Hendrik zich met rusteloos gepruim en met vele pareltjes op
+z'n rooden kop verdienstelijk kweet. Slechts had hij nog den tijd,
+me het eind van z'n verhaal aan te kondigen:</p>
+
+<p>"Met lachen waren we begonnen, maar met huilen benne we geëindigd.
+As ik je dat straks vertel, m'neer, moet je naar Hendrik luisteren.
+Maar zou je nou niet eerst dat ankertje voor me willen tillen, want
+met je tweeën werk je as met m'ziek, zooas de kapelmeester blieft te
+zeggen. En uit die eigenste boot van Hendrik is dat bocheltje van de
+notaris nog geen week daarna komme te verdrinke!... Haal toch door
+je spil, m'neer, hup twee! ... hup twee!"</p>
+
+<p>'t Was avond geworden; onze schuit lag stil op de rivier, en stevig
+voor anker, &mdash; waarvoor Hendrik trouwelijk gezorgd had. De
+ankerketting stond strak. Met geluidlooze sidderingen wrong<span id="p.165" class="blznr"></span> zich het
+immer stroomende water langs de schakels, zoog de boorden van het
+schip langs, teekende grillige figuren over de rivier. We keken
+ernaar, zwijgend uitrustend na ons eindeloos gestoei met de rivier,
+die onze drijvende schuit maar geen oogenblik met rust had willen
+laten. Later raakte Hendrik toch weer aan den praat, &mdash; hetgeen hij
+niet kon en wou laten, noch onder het werk aan roer of spilblok;
+noch onder het poozend kringetjes-spuwen bij avond-stemming genieten
+op de rappe rivier.</p>
+
+<p>"Je liet je verhaal liggen, Hendrik, nadat je dat bootje had
+afgeleverd aan den notaris."</p>
+
+<p>"'t Is niet eens 'n verhààl!" piekerde nu Hendrik, na den arbeid
+rustig gezeten, en ook voor het eerst dien dag de handen in zijn
+diepe schippers-broek-zakken gedompeld. "As 't nou nog 'n verhaal
+'eweest was! Maar de warentigheid is nooit lang zoo aardig niet.
+Nou, luister dan 's zelf, m'neer, hoe 't met Hendrik z'n bootje
+'egaan is."</p>
+
+<p>"Met de schippers-kameraden an den rol gebleven? tot je met de kous
+op den kop bij moeder-de-vrouw weer thuis kwam?"<span id="p.166" class="blznr"></span></p>
+
+<p>"Kcha! kcha! is dat nou 'n verhaal, om zoolang daarna nog na te
+vertellen?" dee Hendrik. Er klonk iets van minachting bij mijn
+waardeering van z'n schippers-bedrijf uit zijn woorden. "Dàt kome
+wel meer veur! Zaturdaags poets je dat wel weer in 't reine, asse de
+vrouwtjes 'n handvol met blanke daalders in d'r boezelaar ziene
+leggen. Zoo benne ze allemaal, m'neer, mot je nog van Hendrik
+leere?"</p>
+
+<p>Het schippertje bleef peinzend voor zich uit staren. Toen in-eens
+kwam het slot van zijn schippersverhaal over de eigen-gemaakte boot.</p>
+
+<p>"Zoo is 't d'r toen verder mee gegaan, m'neer," haastte hij zich
+blijkbaar. "Ik lag nog geen week thuis, of d'r was al 'n
+pampier-schrijven van de notaris; de schoolmeester heeft 't me net
+zoo veur 'elezen, en of Hendrik de volgende week zoo vrindelijk wou
+wezen, om bij m'neer de notaris te komme, want dat dan die jong z'n
+jaardag vierde, met z'n ronde ruggetje, en dat die kwajonge as eenig
+verlangen 'n zeilpartijtje begeerde. Nou, die notaris was me ook
+geen schippersvak 'ewend, dat had ik van wel vroeger 'emerkt; die
+'ebruikte z'n bootje alleenig maar tot visschers<span class="hyphen"></span><span id="p.167" class="blznr"></span>werk. Maar Hendrik
+had 'm toch 'n bootje 'ebouwd, dat juustement rank 'enog op 't water
+lei', om zonder al te veel jan-klaasen 'n aardig gangetje te zeilen.</p>
+
+<a id="52_zeiltochtje"></a>
+<div style="text-align:center">
+<img src="images/52_zeiltochtje.jpg" alt="{Illustratie: 52_zeiltochtje.jpg}" style="width:80%; height:auto; max-width:800px;">
+</div>
+
+<p>"Daar begeef ik me niet an!" zeit me die notaris, "ieder z'n werk,
+ik de aktes, en Hendrik de takelage." &mdash; "Je kan 't bestelle zooas
+je maar wil, notaris," zeit de gek, en ik wijs dat bocheltje 't
+plaatsje vooran, waar die<span id="p.168" class="blznr"></span> geen goed of kwaad kon uithalen. Maar wij
+zijn nog niet buuten, of dat jong wor' ongedurig, en temet mot
+Hendrik op z'n zeilwerk lette, want daar kwam 'n windslag van wat
+ben je me. "Ga je nou zitte, jongeneer!" Mot m'neer hooren, net as
+Hendrik 't nademaal nog altoos in z'n ooren hoort roepen: "'n Bult
+drijft, Hendrik!" En zoo is die over boord 'eslagen, en as Hendrik
+'m wil grijpe is die al heelemaal weg, zoo snel as Hendrik nog nooit
+of ooit 'n wolk voor de zon heeft zien verskiete. Ik smak m'n roer
+om; ik zeil de plek over. Drie keer, vier keer. Zijn 't er honderd
+keeren 'eweest? Weet Hendrik ook niet meer. Maar toen Hendrik thuis
+kwam met 't bootje, was 't voorplaasie leeg. &mdash; "Je bocheltje is
+verzope, notaris," zeit Hendrik. En meer niet, want ik heef' nog
+nooit zoo'n prop in m'n spraak 'ehad."</p>
+
+<p>Hendrik zweeg, vervaarlijk kauwend op z'n tabakspruim. Ik zweeg mee.
+Wat viel er te spreken? Toen spoog Hendrik recht naar een van die
+malle speelsche water-kolkjes ter weerszij van den ankerketting, en
+beëindigde aldus z'n verhaal:<span id="p.169" class="blznr"></span></p>
+
+<p>"Die notaris was 'n ijzelijk man, m'neer. Ik heb 'm later niet weer
+'ezien. Hendrik wou 'm niet meer zien. &mdash; "Neem nou je gereedskap,"
+zeit ie, "en hak me die boot an zulke gruzelementjes, dat geen
+mensch zal zien, dat 't ooit 'n skuit kan zijn 'eweest."</p>
+
+<a id="53_slopen"></a>
+<div style="text-align:center">
+<img src="images/53_slopen.jpg" alt="{Illustratie: 53_slopen.jpg}" style="width:60%; height:auto; max-width:600px;">
+</div>
+
+
+<p>Ik probeer nog wat te zeggen, van de zonde en van de jammer, omdat
+'t toch 'n goed stuk werk was wat ik 'm geleverd had as boot. Maar
+ie was ijzelijk van stilte. &mdash; "Neem nou je gereedskap, Hendrik,"<span id="p.170" class="blznr"></span>
+zeit ie, "en geen spaan of splinter wat an m'n scheepje
+herinnert!..." En zoo gong 't dan met dat bootje, meneer."</p>
+
+<p>Later bedacht Hendrik onrustig, dat hij 't verhaal toch niet
+volledig verteld had:</p>
+
+<p>"Heel 'n week heeft Hendrik d'r an gewerkt, om 't ding ongedaan te
+maken. Je breekt 'n skuit wel eerder af, dan dat je 'm opbouwt. Maar
+om 'n gaaf scheepje tot splinters te vernielen kost ook z'n tijd.
+"Niks meer van over, Hendrik?" vraagt die stille man. &mdash; "Niks,
+notaris!" &mdash; "Hoeveel ben ik je schuldig, Hendrik?" vraagt die
+notaris. &mdash; "Niks!" zeit Hendrik, en ik keek 'm van terzij an, om 'm
+goed te laten weten, dat ie met die larie geen tweede keer bij mijn
+aan boord most komme. &mdash; "Je mist 'n week loon, Hendrik," probeert
+die waarachtig nog. &mdash; "En jij mist méér dan een week, notaris,"
+schreeuw ik. Want ik kon die ijzelijke man niet langer daar zoo zien
+staan kijken naar 't stapeltje brandhout, dat er van 't bootje over
+was.</p>
+
+<p>"Hendrik is toen maar weg 'eloope. Weet je wat ik onder m'n arm
+hieuw, m'neer? 'n Splinter van 't voorpleggie, waar die jong op
+'ezeten had, met<span id="p.171" class="blznr"></span> z'n bultje tegen de mast 'eleund. As de notaris 't
+'ezien had, was die nog in staat 'eweest, 't me af te nemen. Zoo nam
+ik 't mee naar huis. "Laat maar," zeit Hendrik tegen de vrouw, toen
+ze me vroeg wat ik haar mee bracht van m'n zeiltocht. Had die me nog
+maar uit 'elachen om dat leste spaandertje van Hendrik's
+eigen-geprutste boot."</p>
+
+<br>
+<br>
+<br>
+
+
+<div class="notebox">
+  Bij dezelfde uitgevers verscheen:
+  <br>
+  
+  <div style="text-align:center">
+    <h2>AVIATOR</h2>
+    <h4>DOOR</h4>
+    <h3>JAN FEITH</h3>
+    <br>PRIJS IN PRACHTBAND <i>f</i> <b>2.50</b>.
+  </div>
+
+  <br>
+  <hr style="width:20%;">
+  
+  <p><u>Dit werk is ongetwijfeld een der meest boeiende en spannende boeken,
+  welke van dezen, zoo bekenden schrijver zijn verschenen.</u></p>
+
+  <p><u>Op treffende wijze, geeft hij hierin een romantisch beeld, van het
+  spannende, emotievolle bestaan der vlieghelden.</u></p>
+  <br>
+  <hr style="width:20%;">
+  <br>
+  <br><b>Bij elken Boekhandelaar verkrijgbaar.</b>
+</div>
+
+<br>
+<br>
+<br>
+
+<div class="notebox">
+<p class="p_no_indent">Transcriber's notes</p>
+ 
+<p class="p_no_indent">  Het papieren boek accentueert sommige woorden met uitgebreidere letterafstand ("expanded letter-spacing"). In de 'platte-tekst'-versie wordt dit met underscores aangegeven:</p>
+
+_gespatieerde tekst_ &rarr; <span class="expand_spacing">gespatieerde tekst</span>
+
+<p class="p_no_indent">  Bladzijdenummers zijn in de 'platte-tekst'-versie weggelaten. In de HTML-versie zijn ze wel zichtbaar, maar virtueel, wat het voordeel heeft dat u kunt zoeken op tekst-fragmenten zonder dat de bladzijde-nummers het zoeken hinderen. Dit werkt alleen als de bladzijdenummers in de tekst staan (maar niet in de kantlijn).</p>
+
+<p class="p_no_indent">  Bladzijdenummers staan bovenaan een bladzijde. U kunt zoeken op bladzijdenummers: door bijvoorbeeld <b>p.20</b> in te tikken.</p>
+
+<p class="p_no_indent">  Als u de weergave van de bladzijde-nummers wilt aanpassen, kijk dan met een tekstverwerker in het &lt;style&gt; blok naar de CSS-klassen [.blznr] (voor bladzijde-nummers) en [.hyphen] voor afbreekstreepjes</p>
+
+<p class="p_no_indent">  Voor de hand liggende interpunctie fouten zijn gecorrigeerd maar worden hier verder niet genoemd.</p>
+<br>
+<p class="p_no_indent">  Dit boek bevat een aantal zetfouten.
+<br>  De volgende zetfouten zijn gecorrigeerd:</p>
+
+<a href="#cor0001">[niet-zelf-richtende reddingboot]</a> &rarr;
+<br><div class="indent10">[niet-zelfrichtende reddingboot]</div>
+  
+<br>    <a href="#cor0002">[een algemeen gegemopper,]</a> &rarr;
+<br><div class="indent10">[een algemeen gemopper,]</div>
+
+<br>    <a href="#cor0003">[bediening der toestelllen]</a> &rarr;
+<br><div class="indent10">[bediening der toestellen]</div>
+
+<br>    <a href="#cor0004">[oostersche mogendheid]</a> &rarr;
+<br><div class="indent10">[Oostersche mogendheid]
+<br>Zie het vergelijkbare [Aziatische] in de tekst.
+</div>
+
+<br>    <a href="#cor0005">[plooiig over]</a> &rarr;
+<br><div class="indent10">[plooiïg over]
+<br>Zie ook vergelijkbare woorden: [goeiïg] en [lawaaiïg] in tekst.
+</div>
+
+<br>    <a href="#cor0006">[mesroom]</a> &rarr;
+<br><div class="indent10">[messroom]</div>
+    
+<br>
+<p class="p_no_indent">Enkele fouten die waarschijnlijk van de schrijver afkomstig zijn
+  en niet van de zetter, zijn niet gecorrigeerd. Voor de
+  volledigheid worden ze hier wel genoemd:</p>
+ 
+Bij een aantal hoofdstuktitels is er verschil in schrijfwijze
+  tussen inhoudsopgave en het daadwerkelijke hoofdstuk. Dit wordt
+  veroorzaakt doordat de hoofdstuktitel in een illustratie is
+  verwerkt:
+<div class="indent10">
+      [In den Onderzeeër] / 
+  <div class="indent10">[In een Onderzeeër]</div>
+      [Hollandsche Scheepsspreekwoorden] / 
+  <div class="indent10">[Scheepsspreekwoorden]</div>
+      [Met de Koningin aan boord van een onzer Oorlogsschepen] /
+  <div class="indent10">[Met de Koningin aan boord van een onzer Oorlogschepen]</div>
+      [Een overlevende van Shimonoseki] / 
+  <div class="indent10">[Een overlevende van/de Shimonoseki]</div>
+      [Van oude Uithangborden] / 
+  <div class="indent10">[Op oude Uithangborden]</div>
+      [De Millioenen van de Lutine] / 
+  <div class="indent10">[De Millioenen-schat op/den Zeebodem]</div>
+</div>
+<br>
+  [oorlogsschip] / [oorlogschip] 
+<div class="indent10">Eerstgenoemde spelling komt 5x voor, laatstgenoemde 12x. Het woord is een 
+    samenvoeging van de woorden "oorlog" en "schip" waar tegenwoordig een "s"
+    wordt toegevoegd. Omdat vergelijkbare woorden in dit boek ook op twee
+    wijzen geschreven worden, is hierop geen correctie toegepast.</div>
+    
+  [een weddingschap] 
+<div class="indent10">Alhoewel dit op een foutief gebruik van het Engelse woord
+    "wedding" lijkt, is dit de Vlaamse schrijfwijze voor
+    [een weddenschap]</div>
+
+  [Zuider-Zee] / [Zuider-Zee-vaarder] / [Zuider-zee] / [Zuiderzee-haventje] /
+    [Zuiderzee-visschersman]
+<div class="indent10">Door elkaar gebruikte hoofd- en kleine letter "z" in "zee", evenals 
+    soms een koppelteken tussen "Zuider" en "zee" en soms niet.</div>
+    
+  [Spaansche matten]
+<div class="indent10">Men zou kunnen denken dat hier "Spaansche munten" moet staan. Het is 
+    echter correct, en was de Nederlandse bijnaam voor zilvermunten
+    van 8 real.</div>
+    
+</div>
+
+<div style='text-align:center'>*** END OF THE PROJECT GUTENBERG EBOOK 73212 ***</div>
+</body>
+</html>
